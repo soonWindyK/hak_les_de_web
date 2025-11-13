@@ -1,0 +1,203 @@
+:root {
+    --rosatom-blue: #0066CC;
+    --rosatom-light-blue: #4D94FF;
+    --rosatom-white: #FFFFFF;
+    --text-dark: #333333;
+    --text-light: #FFFFFF;
+    --bg-light: #F5F8FA;
+    --bg-dark: #1a1a1a;
+    --card-light: #FFFFFF;
+    --card-dark: #2d2d2d;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--rosatom-white);
+    color: var(--text-dark);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-theme {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+
+/* Контейнер с отступами */
+.container {
+    max-width: 1400px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.main-content {
+    padding-top: 20px;
+}
+
+/* Навигация */
+.navbar {
+    background: linear-gradient(135deg, var(--rosatom-blue) 0%, var(--rosatom-light-blue) 100%);
+    box-shadow: 0 2px 10px rgba(0, 102, 204, 0.3);
+}
+
+.brand-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.btn-theme {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.btn-theme:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Карта */
+.map-container {
+    background-color: var(--card-light);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.1);
+    transition: background-color 0.3s;
+}
+
+body.dark-theme .map-container {
+    background-color: var(--card-dark);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+#map {
+    height: 700px;
+    border-radius: 10px;
+    border: 2px solid var(--rosatom-blue);
+}
+
+@media (min-width: 1200px) {
+    #map {
+        height: 800px;
+    }
+}
+
+/* Информационная панель */
+.info-panel {
+    background-color: var(--card-light);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.1);
+    transition: background-color 0.3s;
+}
+
+body.dark-theme .info-panel {
+    background-color: var(--card-dark);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.info-panel h3 {
+    color: var(--rosatom-blue);
+    border-bottom: 3px solid var(--rosatom-blue);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.city-info {
+    min-height: 200px;
+}
+
+.city-info h4 {
+    color: var(--rosatom-blue);
+    margin-top: 15px;
+}
+
+.city-info p {
+    line-height: 1.8;
+}
+
+/* Легенда */
+.legend {
+    background-color: var(--card-light);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.1);
+    transition: background-color 0.3s;
+}
+
+body.dark-theme .legend {
+    background-color: var(--card-dark);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.legend h4 {
+    color: var(--rosatom-blue);
+    margin-bottom: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.legend-marker {
+    width: 20px;
+    height: 20px;
+    background-color: var(--rosatom-blue);
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Заголовки */
+h1 {
+    color: var(--rosatom-blue);
+    font-weight: bold;
+}
+
+body.dark-theme h1 {
+    color: var(--rosatom-light-blue);
+}
+
+/* Футер */
+.footer {
+    background: linear-gradient(135deg, var(--rosatom-blue) 0%, var(--rosatom-light-blue) 100%);
+    color: white;
+    padding: 20px 0;
+    margin-top: 50px;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    #map {
+        height: 400px;
+    }
+    
+    .info-panel, .legend {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .brand-text {
+        font-size: 1.2rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+}
