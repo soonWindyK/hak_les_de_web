@@ -1,0 +1,72 @@
+[
+    {
+        "name": "Sarov",
+        "coords": [54.9333, 43.3167],
+        "info": "Russian Federal Nuclear Center - All-Russian Research Institute of Experimental Physics (RFNC-VNIIEF)",
+        "population": "~95,000",
+        "founded": "1946"
+    },
+    {
+        "name": "Snezhinsk",
+        "coords": [56.0833, 60.7333],
+        "info": "Russian Federal Nuclear Center - All-Russian Research Institute of Technical Physics (RFNC-VNIITF)",
+        "population": "~50,000",
+        "founded": "1957"
+    },
+    {
+        "name": "Ozyorsk",
+        "coords": [55.7667, 60.7],
+        "info": "Production Association 'Mayak' - the first enterprise of the USSR atomic industry",
+        "population": "~82,000",
+        "founded": "1945"
+    },
+    {
+        "name": "Tryokhgorny",
+        "coords": [54.8167, 58.45],
+        "info": "Instrument-Making Plant - production of nuclear warheads",
+        "population": "~33,000",
+        "founded": "1952"
+    },
+    {
+        "name": "Zarechny (Penza Oblast)",
+        "coords": [53.2, 45.1833],
+        "info": "Start - production of fuel assemblies for nuclear power plants",
+        "population": "~64,000",
+        "founded": "1958"
+    },
+    {
+        "name": "Zarechny (Sverdlovsk Oblast)",
+        "coords": [56.8167, 61.3167],
+        "info": "Beloyarsk Nuclear Power Station",
+        "population": "~29,000",
+        "founded": "1955"
+    },
+    {
+        "name": "Novouralsk",
+        "coords": [57.2444, 60.0833],
+        "info": "Ural Electrochemical Plant - uranium enrichment",
+        "population": "~85,000",
+        "founded": "1954"
+    },
+    {
+        "name": "Lesnoy",
+        "coords": [58.6333, 59.7833],
+        "info": "Combine 'Electrokhimpribor' - production of nuclear warheads",
+        "population": "~50,000",
+        "founded": "1947"
+    },
+    {
+        "name": "Seversk",
+        "coords": [56.6, 84.8833],
+        "info": "Siberian Chemical Combine - production of weapons-grade plutonium",
+        "population": "~108,000",
+        "founded": "1949"
+    },
+    {
+        "name": "Zheleznogorsk",
+        "coords": [56.25, 93.5333],
+        "info": "Mining and Chemical Combine - production of weapons-grade plutonium",
+        "population": "~94,000",
+        "founded": "1950"
+    }
+]

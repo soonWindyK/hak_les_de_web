@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container main-content">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center my-4" id="pageTitle">{{ translations.pageTitle }}</h1>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-lg-8 col-md-12">
+            <div class="info-panel">
+                <h3 id="infoPanelTitle">{{ translations.infoPanelTitle }}</h3>
+                <div id="cityInfo" class="city-info">
+                    <p id="selectCityText">{{ translations.selectCityText }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-12">
+            <div class="legend">
+                <h4 id="legendTitle">{{ translations.legendTitle }}</h4>
+                <div class="legend-item">
+                    <span class="legend-marker"></span>
+                    <span id="legendText">{{ translations.legendText }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+{% endblock %}
