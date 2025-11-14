@@ -23,7 +23,7 @@ import os
 
 # Создание приложения
 app = Flask(__name__)
-app.secret_key = 'rosatom_secret_key_2024'
+app.secret_key = 'rosatom_secret_key_2025'
 
 # Создание папки для данных
 DATA_DIR = 'data'

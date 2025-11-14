@@ -185,16 +185,9 @@ body.dark-theme .form-control {
                     <label for="city">{{ translations.city }}</label>
                     <select id="city" name="city" class="form-control" required>
                         <option value="">{{ translations.selectCity }}</option>
-                        <option value="Саров">Саров</option>
-                        <option value="Озерск">Озерск</option>
-                        <option value="Снежинск">Снежинск</option>
-                        <option value="Трехгорный">Трехгорный</option>
-                        <option value="Заречный">Заречный</option>
-                        <option value="Новоуральск">Новоуральск</option>
-                        <option value="Лесной">Лесной</option>
-                        <option value="Северск">Северск</option>
-                        <option value="Железногорск">Железногорск</option>
-                        <option value="Зеленогорск">Зеленогорск</option>
+                        {% for num, city, region in cities_list %}
+                            <option value="city-{{num}}">{{city}}, {{region}}</option>
+                        {% endfor %}
                     </select>
                     <div class="error-message" id="cityError">Выберите город</div>
                 </div>

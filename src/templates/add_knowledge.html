@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.addMaterial }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-container {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+body.dark-theme .form-group label {
+    color: var(--light-blue);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background-color: var(--white);
+    color: var(--text-dark);
+}
+
+body.dark-theme .form-control {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    border-color: var(--border-dark);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <div class="card">
+            <h1>{{ translations.addMaterial }}</h1>
+            
+            <form method="POST" action="/admin/add-knowledge">
+                <div class="form-group">
+                    <label for="title">{{ translations.materialTitle }}</label>
+                    <input type="text" id="title" name="title" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">{{ translations.category }}</label>
+                    <select id="category" name="category" class="form-control" required>
+                        <option value="video">{{ translations.video }}</option>
+                        <option value="documents">{{ translations.documents }}</option>
+                        <option value="articles">{{ translations.articles }}</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="type">{{ translations.type }}</label>
+                    <select id="type" name="type" class="form-control" required>
+                        <option value="video">{{ translations.video }}</option>
+                        <option value="document">{{ translations.document }}</option>
+                        <option value="article">{{ translations.article }}</option>
+                        <option value="link">{{ translations.link }}</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">{{ translations.description }}</label>
+                    <textarea id="description" name="description" class="form-control" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="url">{{ translations.url }}</label>
+                    <input type="url" id="url" name="url" class="form-control" placeholder="https://example.com/resource" required>
+                    <small style="color: #888;">{{ translations.urlHint }}</small>
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn btn-primary">{{ translations.add }}</button>
+                    <a href="/admin" class="btn btn-secondary">{{ translations.cancel }}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

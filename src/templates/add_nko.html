@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.addNko }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-container {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+body.dark-theme .form-group label {
+    color: var(--light-blue);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background-color: var(--white);
+    color: var(--text-dark);
+}
+
+body.dark-theme .form-control {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    border-color: var(--border-dark);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <div class="card">
+            <h1>{{ translations.addNko }}</h1>
+            <p>{{ translations.nkoWillBeModerated }}</p>
+            
+            <form method="POST" action="/profile/add-nko">
+                <div class="form-group">
+                    <label for="name">{{ translations.nkoName }}</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">{{ translations.category }}</label>
+                    <input type="text" id="category" name="category" class="form-control" placeholder="Например: Социальная помощь, Экология" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">{{ translations.description }}</label>
+                    <textarea id="description" name="description" class="form-control" placeholder="Краткое описание деятельности (2-3 предложения)" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteers">{{ translations.volunteers }}</label>
+                    <textarea id="volunteers" name="volunteers" class="form-control" placeholder="Функционал волонтеров" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="city">{{ translations.city }}</label>
+                    <select id="city" name="city" class="form-control" required>
+                        <option value="">{{ translations.selectCity }}</option>
+                        <option value="Саров">Саров</option>
+                        <option value="Озерск">Озерск</option>
+                        <option value="Снежинск">Снежинск</option>
+                        <option value="Трехгорный">Трехгорный</option>
+                        <option value="Заречный">Заречный</option>
+                        <option value="Новоуральск">Новоуральск</option>
+                        <option value="Лесной">Лесной</option>
+                        <option value="Северск">Северск</option>
+                        <option value="Железногорск">Железногорск</option>
+                        <option value="Зеленогорск">Зеленогорск</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">{{ translations.address }} ({{ translations.optional }})</label>
+                    <input type="text" id="address" name="address" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="website">{{ translations.website }} ({{ translations.optional }})</label>
+                    <input type="url" id="website" name="website" class="form-control" placeholder="https://example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="social">{{ translations.social }} ({{ translations.optional }})</label>
+                    <input type="text" id="social" name="social" class="form-control" placeholder="vk.com/group">
+                </div>
+                
+                <div class="form-group">
+                    <label for="logo">{{ translations.logoUrl }} ({{ translations.optional }})</label>
+                    <input type="url" id="logo" name="logo" class="form-control" placeholder="https://example.com/logo.png">
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn btn-primary">{{ translations.create }}</button>
+                    <a href="/profile" class="btn btn-secondary">{{ translations.cancel }}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

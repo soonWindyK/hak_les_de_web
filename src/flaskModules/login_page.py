@@ -1,18 +1,20 @@
 from src.databaseModules.classUsersDB import UsersDB_module
+from hash_password_usr import hasher_pass
+from flask import redirect, url_for, render_template
 
 
 def login_page(request):
-    username = request.form['username']
-    password = request.form['password']
-    users = bd_users().select_po_us_name(username)
-    # print(users)
-    if 'id' in users:
-        if users['password'] == password:
-            flash(f'Welcome, {username}!', 'success_panel')
-            session['username'] = username
-            return redirect(url_for('profile'))
+    user_mail = request.form['email']
+    password = hasher_pass(request.form['password'])
+    print(user_mail, password)
+
+    if UsersDB_module().check_presence_mail(mail=user_mail):
+        user = UsersDB_module().select_with_mail(mail=user_mail)
+
+        if user['user_pass'] == password:
+            return redirect(url_for('lk'))
         else:
-            return render_template('auth.html', message='Проблема с данными')
+            return render_template('login.html', message='Пароль неверный')
     else:
-        return redirect(url_for('login', message='Проблема с данными'))
+        return render_template('login.html', message='Пользователь не найден')
 
