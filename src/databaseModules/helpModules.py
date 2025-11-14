@@ -14,6 +14,7 @@ from data_from_env import db_table, db_host, db_pass, db_user, db_port
 import mysql.connector
 
 def get_db_connection():
+    # print(db_host, db_port, db_user, db_pass, db_table)
     conn = mysql.connector.connect(
             host=db_host,
             user=db_user,
