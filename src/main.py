@@ -1,7 +1,6 @@
 import json, os
 from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory
 from databaseModules import *
-from helper_main import *
 
 app = Flask(__name__)
 avatars_folder = os.path.join(os.path.dirname(__file__), 'avatars')

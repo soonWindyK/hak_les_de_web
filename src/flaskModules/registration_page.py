@@ -13,8 +13,6 @@ def reg_page(request):
     user_role = 1
 
     # нужно сделать приход с бд
-
-
     if UsersDB_module().check_presence_mail(mail=user_mail):
         return render_template('register.html', message2='Почта занята')
     else:
