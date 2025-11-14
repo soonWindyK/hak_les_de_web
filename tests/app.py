@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for, flash
 import json
 import os
+import re
 from datetime import datetime
 from functools import wraps
 
@@ -10,6 +11,12 @@ app.secret_key = 'rosatom_secret_key_2024'
 # Хранилище данных (вместо БД)
 DATA_DIR = 'data'
 os.makedirs(DATA_DIR, exist_ok=True)
+
+# Функция проверки email
+def is_valid_email(email):
+    """Проверка корректности email адреса"""
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
 
 # Декоратор для проверки авторизации
 def login_required(f):
@@ -148,8 +155,11 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         
-        # TODO: Здесь будет проверка в БД
-        # Временная заглушка для демонстрации
+        # Проверка корректности email
+        if not is_valid_email(email):
+            flash('Некорректный формат email адреса', 'error')
+            return render_template('login.html', translations=translations, lang=lang)
+        
         users = load_data('users.json')
         user = next((u for u in users if u['email'] == email and u['password'] == password), None)
         
@@ -158,7 +168,8 @@ def login():
                 'id': user['id'],
                 'name': user['name'],
                 'email': user['email'],
-                'role': user['role']
+                'role': user['role'],
+                'city': user.get('city')
             }
             flash('Вы успешно вошли в систему', 'success')
             return redirect(url_for('profile'))
@@ -179,7 +190,16 @@ def register():
         password = request.form.get('password')
         city = request.form.get('city')
         
-        # TODO: Здесь будет сохранение в БД
+        # Проверка корректности email
+        if not is_valid_email(email):
+            flash('Некорректный формат email адреса. Используйте формат: example@domain.com', 'error')
+            return render_template('register.html', translations=translations, lang=lang)
+        
+        # Проверка длины пароля
+        if len(password) < 6:
+            flash('Пароль должен содержать минимум 6 символов', 'error')
+            return render_template('register.html', translations=translations, lang=lang)
+        
         users = load_data('users.json')
         
         # Проверка существования пользователя
