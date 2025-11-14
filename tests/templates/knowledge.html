@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.knowledge }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ translations.knowledge }}</h1>
+    
+    <div style="margin-bottom: 20px;">
+        <a href="/knowledge?category=all" class="btn {% if category == 'all' %}btn-primary{% else %}btn-secondary{% endif %}">{{ translations.all }}</a>
+        <a href="/knowledge?category=video" class="btn {% if category == 'video' %}btn-primary{% else %}btn-secondary{% endif %}">{{ translations.video }}</a>
+        <a href="/knowledge?category=documents" class="btn {% if category == 'documents' %}btn-primary{% else %}btn-secondary{% endif %}">{{ translations.documents }}</a>
+        <a href="/knowledge?category=articles" class="btn {% if category == 'articles' %}btn-primary{% else %}btn-secondary{% endif %}">{{ translations.articles }}</a>
+    </div>
+    
+    <div class="grid grid-2">
+        {% for material in materials %}
+        <div class="card">
+            <h3>{{ material.title }}</h3>
+            <p><strong>{{ translations.category }}:</strong> {{ material.category }}</p>
+            <p>{{ material.description }}</p>
+            
+            {% if material.type == 'video' and material.url %}
+            <div style="margin-top: 15px;">
+                <iframe width="100%" height="315" src="{{ material.url }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            {% elif material.url %}
+            <a href="{{ material.url }}" target="_blank" class="btn btn-primary">{{ translations.open }}</a>
+            {% endif %}
+        </div>
+        {% else %}
+        <p>{{ translations.noMaterials }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

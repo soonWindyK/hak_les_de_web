@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.addNews }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-container {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+body.dark-theme .form-group label {
+    color: var(--light-blue);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background-color: var(--white);
+    color: var(--text-dark);
+}
+
+body.dark-theme .form-control {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    border-color: var(--border-dark);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+textarea.form-control {
+    min-height: 200px;
+    resize: vertical;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <div class="card">
+            <h1>{{ translations.addNews }}</h1>
+            
+            <form method="POST" action="/admin/add-news">
+                <div class="form-group">
+                    <label for="title">{{ translations.newsTitle }}</label>
+                    <input type="text" id="title" name="title" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="city">{{ translations.city }} ({{ translations.optional }})</label>
+                    <select id="city" name="city" class="form-control">
+                        <option value="">{{ translations.allCities }}</option>
+                        <option value="Саров">Саров</option>
+                        <option value="Озерск">Озерск</option>
+                        <option value="Снежинск">Снежинск</option>
+                        <option value="Трехгорный">Трехгорный</option>
+                        <option value="Заречный">Заречный</option>
+                        <option value="Новоуральск">Новоуральск</option>
+                        <option value="Лесной">Лесной</option>
+                        <option value="Северск">Северск</option>
+                        <option value="Железногорск">Железногорск</option>
+                        <option value="Зеленогорск">Зеленогорск</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="content">{{ translations.content }}</label>
+                    <textarea id="content" name="content" class="form-control" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image">{{ translations.imageUrl }} ({{ translations.optional }})</label>
+                    <input type="url" id="image" name="image" class="form-control" placeholder="https://example.com/image.jpg">
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn btn-primary">{{ translations.publish }}</button>
+                    <a href="/admin" class="btn btn-secondary">{{ translations.cancel }}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

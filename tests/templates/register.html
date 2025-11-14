@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.register }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.auth-container {
+    max-width: 500px;
+    margin: 50px auto;
+}
+
+.auth-card {
+    background-color: var(--card-light);
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 4px 20px var(--shadow-light);
+}
+
+body.dark-theme .auth-card {
+    background-color: var(--card-dark);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+body.dark-theme .form-group label {
+    color: var(--light-blue);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background-color: var(--white);
+    color: var(--text-dark);
+}
+
+body.dark-theme .form-control {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    border-color: var(--border-dark);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+.alert {
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-3 {
+    margin-top: 15px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1 class="text-center">{{ translations.register }}</h1>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form method="POST" action="/register">
+                <div class="form-group">
+                    <label for="name">{{ translations.fullName }}</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">{{ translations.email }}</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">{{ translations.password }}</label>
+                    <input type="password" id="password" name="password" class="form-control" required minlength="6">
+                </div>
+                
+                <div class="form-group">
+                    <label for="city">{{ translations.city }}</label>
+                    <select id="city" name="city" class="form-control" required>
+                        <option value="">{{ translations.selectCity }}</option>
+                        <option value="Саров">Саров</option>
+                        <option value="Озерск">Озерск</option>
+                        <option value="Снежинск">Снежинск</option>
+                        <option value="Трехгорный">Трехгорный</option>
+                        <option value="Заречный">Заречный</option>
+                        <option value="Новоуральск">Новоуральск</option>
+                        <option value="Лесной">Лесной</option>
+                        <option value="Северск">Северск</option>
+                        <option value="Железногорск">Железногорск</option>
+                        <option value="Зеленогорск">Зеленогорск</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">{{ translations.register }}</button>
+            </form>
+            
+            <p class="text-center mt-3">
+                {{ translations.haveAccount }} 
+                <a href="/login" style="color: var(--primary-blue);">{{ translations.login }}</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

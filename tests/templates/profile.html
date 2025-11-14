@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.profile }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ translations.profile }}</h1>
+    <p>{{ translations.welcome }}, <strong>{{ user.name }}</strong>! {{ translations.role }}: <strong>{{ translations.volunteer }}</strong></p>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" style="padding: 12px 20px; border-radius: 8px; margin-bottom: 20px;">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="card">
+        <h2>{{ translations.myInfo }}</h2>
+        <p><strong>{{ translations.email }}:</strong> {{ user.email }}</p>
+        <p><strong>{{ translations.city }}:</strong> {{ user.city }}</p>
+        <p><strong>{{ translations.role }}:</strong> {{ user.role }}</p>
+        
+        <div style="margin-top: 20px;">
+            <a href="/profile/add-nko" class="btn btn-primary">{{ translations.addNko }}</a>
+        </div>
+    </div>
+    
+    <h2 style="margin-top: 30px;">{{ translations.favorites }}</h2>
+    
+    <div class="grid grid-3">
+        <div class="card">
+            <h3>{{ translations.favoriteNews }}</h3>
+            <p>{{ translations.saved }}: {{ favorites.news|length }}</p>
+        </div>
+        
+        <div class="card">
+            <h3>{{ translations.favoriteEvents }}</h3>
+            <p>{{ translations.saved }}: {{ favorites.events|length }}</p>
+        </div>
+        
+        <div class="card">
+            <h3>{{ translations.favoriteMaterials }}</h3>
+            <p>{{ translations.saved }}: {{ favorites.materials|length }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

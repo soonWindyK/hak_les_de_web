@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.news }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ translations.news }}</h1>
+    
+    {% if city %}
+    <p>{{ translations.selectedCity }}: <strong>{{ city }}</strong></p>
+    {% endif %}
+    
+    <div class="grid grid-2">
+        {% for news_item in news_list %}
+        <div class="card">
+            {% if news_item.image %}
+            <img src="{{ news_item.image }}" alt="{{ news_item.title }}" style="width: 100%; border-radius: 5px; margin-bottom: 15px;">
+            {% endif %}
+            
+            <h3>{{ news_item.title }}</h3>
+            <p style="color: #888; font-size: 0.9rem;">{{ news_item.date }}</p>
+            {% if news_item.city %}
+            <p><strong>{{ translations.city }}:</strong> {{ news_item.city }}</p>
+            {% endif %}
+            <p>{{ news_item.content[:200] }}...</p>
+        </div>
+        {% else %}
+        <p>{{ translations.noNews }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

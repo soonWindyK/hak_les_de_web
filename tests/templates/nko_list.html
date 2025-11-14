@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.nko }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ translations.nko }}</h1>
+    
+    {% if city %}
+    <p>{{ translations.selectedCity }}: <strong>{{ city }}</strong></p>
+    {% endif %}
+    
+    <div class="grid grid-3">
+        {% for nko in nko_list %}
+        <div class="card">
+            <h3><a href="/nko/{{ nko.id }}" style="text-decoration: none; color: inherit;">{{ nko.name }}</a></h3>
+            <p><strong>{{ translations.category }}:</strong> {{ nko.category }}</p>
+            <p>{{ nko.description[:150] }}...</p>
+            {% if nko.city %}
+            <p><strong>{{ translations.city }}:</strong> {{ nko.city }}</p>
+            {% endif %}
+            <a href="/nko/{{ nko.id }}" class="btn btn-primary">{{ translations.readMore }}</a>
+        </div>
+        {% else %}
+        <p>{{ translations.noNko }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

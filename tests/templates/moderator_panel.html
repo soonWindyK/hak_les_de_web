@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.moderatorPanel }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ translations.moderatorPanel }}</h1>
+    <p>{{ translations.welcome }}, <strong>{{ user.name }}</strong>! {{ translations.role }}: <strong>{{ translations.moderator }}</strong></p>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" style="padding: 12px 20px; border-radius: 8px; margin-bottom: 20px;">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <h2 style="margin-top: 30px;">{{ translations.pendingEvents }}</h2>
+    
+    {% if pending_events %}
+    <div class="grid grid-2">
+        {% for event in pending_events %}
+        <div class="card">
+            <h3>{{ event.title }}</h3>
+            <p><strong>{{ translations.date }}:</strong> {{ event.date }} {{ event.time }}</p>
+            <p><strong>{{ translations.location }}:</strong> {{ event.location }}</p>
+            <p><strong>{{ translations.city }}:</strong> {{ event.city }}</p>
+            <p>{{ event.description }}</p>
+            <p><strong>{{ translations.organizer }}:</strong> {{ event.organizer }}</p>
+            
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <form method="POST" action="/moderator/approve-event/{{ event.id }}" style="flex: 1;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">{{ translations.approve }}</button>
+                </form>
+                <form method="POST" action="/moderator/reject-event/{{ event.id }}" style="flex: 1;">
+                    <button type="submit" class="btn btn-secondary" style="width: 100%;">{{ translations.reject }}</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>{{ translations.noPendingEvents }}</p>
+    {% endif %}
+    
+    <h2 style="margin-top: 40px;">{{ translations.pendingNko }}</h2>
+    
+    {% if pending_nko %}
+    <div class="grid grid-2">
+        {% for nko in pending_nko %}
+        <div class="card">
+            <h3>{{ nko.name }}</h3>
+            <p><strong>{{ translations.category }}:</strong> {{ nko.category }}</p>
+            <p><strong>{{ translations.city }}:</strong> {{ nko.city }}</p>
+            <p>{{ nko.description[:150] }}...</p>
+            
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <form method="POST" action="/moderator/approve-nko/{{ nko.id }}" style="flex: 1;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">{{ translations.approve }}</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>{{ translations.noPendingNko }}</p>
+    {% endif %}
+</div>
+{% endblock %}
