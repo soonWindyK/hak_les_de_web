@@ -1,7 +1,10 @@
 [
   {
     "id": 1,
+    "firstName": "Иван",
+    "lastName": "Модератор",
     "name": "Иван Модератор",
+    "birthDate": "1990-05-15",
     "email": "moderator@rosatom.ru",
     "password": "123456",
     "role": "moderator",
@@ -10,7 +13,10 @@
   },
   {
     "id": 2,
+    "firstName": "Мария",
+    "lastName": "Организатор",
     "name": "Мария Организатор",
+    "birthDate": "1992-08-20",
     "email": "organizer@rosatom.ru",
     "password": "123456",
     "role": "organizer",
@@ -19,7 +25,10 @@
   },
   {
     "id": 3,
+    "firstName": "Петр",
+    "lastName": "Волонтёр",
     "name": "Петр Волонтёр",
+    "birthDate": "1995-03-10",
     "email": "volunteer@rosatom.ru",
     "password": "123456",
     "role": "volunteer",
@@ -28,7 +37,10 @@
   },
   {
     "id": 4,
+    "firstName": "Анна",
+    "lastName": "Администратор",
     "name": "Анна Администратор",
+    "birthDate": "1988-12-05",
     "email": "admin@rosatom.ru",
     "password": "123456",
     "role": "admin",

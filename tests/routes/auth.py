@@ -49,8 +49,14 @@ def register():
     lang = session.get('lang', 'ru')
     translations = load_translations(lang)
     
+    # Передаем сегодняшнюю дату для ограничения выбора даты рождения
+    from datetime import date
+    today = date.today().isoformat()
+    
     if request.method == 'POST':
-        name = request.form.get('name')
+        first_name = request.form.get('firstName')
+        last_name = request.form.get('lastName')
+        birth_date = request.form.get('birthDate')
         email = request.form.get('email')
         password = request.form.get('password')
         city = request.form.get('city')
@@ -60,9 +66,15 @@ def register():
         if any(u['email'] == email for u in users):
             flash('Пользователь с таким email уже существует', 'error')
         else:
+            # Формируем полное имя
+            full_name = f"{first_name} {last_name}"
+            
             new_user = {
                 'id': len(users) + 1,
-                'name': name,
+                'firstName': first_name,
+                'lastName': last_name,
+                'name': full_name,
+                'birthDate': birth_date,
                 'email': email,
                 'password': password,
                 'role': 'volunteer',
@@ -75,7 +87,7 @@ def register():
             flash('Регистрация успешна! Войдите в систему', 'success')
             return redirect(url_for('auth.login'))
     
-    return render_template('register.html', translations=translations, lang=lang)
+    return render_template('register.html', translations=translations, lang=lang, today=today)
 
 
 @auth_bp.route('/logout')
