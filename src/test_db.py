@@ -1,5 +1,11 @@
 from databaseModules.classCreatorTables import CreatorTables
+from databaseModules.classUsersDB import UsersDB_module
 
 
-print(CreatorTables().create_regions())
-print(CreatorTables().create_cities())
+# print(CreatorTables().create_regions())
+# print(CreatorTables().create_cities())
+# print(CreatorTables().create_roles())
+# print(CreatorTables().create_users())
+
+print(UsersDB_module().select_with_mail(mail='oleg@mail.ru'))
+print(UsersDB_module().check_presence_mail(mail='oleg@mail.ru'))
