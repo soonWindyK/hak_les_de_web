@@ -23,9 +23,12 @@ wheels/
 .installed.cfg
 *.egg
 
-# Flask
-instance/
-.webassets-cache
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
 
 # IDE
 .vscode/

@@ -4,8 +4,10 @@ from .models import NKO, News, Event, KnowledgeItem, UserProfile
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'patronymic', 'city', 'phone']
+    list_display = ['user', 'role', 'patronymic', 'city', 'phone']
+    list_filter = ['role', 'city']
     search_fields = ['user__username', 'user__first_name', 'user__last_name', 'patronymic']
+    list_editable = ['role']
 
 
 @admin.register(NKO)
