@@ -5,6 +5,7 @@ import re
 from datetime import datetime
 from functools import wraps
 
+
 app = Flask(__name__)
 app.secret_key = 'rosatom_secret_key_2025'
 

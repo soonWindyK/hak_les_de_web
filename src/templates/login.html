@@ -57,6 +57,21 @@ body.dark-theme .form-control {
     border-color: var(--primary-blue);
 }
 
+.form-control.error {
+    border-color: #dc3545;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 5px;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
 .alert {
     padding: 12px 20px;
     border-radius: 8px;
@@ -99,15 +114,19 @@ body.dark-theme .form-control {
                 {% endif %}
             {% endwith %}
             
-            <form method="POST" action="/login">
+            <form method="POST" action="/login" id="loginForm" novalidate>
                 <div class="form-group">
                     <label for="email">{{ translations.email }}</label>
-                    <input type="email" id="email" name="email" class="form-control" required>
+                    <input type="email" id="email" name="email" class="form-control" required 
+                           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                           placeholder="example@domain.com">
+                    <div class="error-message" id="emailError">Введите корректный email адрес</div>
                 </div>
                 
                 <div class="form-group">
                     <label for="password">{{ translations.password }}</label>
-                    <input type="password" id="password" name="password" class="form-control" required>
+                    <input type="password" id="password" name="password" class="form-control" required minlength="6">
+                    <div class="error-message" id="passwordError">Пароль должен содержать минимум 6 символов</div>
                 </div>
                 
                 <button type="submit" class="btn btn-primary" style="width: 100%;">{{ translations.login }}</button>
@@ -120,4 +139,53 @@ body.dark-theme .form-control {
         </div>
     </div>
 </div>
+
+<script>
+// Валидация формы
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    let isValid = true;
+    
+    // Проверка email
+    const email = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    if (!emailPattern.test(email.value)) {
+        email.classList.add('error');
+        emailError.classList.add('show');
+        isValid = false;
+    } else {
+        email.classList.remove('error');
+        emailError.classList.remove('show');
+    }
+    
+    // Проверка пароля
+    const password = document.getElementById('password');
+    const passwordError = document.getElementById('passwordError');
+    
+    if (password.value.length < 6) {
+        password.classList.add('error');
+        passwordError.classList.add('show');
+        isValid = false;
+    } else {
+        password.classList.remove('error');
+        passwordError.classList.remove('show');
+    }
+    
+    if (!isValid) {
+        e.preventDefault();
+    }
+});
+
+// Убираем ошибку при вводе
+document.getElementById('email').addEventListener('input', function() {
+    this.classList.remove('error');
+    document.getElementById('emailError').classList.remove('show');
+});
+
+document.getElementById('password').addEventListener('input', function() {
+    this.classList.remove('error');
+    document.getElementById('passwordError').classList.remove('show');
+});
+</script>
 {% endblock %}

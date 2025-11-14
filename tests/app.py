@@ -6,7 +6,7 @@ from datetime import datetime
 from functools import wraps
 
 app = Flask(__name__)
-app.secret_key = 'rosatom_secret_key_2024'
+app.secret_key = 'rosatom_secret_key_2025'
 
 # Хранилище данных (вместо БД)
 DATA_DIR = 'data'
