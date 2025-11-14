@@ -56,6 +56,7 @@ def register():
     if request.method == 'POST':
         first_name = request.form.get('firstName')
         last_name = request.form.get('lastName')
+        patronymic = request.form.get('patronymic', '')
         birth_date = request.form.get('birthDate')
         email = request.form.get('email')
         password = request.form.get('password')
@@ -66,13 +67,17 @@ def register():
         if any(u['email'] == email for u in users):
             flash('Пользователь с таким email уже существует', 'error')
         else:
-            # Формируем полное имя
-            full_name = f"{first_name} {last_name}"
+            # Формируем полное имя (Фамилия Имя Отчество)
+            if patronymic:
+                full_name = f"{last_name} {first_name} {patronymic}"
+            else:
+                full_name = f"{last_name} {first_name}"
             
             new_user = {
                 'id': len(users) + 1,
                 'firstName': first_name,
                 'lastName': last_name,
+                'patronymic': patronymic if patronymic else None,
                 'name': full_name,
                 'birthDate': birth_date,
                 'email': email,

@@ -9,6 +9,36 @@
     margin: 0 auto;
 }
 
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.city-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.city-filter select {
+    padding: 10px 15px;
+    border: 2px solid var(--primary-blue);
+    border-radius: 5px;
+    background-color: var(--white);
+    color: var(--text-dark);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+body.dark-theme .city-filter select {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+
 .calendar-header {
     display: flex;
     justify-content: space-between;
@@ -148,6 +178,11 @@ body.dark-theme .event-card {
 }
 
 @media (max-width: 768px) {
+    .calendar-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
     .calendar-grid {
         gap: 5px;
     }
@@ -164,14 +199,34 @@ body.dark-theme .event-card {
 </style>
 {% endblock %}
 
-
 {% block content %}
 <div class="container calendar-container">
     <h1>{{ translations.calendar }}</h1>
     
-    {% if city %}
-    <p>{{ translations.selectedCity }}: <strong>{{ city }}</strong></p>
-    {% endif %}
+    <div class="calendar-controls">
+        <div class="city-filter">
+            <label for="cityFilter"><strong>{{ translations.filterByCity }}:</strong></label>
+            <select id="cityFilter" onchange="filterByCity(this.value)">
+                <option value="">{{ translations.allCities }}</option>
+                <option value="Саров" {% if city == 'Саров' %}selected{% endif %}>Саров</option>
+                <option value="Озерск" {% if city == 'Озерск' %}selected{% endif %}>Озерск</option>
+                <option value="Снежинск" {% if city == 'Снежинск' %}selected{% endif %}>Снежинск</option>
+                <option value="Трехгорный" {% if city == 'Трехгорный' %}selected{% endif %}>Трехгорный</option>
+                <option value="Заречный" {% if city == 'Заречный' %}selected{% endif %}>Заречный</option>
+                <option value="Новоуральск" {% if city == 'Новоуральск' %}selected{% endif %}>Новоуральск</option>
+                <option value="Лесной" {% if city == 'Лесной' %}selected{% endif %}>Лесной</option>
+                <option value="Северск" {% if city == 'Северск' %}selected{% endif %}>Северск</option>
+                <option value="Железногорск" {% if city == 'Железногорск' %}selected{% endif %}>Железногорск</option>
+                <option value="Зеленогорск" {% if city == 'Зеленогорск' %}selected{% endif %}>Зеленогорск</option>
+            </select>
+        </div>
+        
+        {% if session.user %}
+        <a href="/organizer/create-event" class="btn btn-primary">➕ {{ translations.createEvent }}</a>
+        {% else %}
+        <a href="/login" class="btn btn-primary">{{ translations.loginToAddEvent }}</a>
+        {% endif %}
+    </div>
     
     <div class="calendar-header">
         <div class="calendar-nav">
@@ -196,6 +251,7 @@ body.dark-theme .event-card {
 // Данные событий из Flask
 const eventsData = {{ events|tojson|safe }};
 const translations = {{ translations|tojson|safe }};
+const currentCity = "{{ city if city else '' }}";
 
 let currentDate = new Date();
 let selectedDate = null;
@@ -210,6 +266,16 @@ const monthNames = ['{{ translations.january }}', '{{ translations.february }}',
                     '{{ translations.july }}', '{{ translations.august }}', '{{ translations.september }}', 
                     '{{ translations.october }}', '{{ translations.november }}', '{{ translations.december }}'];
 
+// Фильтрация по городу
+function filterByCity(city) {
+    const url = new URL(window.location);
+    if (city) {
+        url.searchParams.set('city', city);
+    } else {
+        url.searchParams.delete('city');
+    }
+    window.location.href = url.toString();
+}
 </script>
 
 <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>

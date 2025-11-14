@@ -140,5 +140,8 @@
     "december": "Декабрь",
     "firstName": "Имя",
     "lastName": "Фамилия",
-    "birthDate": "Дата рождения"
+    "patronymic": "Отчество",
+    "birthDate": "Дата рождения",
+    "filterByCity": "Фильтр по городу",
+    "loginToAddEvent": "Войдите, чтобы добавить событие"
 }
