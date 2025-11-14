@@ -1,6 +1,6 @@
 import hashlib
 
-def hash_pass(password):
+def hasher_pass(password):
     hasher = hashlib.sha256()
     hasher.update(password.encode('utf-8'))
     hashed_value = hasher.hexdigest()

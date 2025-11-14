@@ -1,6 +1,6 @@
 from src.databaseModules.classUsersDB import UsersDB_module
 from flask import render_template, redirect, url_for
-from hash_password import hash_pass
+from src.flaskModules.hash_password_usr import hasher_pass
 
 def reg_page(request):
     first_name = request.form['first_name']
@@ -8,7 +8,7 @@ def reg_page(request):
     father_name = request.form['father_name']
     user_mail = request.form['email']
     password = request.form['password']
-    hash_password = hash_pass(password=password)
+    hash_password = hasher_pass(password=password)
     user_birthday = request.form['birthday']
     user_role = 1
 

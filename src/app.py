@@ -181,26 +181,13 @@ def login():
 # Регистрация
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    lang = session.get('lang', 'ru')
+    translations = load_translations(lang)
+
     from src.flaskModules.registration_page import reg_page
     from src.databaseModules.classCityRegionDB import CityRegionDB_module
 
-    lang = session.get('lang', 'ru')
-    translations = load_translations(lang)
-    
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-        
-        # Проверка корректности email
-        if not is_valid_email(email):
-            flash('Некорректный формат email адреса. Используйте формат: example@domain.com', 'error')
-            return render_template('register.html', translations=translations, lang=lang)
-        
-        # Проверка длины пароля
-        if len(password) < 6:
-            flash('Пароль должен содержать минимум 6 символов', 'error')
-            return render_template('register.html', translations=translations, lang=lang)
-
         return reg_page(request)
 
     cities_list = CityRegionDB_module().get_cities_list_with_region()
