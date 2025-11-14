@@ -28,6 +28,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 # Декоратор для проверки роли
 def role_required(roles):
     def decorator(f):

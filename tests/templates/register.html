@@ -5,7 +5,7 @@
 {% block extra_css %}
 <style>
 .auth-container {
-    max-width: 500px;
+    max-width: 600px;
     margin: 50px auto;
 }
 
@@ -18,6 +18,12 @@
 
 body.dark-theme .auth-card {
     background-color: var(--card-dark);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
 }
 
 .form-group {
@@ -98,17 +104,27 @@ body.dark-theme .form-control {
     margin-top: 15px;
 }
 
-.password-requirements {
-    font-size: 0.875rem;
-    color: #666;
-    margin-top: 5px;
+.btn-full {
+    width: 100%;
 }
 
-body.dark-theme .password-requirements {
-    color: #aaa;
+.link-primary {
+    color: var(--primary-blue);
+    text-decoration: none;
+}
+
+.link-primary:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 {% endblock %}
+
 
 {% block content %}
 <div class="container">
@@ -125,10 +141,24 @@ body.dark-theme .password-requirements {
             {% endwith %}
             
             <form method="POST" action="/register" id="registerForm" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">{{ translations.firstName }}</label>
+                        <input type="text" id="firstName" name="firstName" class="form-control" required minlength="2" placeholder="Иван">
+                        <div class="error-message" id="firstNameError">Введите имя (минимум 2 символа)</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">{{ translations.lastName }}</label>
+                        <input type="text" id="lastName" name="lastName" class="form-control" required minlength="2" placeholder="Иванов">
+                        <div class="error-message" id="lastNameError">Введите фамилию (минимум 2 символа)</div>
+                    </div>
+                </div>
+                
                 <div class="form-group">
-                    <label for="name">{{ translations.fullName }}</label>
-                    <input type="text" id="name" name="name" class="form-control" required minlength="2">
-                    <div class="error-message" id="nameError">Введите ваше имя (минимум 2 символа)</div>
+                    <label for="birthDate">{{ translations.birthDate }}</label>
+                    <input type="date" id="birthDate" name="birthDate" class="form-control" required max="{{ today }}">
+                    <div class="error-message" id="birthDateError">Введите дату рождения</div>
                 </div>
                 
                 <div class="form-group">
@@ -136,13 +166,12 @@ body.dark-theme .password-requirements {
                     <input type="email" id="email" name="email" class="form-control" required 
                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                            placeholder="example@domain.com">
-                    <div class="error-message" id="emailError">Введите корректный email адрес (example@domain.com)</div>
+                    <div class="error-message" id="emailError">Введите корректный email адрес</div>
                 </div>
                 
                 <div class="form-group">
                     <label for="password">{{ translations.password }}</label>
-                    <input type="password" id="password" name="password" class="form-control" required minlength="6">
-                    <div class="password-requirements">Минимум 6 символов</div>
+                    <input type="password" id="password" name="password" class="form-control" required minlength="6" placeholder="Минимум 6 символов">
                     <div class="error-message" id="passwordError">Пароль должен содержать минимум 6 символов</div>
                 </div>
                 
@@ -150,30 +179,24 @@ body.dark-theme .password-requirements {
                     <label for="city">{{ translations.city }}</label>
                     <select id="city" name="city" class="form-control" required>
                         <option value="">{{ translations.selectCity }}</option>
-                        <option value="Саров">Саров</option>
-                        <option value="Озерск">Озерск</option>
-                        <option value="Снежинск">Снежинск</option>
-                        <option value="Трехгорный">Трехгорный</option>
-                        <option value="Заречный">Заречный</option>
-                        <option value="Новоуральск">Новоуральск</option>
-                        <option value="Лесной">Лесной</option>
-                        <option value="Северск">Северск</option>
-                        <option value="Железногорск">Железногорск</option>
-                        <option value="Зеленогорск">Зеленогорск</option>
+                        {% for num, city, region in cities_list %}
+                            <option value="city-{{num}}">{{city}}, {{region}}</option>
+                        {% endfor %}
                     </select>
                     <div class="error-message" id="cityError">Выберите город</div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary" style="width: 100%;">{{ translations.register }}</button>
+                <button type="submit" class="btn btn-primary btn-full">{{ translations.register }}</button>
             </form>
             
             <p class="text-center mt-3">
                 {{ translations.haveAccount }} 
-                <a href="/login" style="color: var(--primary-blue);">{{ translations.login }}</a>
+                <a href="/login" class="link-primary">{{ translations.login }}</a>
             </p>
         </div>
     </div>
 </div>
+
 
 <script>
 // Валидация формы
@@ -181,16 +204,42 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
     let isValid = true;
     
     // Проверка имени
-    const name = document.getElementById('name');
-    const nameError = document.getElementById('nameError');
+    const firstName = document.getElementById('firstName');
+    const firstNameError = document.getElementById('firstNameError');
     
-    if (name.value.trim().length < 2) {
-        name.classList.add('error');
-        nameError.classList.add('show');
+    if (firstName.value.trim().length < 2) {
+        firstName.classList.add('error');
+        firstNameError.classList.add('show');
         isValid = false;
     } else {
-        name.classList.remove('error');
-        nameError.classList.remove('show');
+        firstName.classList.remove('error');
+        firstNameError.classList.remove('show');
+    }
+    
+    // Проверка фамилии
+    const lastName = document.getElementById('lastName');
+    const lastNameError = document.getElementById('lastNameError');
+    
+    if (lastName.value.trim().length < 2) {
+        lastName.classList.add('error');
+        lastNameError.classList.add('show');
+        isValid = false;
+    } else {
+        lastName.classList.remove('error');
+        lastNameError.classList.remove('show');
+    }
+    
+    // Проверка даты рождения
+    const birthDate = document.getElementById('birthDate');
+    const birthDateError = document.getElementById('birthDateError');
+    
+    if (!birthDate.value) {
+        birthDate.classList.add('error');
+        birthDateError.classList.add('show');
+        isValid = false;
+    } else {
+        birthDate.classList.remove('error');
+        birthDateError.classList.remove('show');
     }
     
     // Проверка email
@@ -239,19 +288,11 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
 });
 
 // Убираем ошибки при вводе
-document.getElementById('name').addEventListener('input', function() {
-    this.classList.remove('error');
-    document.getElementById('nameError').classList.remove('show');
-});
-
-document.getElementById('email').addEventListener('input', function() {
-    this.classList.remove('error');
-    document.getElementById('emailError').classList.remove('show');
-});
-
-document.getElementById('password').addEventListener('input', function() {
-    this.classList.remove('error');
-    document.getElementById('passwordError').classList.remove('show');
+['firstName', 'lastName', 'birthDate', 'email', 'password'].forEach(id => {
+    document.getElementById(id).addEventListener('input', function() {
+        this.classList.remove('error');
+        document.getElementById(id + 'Error').classList.remove('show');
+    });
 });
 
 document.getElementById('city').addEventListener('change', function() {
