@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.adminPanel }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ translations.adminPanel }}</h1>
+    <p>{{ translations.welcome }}, <strong>{{ user.name }}</strong>!</p>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" style="padding: 12px 20px; border-radius: 8px; margin-bottom: 20px;">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="grid grid-3" style="margin: 30px 0;">
+        <div class="card" style="text-align: center;">
+            <h3>📰 {{ translations.news }}</h3>
+            <p>{{ translations.manageNews }}</p>
+            <a href="/admin/add-news" class="btn btn-primary">{{ translations.addNews }}</a>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+            <h3>📚 {{ translations.knowledge }}</h3>
+            <p>{{ translations.manageKnowledge }}</p>
+            <a href="/admin/add-knowledge" class="btn btn-primary">{{ translations.addMaterial }}</a>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+            <h3>✅ {{ translations.moderation }}</h3>
+            <p>{{ translations.moderateContent }}</p>
+            <a href="/moderator" class="btn btn-primary">{{ translations.toModeration }}</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
