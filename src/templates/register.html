@@ -57,6 +57,21 @@ body.dark-theme .form-control {
     border-color: var(--primary-blue);
 }
 
+.form-control.error {
+    border-color: #dc3545;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 5px;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
 .alert {
     padding: 12px 20px;
     border-radius: 8px;
@@ -82,6 +97,16 @@ body.dark-theme .form-control {
 .mt-3 {
     margin-top: 15px;
 }
+
+.password-requirements {
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+body.dark-theme .password-requirements {
+    color: #aaa;
+}
 </style>
 {% endblock %}
 
@@ -99,37 +124,49 @@ body.dark-theme .form-control {
                 {% endif %}
             {% endwith %}
             
-            <form method="POST" action="/register">
+            <form method="POST" action="/register" id="registerForm" novalidate>
                 <div class="form-group">
-                    <label for="name">{{ translations.fullName }}</label>
-                    <input type="text" id="name" name="name" class="form-control" required>
+                    <label for="first_name">{{ translations.fullName }}</label>
+                    <input type="text" id="first_name" name="first_name" class="form-control" required minlength="2">
+                    <div class="error-message" id="nameError1">Введите ваше имя (минимум 2 символа)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">{{ translations.fullName }}</label>
+                    <input type="text" id="last_name" name="last_name" class="form-control" required minlength="2">
+                    <div class="error-message" id="nameError2">Введите ваше имя (минимум 2 символа)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="father_name">{{ translations.fullName }}</label>
+                    <input type="text" id="father_name" name="father_name" class="form-control" required minlength="2">
+                    <div class="error-message" id="nameError3">Введите ваше имя (минимум 2 символа)</div>
                 </div>
                 
                 <div class="form-group">
                     <label for="email">{{ translations.email }}</label>
-                    <input type="email" id="email" name="email" class="form-control" required>
+                    <input type="email" id="email" name="email" class="form-control" required 
+                           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                           placeholder="example@domain.com">
+                    <div class="error-message" id="emailError">Введите корректный email адрес (example@domain.com)</div>
                 </div>
                 
                 <div class="form-group">
                     <label for="password">{{ translations.password }}</label>
                     <input type="password" id="password" name="password" class="form-control" required minlength="6">
+                    <div class="password-requirements">Минимум 6 символов</div>
+                    <div class="error-message" id="passwordError">Пароль должен содержать минимум 6 символов</div>
                 </div>
                 
                 <div class="form-group">
                     <label for="city">{{ translations.city }}</label>
                     <select id="city" name="city" class="form-control" required>
                         <option value="">{{ translations.selectCity }}</option>
-                        <option value="Саров">Саров</option>
-                        <option value="Озерск">Озерск</option>
-                        <option value="Снежинск">Снежинск</option>
-                        <option value="Трехгорный">Трехгорный</option>
-                        <option value="Заречный">Заречный</option>
-                        <option value="Новоуральск">Новоуральск</option>
-                        <option value="Лесной">Лесной</option>
-                        <option value="Северск">Северск</option>
-                        <option value="Железногорск">Железногорск</option>
-                        <option value="Зеленогорск">Зеленогорск</option>
+                        {% for num, city, region in cities_list %}
+                            <option value="city-{{num}}">{{city}}, {{region}}</option>
+                        {% endfor %}
                     </select>
+                    <div class="error-message" id="cityError">Выберите город</div>
                 </div>
                 
                 <button type="submit" class="btn btn-primary" style="width: 100%;">{{ translations.register }}</button>
@@ -142,4 +179,89 @@ body.dark-theme .form-control {
         </div>
     </div>
 </div>
+
+<script>
+// Валидация формы
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    let isValid = true;
+    
+    // Проверка имени
+    const name = document.getElementById('name');
+    const nameError = document.getElementById('nameError');
+    
+    if (name.value.trim().length < 2) {
+        name.classList.add('error');
+        nameError.classList.add('show');
+        isValid = false;
+    } else {
+        name.classList.remove('error');
+        nameError.classList.remove('show');
+    }
+    
+    // Проверка email
+    const email = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    if (!emailPattern.test(email.value)) {
+        email.classList.add('error');
+        emailError.classList.add('show');
+        isValid = false;
+    } else {
+        email.classList.remove('error');
+        emailError.classList.remove('show');
+    }
+    
+    // Проверка пароля
+    const password = document.getElementById('password');
+    const passwordError = document.getElementById('passwordError');
+    
+    if (password.value.length < 6) {
+        password.classList.add('error');
+        passwordError.classList.add('show');
+        isValid = false;
+    } else {
+        password.classList.remove('error');
+        passwordError.classList.remove('show');
+    }
+    
+    // Проверка города
+    const city = document.getElementById('city');
+    const cityError = document.getElementById('cityError');
+    
+    if (!city.value) {
+        city.classList.add('error');
+        cityError.classList.add('show');
+        isValid = false;
+    } else {
+        city.classList.remove('error');
+        cityError.classList.remove('show');
+    }
+    
+    if (!isValid) {
+        e.preventDefault();
+    }
+});
+
+// Убираем ошибки при вводе
+document.getElementById('name').addEventListener('input', function() {
+    this.classList.remove('error');
+    document.getElementById('nameError').classList.remove('show');
+});
+
+document.getElementById('email').addEventListener('input', function() {
+    this.classList.remove('error');
+    document.getElementById('emailError').classList.remove('show');
+});
+
+document.getElementById('password').addEventListener('input', function() {
+    this.classList.remove('error');
+    document.getElementById('passwordError').classList.remove('show');
+});
+
+document.getElementById('city').addEventListener('change', function() {
+    this.classList.remove('error');
+    document.getElementById('cityError').classList.remove('show');
+});
+</script>
 {% endblock %}
