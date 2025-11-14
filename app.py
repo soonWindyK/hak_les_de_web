@@ -6,13 +6,13 @@ app = Flask(__name__)
 
 # Загрузка переводов
 def load_translations(lang='ru'):
-    translations_path = os.path.join('static', 'languages', lang, 'translations.json')
+    translations_path = os.path.join('tests/static', 'languages', lang, 'translations.json')
     with open(translations_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 # Загрузка данных городов
 def load_cities(lang='ru'):
-    cities_path = os.path.join('static', 'languages', lang, 'cities.json')
+    cities_path = os.path.join('tests/static', 'languages', lang, 'cities.json')
     with open(cities_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
