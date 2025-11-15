@@ -18,22 +18,22 @@
                 </div>
                 <div class="admin-body">
                     {% if nko_list %}
-                    {% for nko in nko_list %}
-                        <div class="nko-card">
-                            <div class="nko-logo">{{ nko.icon }}</div>
-                            <div class="nko-content">
-                                <span class="nko-category">{{ nko.category_name }}</span>
-                                <h3 class="nko-title">{{ nko.name }}</h3>
-                                <p class="nko-description"> {{ nko.description }}</p>
-                                <p class="nko-address">📍 {{ nko.region_name }}, {{ nko.city_name }}, {{ nko.address }}</p>
-                                <div class="nko-links">
-                                    <a href="{{ nko.website }}" class="nko-link">🌐 Сайт</a>
-                                    <a href="{{ nko.link_social_net }}" class="nko-link">📱 Соц. сеть</a>
-                                    <button class="btn-admin btn-primary">Редактировать</button>
-                                    <button class="btn-secondary">Удалить</button>
+                        {% for nko in nko_list %}
+                            <div class="nko-card">
+                                <div class="nko-logo">{{ nko.icon }}</div>
+                                <div class="nko-content">
+                                    <span class="nko-category">{{ nko.category_name }}</span>
+                                    <h3 class="nko-title">{{ nko.name }}</h3>
+                                    <p class="nko-description"> {{ nko.description }}</p>
+                                    <p class="nko-address">📍 {{ nko.region_name }}, {{ nko.city_name }}, {{ nko.address }}</p>
+                                    <div class="nko-links">
+                                        <a href="{{ nko.website }}" class="nko-link">🌐 Сайт</a>
+                                        <a href="{{ nko.link_social_net }}" class="nko-link">📱 Соц. сеть</a>
+                                        <button class="btn-admin btn-primary">Редактировать</button>
+                                        <button class="btn-secondary">Удалить</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         {% endfor %}
                     {% else %}
                         <p class="no-organizations">Нет организаций для отображения</p>
