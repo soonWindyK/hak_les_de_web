@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование курса</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rosatom-main.css') }}">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="page-content">
+            <div class="container">
+                <div class="admin-form-container">
+                    <h1>Редактирование курса</h1>
+                    
+                    <form method="POST" class="admin-form">
+                        <div class="form-group">
+                            <label for="name">Название курса</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-admin btn-primary">Сохранить</button>
+                            <a href="{{ url_for('admin_courses_list') }}" class="btn-secondary">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+</body>
+</html>

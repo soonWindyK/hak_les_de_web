@@ -468,8 +468,22 @@ main {
 }
 
 .btn-delete {
+    padding: 12px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+    border: none;
+    width: auto;
     background-color: #dc3545;
     color: var(--white);
+
+    
+
+
+
+
 }
 
 .btn-delete:hover {
