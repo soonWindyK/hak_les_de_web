@@ -95,7 +95,8 @@ def admin_panel():
 @app.route('/admin/nko', methods=['GET', 'POST'])
 def admin_nko_list():
     # Здесь будет логика отображения списка НКО
-    return render_template('admin/admin-nko-list.html')
+    from webModules.adminModules.admin_nko_list import before_admin_nko_
+    return before_admin_nko_()
 
 @app.route('/nko/add', methods=['GET', 'POST'])
 def nko_add():
