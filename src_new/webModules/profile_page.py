@@ -16,9 +16,8 @@ def profile_page(request, mail):
     data_db = UsersDB_module().select_with_mail(mail=mail)
     data_db.pop('user_pass')
     print("Все ключи:", list(request.form.keys()))
-    action = request.form.get('action')
-    print(action)
 
+    action = False
     if request.method == 'POST':
         action = request.form.get('action')
 
