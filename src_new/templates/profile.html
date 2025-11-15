@@ -57,7 +57,9 @@
                         <h1 class="profile-title">Мой профиль</h1>
                     </div>
 
-                    <form class="profile-form">
+                    <!-- УДАЛИ ЭТУ ФОРМУ -->
+                    <!-- <form class="profile-form"> -->
+
                         <div class="form-section">
                             <h3 class="form-section-title">Личная информация</h3>
                             <div class="form-grid">
@@ -91,34 +93,37 @@
                         <div class="form-section">
                             <h3 class="form-section-title">Изменить пароль</h3>
                             <div class="form-grid">
-                                <div class="form-field full-width">
-                                    <label class="form-label">Текущий пароль</label>
-                                    <input type="password" name="current_password" class="form-control"
-                                    minlength="6" maxlength="64">
-                                </div>
-                                <div class="form-field">
-                                    <label class="form-label">Новый пароль</label>
-                                    <input type="password" name="new_password" class="form-control"
-                                    minlength="6" maxlength="64">
-                                </div>
-                                <div class="form-field">
-                                    <label class="form-label">Подтверждение пароля</label>
-                                    <input type="password" name="confirm_password" class="form-control"
-                                    minlength="6" maxlength="64">
-                                </div>
+                                <!-- ОСТАВЬ ТОЛЬКО ЭТУ ФОРМУ -->
+                                <form method="POST">
+                                    <div class="form-field full-width">
+                                        <label class="form-label">Текущий пароль</label>
+                                        <input type="password" name="current_password" class="form-control"
+                                        minlength="6" maxlength="64">
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="form-label">Новый пароль</label>
+                                        <input type="password" name="new_password" class="form-control"
+                                        minlength="6" maxlength="64">
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="form-label">Подтверждение пароля</label>
+                                        <input type="password" name="confirm_password" class="form-control"
+                                        minlength="6" maxlength="64">
+                                    </div>
 
-                                <div class="form-actions-password">
-                                    <font  color="red">{{ error_pass }}</font >
-                                    <font  color="green">{{ succes_pass }}</font >
-                                    <form method="GET">
-                                        <button type="button" class="btn-cancel" name="action" value="btn-cancel-pass">Отмена</button>
+                                    <div class="form-actions-password">
+                                        <font color="red">{{ error_pass }}</font>
+                                        <font color="green">{{ succes_pass }}</font>
+
+                                        <button type="submit" class="btn-cancel" name="action" value="btn-cancel-pass">Отмена</button>
                                         <button type="submit" class="btn-save" name="action" value="btn-save-password">Изменить пароль</button>
-                                    </form>
-
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </form>
+
+                    <!-- ЗАКРОЙ УДАЛЕННУЮ ФОРМУ -->
+                    <!-- </form> -->
                 </div>
             </div>
         </div>

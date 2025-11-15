@@ -15,8 +15,12 @@ def before_profile_page(request):
 def profile_page(request, mail):
     data_db = UsersDB_module().select_with_mail(mail=mail)
     data_db.pop('user_pass')
+    print("Все ключи:", list(request.form.keys()))
     action = request.form.get('action')
     print(action)
+
+    if request.method == 'POST':
+        action = request.form.get('action')
 
     if action == 'btn-save-password':
         data_db = UsersDB_module().select_with_mail(mail=mail)
