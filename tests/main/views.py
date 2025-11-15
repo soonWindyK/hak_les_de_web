@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, EmailAuthenticationForm
 from .models import NKO, News, Event, KnowledgeItem
 
 
@@ -13,131 +14,73 @@ def index(request):
 
 def nko_list(request):
     """Список НКО"""
-    # Временные данные для демонстрации
-    nko_list = [
-        {
-            'id': 1,
-            'icon': '🌱',
-            'category': 'Экология',
-            'name': 'Зелёный город',
-            'description': 'Организация занимается озеленением города, проводит субботники и экологические акции. Волонтёры помогают в посадке деревьев и уборке территорий.',
-            'address': 'г. Саров, ул. Ленина, 25',
-            'website': '#',
-            'vk': '#'
-        },
-        {
-            'id': 2,
-            'icon': '❤️',
-            'category': 'Социальная помощь',
-            'name': 'Добрые сердца',
-            'description': 'Помощь пожилым людям и людям с ограниченными возможностями. Волонтёры оказывают бытовую помощь, организуют досуг и мероприятия.',
-            'address': 'г. Обнинск, пр. Ленина, 103',
-            'website': '#',
-            'vk': '#'
-        },
-        {
-            'id': 3,
-            'icon': '🎨',
-            'category': 'Культура',
-            'name': 'Культурное наследие',
-            'description': 'Сохранение и популяризация культурного наследия региона. Организация выставок, мастер-классов и культурных мероприятий.',
-            'address': 'г. Северск, ул. Калинина, 15',
-            'website': '#',
-            'vk': '#'
-        }
-    ]
+    # Получаем только одобренные НКО
+    nko_list = NKO.objects.filter(is_approved=True)
+    
+    # Фильтрация по городу
+    city = request.GET.get('city')
+    if city:
+        nko_list = nko_list.filter(city=city)
+    
+    # Фильтрация по категории
+    category = request.GET.get('category')
+    if category:
+        nko_list = nko_list.filter(category=category)
+    
     return render(request, 'nko.html', {'nko_list': nko_list})
 
 
 def nko_detail(request, nko_id):
     """Детальная страница НКО"""
-    # Временные данные
-    nko = {
-        'id': nko_id,
-        'icon': '🌱',
-        'category': 'Экология',
-        'name': 'Зелёный город',
-        'about': 'Некоммерческая организация "Зелёный город" была основана в 2018 году группой активных жителей Сарова, обеспокоенных экологической ситуацией в городе.',
-        'activities': 'Организация занимается озеленением города, проводит регулярные субботники и экологические акции.',
-        'volunteer_help': 'Волонтёры помогают в посадке деревьев и кустарников, участвуют в уборке территорий.',
-        'address': 'г. Саров, ул. Ленина, 25',
-        'email': 'info@green-city.ru',
-        'phone': '+7 (900) 123-45-67',
-        'website': 'https://green-city.ru',
-        'vk': 'https://vk.com/greencity'
-    }
+    nko = get_object_or_404(NKO, id=nko_id, is_approved=True)
     return render(request, 'nko_detail.html', {'nko': nko})
 
 
 def news_list(request):
     """Список новостей"""
-    news_list = [
-        {
-            'id': 1,
-            'icon': '🌳',
-            'date': '10 ноября 2025',
-            'city': 'Саров',
-            'title': 'Волонтёры высадили 500 деревьев в городском парке',
-            'excerpt': 'В рамках экологической акции "Зелёный город" волонтёры Росатома совместно с местными НКО высадили более 500 саженцев деревьев в городском парке.'
-        },
-        {
-            'id': 2,
-            'icon': '🎭',
-            'date': '8 ноября 2025',
-            'city': 'Обнинск',
-            'title': 'Открыт новый культурный центр для молодёжи',
-            'excerpt': 'При поддержке ГК Росатом в Обнинске открылся современный культурный центр, где молодёжь сможет заниматься творчеством.'
-        }
-    ]
+    news_list = News.objects.all()
+    
+    # Фильтрация по городу
+    city = request.GET.get('city')
+    if city:
+        news_list = news_list.filter(city=city)
+    
     return render(request, 'news.html', {'news_list': news_list})
 
 
 def news_detail(request, news_id):
     """Детальная страница новости"""
-    return render(request, 'news_detail.html', {'news_id': news_id})
+    news = get_object_or_404(News, id=news_id)
+    return render(request, 'news_detail.html', {'news': news})
 
 
 def calendar_view(request):
     """Календарь событий"""
-    events_list = [
-        {
-            'date': '15 ноября 2025',
-            'title': 'Экологический субботник "Чистый город"',
-            'organizer': 'НКО "Зелёный город"',
-            'description': 'Приглашаем всех желающих принять участие в уборке городского парка.',
-            'location': 'Городской парк, г. Саров'
-        },
-        {
-            'date': '18 ноября 2025',
-            'title': 'Благотворительный концерт для пожилых людей',
-            'organizer': 'НКО "Добрые сердца"',
-            'description': 'Концертная программа с участием местных артистов.',
-            'location': 'Дом культуры, г. Обнинск'
-        }
-    ]
+    # Получаем только одобренные события
+    events_list = Event.objects.filter(is_approved=True)
+    
+    # Фильтрация по городу
+    city = request.GET.get('city')
+    if city:
+        events_list = events_list.filter(city=city)
+    
+    # Фильтрация по категории
+    category = request.GET.get('category')
+    if category:
+        events_list = events_list.filter(category=category)
+    
     return render(request, 'calendar.html', {'events_list': events_list})
 
 
 def knowledge_list(request):
     """База знаний"""
-    knowledge_list = [
-        {
-            'icon': '🎥',
-            'type': 'Видео',
-            'title': 'Как организовать волонтёрское мероприятие',
-            'description': 'Пошаговое руководство по организации волонтёрских мероприятий от планирования до отчётности.',
-            'view_url': '#',
-            'download_url': None
-        },
-        {
-            'icon': '📄',
-            'type': 'Документ',
-            'title': 'Шаблон отчёта о мероприятии',
-            'description': 'Готовый шаблон для составления отчёта о проведённом волонтёрском мероприятии.',
-            'view_url': '#',
-            'download_url': '#'
-        }
-    ]
+    knowledge_list = KnowledgeItem.objects.all()
+    
+    # Фильтрация по типу
+    item_type = request.GET.get('type')
+    if item_type:
+        knowledge_list = knowledge_list.filter(type=item_type)
+    
     return render(request, 'knowledge.html', {'knowledge_list': knowledge_list})
 
 
@@ -164,17 +107,15 @@ def register(request):
 def login_view(request):
     """Вход пользователя"""
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = EmailAuthenticationForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            user = form.get_user()
             if user is not None:
                 login(request, user)
-                messages.success(request, f'Добро пожаловать, {username}!')
+                messages.success(request, f'Добро пожаловать, {user.first_name or user.username}!')
                 return redirect('index')
     else:
-        form = AuthenticationForm()
+        form = EmailAuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
 
@@ -183,3 +124,39 @@ def logout_view(request):
     logout(request)
     messages.info(request, 'Вы вышли из системы.')
     return redirect('index')
+
+
+@login_required
+def profile_redirect(request):
+    """Перенаправление на страницу профиля в зависимости от роли"""
+    # Создаем профиль, если его нет
+    if not hasattr(request.user, 'profile'):
+        from .models import UserProfile
+        UserProfile.objects.create(user=request.user)
+    
+    user_role = request.user.profile.role
+    
+    if user_role == 'admin':
+        return redirect('admin_dashboard')
+    elif user_role == 'moderator':
+        return redirect('moderator_dashboard')
+    else:
+        return redirect('user_profile')
+
+
+@login_required
+def user_profile(request):
+    """Профиль обычного пользователя"""
+    return render(request, 'profile/user_profile.html')
+
+
+@login_required
+def moderator_dashboard(request):
+    """Панель модератора"""
+    return render(request, 'profile/moderator_dashboard.html')
+
+
+@login_required
+def admin_dashboard(request):
+    """Панель администратора"""
+    return render(request, 'profile/admin_dashboard.html')

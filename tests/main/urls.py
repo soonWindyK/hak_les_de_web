@@ -15,4 +15,8 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('profile/', views.profile_redirect, name='profile'),
+    path('profile/user/', views.user_profile, name='user_profile'),
+    path('profile/moderator/', views.moderator_dashboard, name='moderator_dashboard'),
+    path('profile/admin/', views.admin_dashboard, name='admin_dashboard'),
 ]

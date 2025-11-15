@@ -25,10 +25,10 @@
                     {% endif %}
 
                     <div class="form-group">
-                        <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
-                        {{ form.username }}
-                        {% if form.username.errors %}
-                        <div class="field-error">{{ form.username.errors.0 }}</div>
+                        <label for="{{ form.email.id_for_label }}">Email</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                        <div class="field-error">{{ form.email.errors.0 }}</div>
                         {% endif %}
                     </div>
 

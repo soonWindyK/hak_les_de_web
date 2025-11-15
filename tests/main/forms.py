@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 from .models import UserProfile
 
@@ -48,3 +49,33 @@ class UserRegistrationForm(forms.ModelForm):
         if User.objects.filter(email=email).exists():
             raise ValidationError('Пользователь с таким email уже существует')
         return email
+
+
+class EmailAuthenticationForm(forms.Form):
+    """Форма входа по email"""
+    email = forms.EmailField(
+        label='Email',
+        widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Введите email'})
+    )
+    password = forms.CharField(
+        label='Пароль',
+        widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Введите пароль'})
+    )
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+
+        if email and password:
+            try:
+                user = User.objects.get(email=email)
+                self.user_cache = authenticate(username=user.username, password=password)
+                if self.user_cache is None:
+                    raise ValidationError('Неверный email или пароль')
+            except User.DoesNotExist:
+                raise ValidationError('Неверный email или пароль')
+        
+        return self.cleaned_data
+
+    def get_user(self):
+        return getattr(self, 'user_cache', None)

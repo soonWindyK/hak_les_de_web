@@ -6,10 +6,17 @@ from django.dispatch import receiver
 
 class UserProfile(models.Model):
     """Расширенный профиль пользователя"""
+    ROLE_CHOICES = [
+        ('user', 'Пользователь'),
+        ('moderator', 'Модератор'),
+        ('admin', 'Администратор'),
+    ]
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     patronymic = models.CharField(max_length=150, verbose_name='Отчество', blank=True)
     city = models.CharField(max_length=100, verbose_name='Город', blank=True)
     phone = models.CharField(max_length=50, verbose_name='Телефон', blank=True)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user', verbose_name='Роль')
 
     class Meta:
         verbose_name = 'Профиль пользователя'
