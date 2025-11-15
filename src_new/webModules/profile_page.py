@@ -33,6 +33,25 @@ def change_password(request, mail):
     else:
         return render_template('profile.html', data_profile=data_db_copy, error_pass='Ошибка при обновлении пароля')
 
+def change_profile(request, mail):
+    request = request.form
+    data_db = UsersDB_module().select_with_mail(mail=mail)
+
+    form_data = {
+        'first_name': request.get('first_name', ''),
+        'last_name': request.get('last_name', ''),
+        'father_name': request.get('father_name', ''),
+        'birth_date': request.get('birth_date', '')
+    }
+
+    data = list(form_data.values())
+    form_data = data_db | form_data
+
+    if UsersDB_module().update_user(data, mail):
+        return render_template('profile.html', data_profile=form_data, success_msg='Обновлено')
+    else:
+        return render_template('profile.html', data_profile=form_data, error_msg='Ошибка')
+
 
 def profile_page(request, mail):
     data_db = UsersDB_module().select_with_mail(mail=mail)
@@ -44,5 +63,8 @@ def profile_page(request, mail):
 
     if action == 'btn-save-password':
         return change_password(request=request, mail=mail)
+
+    if action == 'change-profile':
+        return change_profile(request=request, mail=mail)
 
     return render_template('profile.html', data_profile=data_db)

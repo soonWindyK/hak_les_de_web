@@ -11,6 +11,7 @@ def before_nko_add(request):
 
     return redirect('/')
 
+
 def nko_add(request):
     cities_list = CityRegionDB_module().get_cities_list_with_region()
     cats_list = SmallFuncsDB_module().select_all_categories()

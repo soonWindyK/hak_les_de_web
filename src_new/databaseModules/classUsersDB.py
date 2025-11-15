@@ -7,7 +7,6 @@ class UsersDB_module:
         self.cursor = self.conn.cursor(buffered=True, dictionary=True)
         self.table_name = 'users'
 
-
     def new_user(self, data):
         try:
             print(data)
@@ -20,6 +19,25 @@ class UsersDB_module:
                 f'user_pass, city_id) '
                 f'VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', data)
             self.conn.commit()
+        finally:
+            self.conn.close()
+
+    def update_user(self, data, mail):
+        try:
+            print(mail, data)
+
+            self.cursor.execute(
+                f'UPDATE {self.table_name} SET '
+                f'first_name = %s, '
+                f'last_name = %s, '
+                f'father_name = %s, '
+                f'user_birthday = %s '
+                f'WHERE user_mail = "{mail}"', data)
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
         finally:
             self.conn.close()
 
@@ -64,27 +82,3 @@ class UsersDB_module:
             return False
         finally:
             self.conn.close()
-
-    def select_users_msgs(self, us_name):
-        resp = self.cursor.execute(f'SELECT * FROM {self.table_name} WHERE admin == 0 and us_name != "{us_name}"').fetchall()
-        return json_return(resp)
-
-    def select_users_all(self):
-        resp = self.cursor.execute(f'SELECT * FROM {self.table_name} WHERE admin == 0').fetchall()
-        return json_return(resp)
-
-    def select_admins(self):
-        resp = self.cursor.execute(f'SELECT * FROM {self.table_name} WHERE admin == 1').fetchall()
-        return json_return(resp)
-
-    def update_user(self, data: dict, email):
-        try:
-            print(data, email)
-            self.cursor.execute(f'UPDATE {self.table_name} SET us_name = :us_name, ' +
-                                f'age = :age, ' +
-                                f'info = :info,' +
-                                f'profile_picture = :profile_picture' +
-                                f' WHERE email = "{email}"', data)
-            self.conn.commit()
-        except Exception as e:
-            return e

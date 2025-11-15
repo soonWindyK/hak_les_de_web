@@ -55,36 +55,40 @@
                     <div class="profile-header">
                         <h1 class="profile-title">Мой профиль</h1>
                     </div>
-                        <div class="form-section">
-                            <h3 class="form-section-title">Личная информация</h3>
-                            <div class="form-grid">
-                                <div class="form-field">
-                                    <label class="form-label">Фамилия</label>
-                                    <input type="text" name="last_name" class="form-control" value="{{ data_profile.last_name }}">
-                                </div>
-                                <div class="form-field">
-                                    <label class="form-label">Имя</label>
-                                    <input type="text" name="first_name" class="form-control" value="{{ data_profile.first_name }}">
-                                </div>
-                                <div class="form-field">
-                                    <label class="form-label">Отчество</label>
-                                    <input type="text" name="middle_name" class="form-control" value="{{ data_profile.father_name }}">
-                                </div>
-                                <div class="form-field">
-                                    <label class="form-label">Дата рождения</label>
-                                    <input type="date" name="birth_date" class="form-control" value="{{ data_profile.user_birthday }}">
-                                    <span id="birth_date_error" style="color: red; font-size: 14px; display: none;">Нельзя выбрать будущую дату рождения</span>
-                                </div>
-                                <div class="form-field full-width">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" name="email" class="form-control" value="{{ data_profile.user_mail }}">
-                                </div>
-                                <div class="form-actions">
-                                    <button type="button" class="btn-cancel">Отмена</button>
-                                    <button type="submit" class="btn-save" name="btn-save-profile">Сохранить изменения</button>
+                        <form method="post" class="form-grid">
+                            <div class="form-section">
+                                <h3 class="form-section-title">Личная информация</h3>
+                                <font color="red">{{ error_msg }}</font>
+                                <font color="green">{{ success_msg }}</font>
+                                <div class="form-grid">
+                                    <div class="form-field">
+                                        <label class="form-label">Фамилия</label>
+                                        <input type="text" name="last_name" class="form-control" value="{{ data_profile.last_name }}"
+                                        minlength="2" maxlength="64">
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="form-label">Имя</label>
+                                        <input type="text" name="first_name" class="form-control" value="{{ data_profile.first_name }}"
+                                        minlength="2" maxlength="64">
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="form-label">Отчество</label>
+                                        <input type="text" name="father_name" class="form-control" value="{{ data_profile.father_name }}"
+                                        minlength="2" maxlength="64">
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="form-label">Дата рождения</label>
+                                        <input type="date" name="birth_date" class="form-control" value="{{ data_profile.user_birthday }}">
+                                        <span id="birth_date_error" style="color: red; font-size: 14px; display: none;">Нельзя выбрать будущую дату рождения</span>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button type="button" class="btn-cancel">Отмена</button>
+                                        <button type="submit" class="btn-save" name="action" value="change-profile">Сохранить изменения</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
 
                         <div class="form-section form-margin">
                             <h3 class="form-section-title">Изменить пароль</h3>
