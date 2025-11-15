@@ -17,30 +17,30 @@
                     <p class="page-subtitle">Последние события и инициативы в городах присутствия Росатома</p>
                 </div>
 
-                <div class="filters">
-                    <select class="filter-select">
-                        <option value="">Все категории</option>
-                        <option value="social">Социальные</option>
-                        <option value="ecology">Экология</option>
-                        <option value="culture">Культура</option>
-                        <option value="education">Образование</option>
-                        <option value="sport">Спорт</option>
-                    </select>
-                </div>
+<!--                <div class="filters">-->
+<!--                    <select class="filter-select">-->
+<!--                        <option value="">Все категории</option>-->
+<!--                        <option value="social">Социальные</option>-->
+<!--                        <option value="ecology">Экология</option>-->
+<!--                        <option value="culture">Культура</option>-->
+<!--                        <option value="education">Образование</option>-->
+<!--                        <option value="sport">Спорт</option>-->
+<!--                    </select>-->
+<!--                </div>-->
 
                 <div class="news-grid">
                     {% if news %}
                         {% for item in news %}
                             <article class="news-card">
                                 {% if item.avatar %}
-                                    <img src="{{ url_for('static', filename=item.avatar) }}" alt="{{ item.title }}" class="news-image">
+                                    <img src="{{ url_for('static', filename=item.attached_file) }}" alt="{{ item.title }}" class="news-image">
                                 {% else %}
                                     <div class="news-image">📰</div>
                                 {% endif %}
                                 <div class="news-content">
                                     <div class="news-meta">
-                                        <span>📅 {{ item.created_time.strftime('%d.%m.%Y') }}</span>
-                                        <span>📍 {{ item.city }}</span>
+                                        <span>📅 {{ item.created_time.strftime('%d.%m.%Y %H:%M') }}</span>
+                                        <span>📍 {{ item.region_name }}, {{ item.city_name }}</span>
                                     </div>
                                     <h2 class="news-title">{{ item.title }}</h2>
                                     <p class="news-excerpt">{{ item.description }}</p>
