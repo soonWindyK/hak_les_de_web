@@ -17,7 +17,7 @@ def reg_page(request):
         'father_name': request.get('father_name', ''),
         'email': request.get('email', ''),
         'city_id': request.get('city_id', ''),
-        'birthday': request.get('birthday', '')
+        'birthday': request.get('birth_date', '')
     }
 
     first_name = request['first_name']
@@ -27,7 +27,7 @@ def reg_page(request):
     password = request['password']
     password_confirm = request['password_confirm']
     hash_password = hasher_pass(password=password)
-    user_birthday = request.get('birthday', datetime.datetime.now())
+    user_birthday = request.get('birth_date', datetime.datetime.now())
     user_role = 1
     city_id = 1
 
