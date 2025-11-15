@@ -12,10 +12,11 @@ class NkoDB_module:
         try:
             print(data)
             self.cursor.execute(
-                f"INSERT INTO {self.nko_list}(name, category_id, description, about, volounteer_help, address, email, phone, link_social_net, link_website, citi_code, status_id) "
-                f"VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, 0)", data
+                f"INSERT INTO {self.nko_list}(name, category_id, description, about, volounteer_help, "
+                f"address, email, phone, link_social_net, link_website, citi_code, status_id) "
+                f"VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, 1)", data
             )
-            # self.conn.commit()
+            self.conn.commit()
             return False
         except Exception as e:
             print(e)

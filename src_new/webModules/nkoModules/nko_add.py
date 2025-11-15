@@ -29,9 +29,11 @@ def nko_add(request):
 
             form_data['category'] = form_data['category'].split("_")[-1]
             form_data['city'] = form_data['city'].split("_")[-1]
-            print(form_data.values())
+
+            # print(form_data.values())
             result = NkoDB_module().create_nko(data=tuple(form_data.values()))
-            print(result)
+            # print(result)
+
             if result:
                 result = str(result)
                 if '`FK_citi_code_nko`' in result:
@@ -45,13 +47,13 @@ def nko_add(request):
                                            cats_list=cats_list, cities_list=cities_list, form_data=form_data,
                                            error_msg='Выберите категорию!'
                                            )
+                else:
+                    return render_template('nko-add.html',
+                                           cats_list=cats_list, cities_list=cities_list, form_data=form_data,
+                                           error_msg='Неизвестная ошибка')
+            else:
+                return render_template('nko-add.html', cats_list=cats_list,
+                                       cities_list=cities_list, succes_msg='заявка для НКО на модерации!')
 
-
-            #     print(result.replace('', 'error'))
-            #
-            #
-            # print(request)
-            return render_template('nko-add.html', cats_list=cats_list,
-                                   cities_list=cities_list, form_data=form_data)
 
     return render_template('nko-add.html', cats_list=cats_list, cities_list=cities_list)
