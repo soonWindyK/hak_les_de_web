@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, redirect, url_for, request
 from datetime import datetime
 from databaseModules.classUsersDB import UsersDB_module
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.secret_key = 'your-secret-key'
 
 @app.route('/', methods=['GET', 'POST'])
