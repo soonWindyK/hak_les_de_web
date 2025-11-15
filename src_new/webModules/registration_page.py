@@ -17,7 +17,7 @@ def reg_page(request):
         'father_name': request.get('father_name', ''),
         'email': request.get('email', ''),
         'city_id': request.get('city_id', ''),
-        'birthday': request.get('birth_date', '')
+        'birth_date': request.get('birth_date', '')
     }
 
     first_name = request['first_name']
