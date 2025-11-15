@@ -1,48 +1,38 @@
-from flask import Flask, render_template, session, redirect, url_for
+from flask import Flask, render_template, session, redirect, url_for, request
 from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
 
 @app.route('/')
-def home():
-    return render_template('index.html')
-
+def home(): return render_template('index.html')
 @app.route('/calendar')
-def calendar():
-    return render_template('calendar.html')
-
+def calendar(): return render_template('calendar.html')
 @app.route('/knowledge')
-def knowledge():
-    return render_template('knowledge.html')
-
+def knowledge(): return render_template('knowledge.html')
 @app.route('/login')
-def login():
-    return render_template('login.html')
+def login(): return render_template('login.html')
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
+    from webModules.registration_page import reg_page
+    print(request.form)
+    if request.method == 'POST':
+        return reg_page(request=request.form)
+
     return render_template('register.html')
 
 @app.route('/news')
-def news():
-    return render_template('news.html')
-
+def news(): return render_template('news.html')
 @app.route('/news/<int:news_id>')
-def news_detail(news_id):
-    return render_template('news-detail.html')
-
+def news_detail(news_id): return render_template('news-detail.html')
 @app.route('/nko')
-def nko():
-    return render_template('nko.html')
-
+def nko(): return render_template('nko.html')
 @app.route('/nko/<int:nko_id>')
-def nko_detail(nko_id):
-    return render_template('nko-detail.html')
+def nko_detail(nko_id): return render_template('nko-detail.html')
 
 @app.route('/profile')
-def profile():
-    return render_template('profile.html')
+def profile(): return render_template('profile.html')
 
 @app.route('/logout')
 def logout():

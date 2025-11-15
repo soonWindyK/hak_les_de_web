@@ -1,4 +1,4 @@
-from src.main.databaseModules.helpModules import get_db_connection
+from src_new.databaseModules.helpModules import get_db_connection
 
 
 class CityRegionDB_module:

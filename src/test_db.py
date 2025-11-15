@@ -1,4 +1,4 @@
-from src.main.databaseModules.classCityRegionDB import CityRegionDB_module
+from src_new.databaseModules import CityRegionDB_module
 
 
 # print(CreatorTables().create_regions())

@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import UserRegistrationForm
-from .models import NKO, News, Event, KnowledgeItem
-
+from src_new.databaseModules import UsersDB_module
 
 def index(request):
     """Главная страница"""
@@ -141,17 +140,16 @@ def knowledge_list(request):
     return render(request, 'knowledge.html', {'knowledge_list': knowledge_list})
 
 
+"""Регистрация пользователя"""
 def register(request):
-    from .djangoModules.registration_page import reg_page
-    from .databaseModules.classUsersDB import UsersDB_module
-    """Регистрация пользователя"""
-
+    from src_new.webModules.registration_page import reg_page
+    form = UserRegistrationForm()
     if request.method == 'POST':
         data = request.POST
         email = data.get('email').strip()
 
         if UsersDB_module().check_presence_mail(mail=email):
-            raise 'Пользователь с таким email уже существует'
+            return render(request, 'register.html', {'form': form})
 
         return reg_page(request=data)
     else:

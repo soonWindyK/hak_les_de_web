@@ -18,8 +18,8 @@ def index():
 
 @app.route('/registration', methods=['GET', 'POST'])
 def register():
-    from src.main.djangoModules.registration_page import reg_page
-    from src.main.databaseModules.classCityRegionDB import CityRegionDB_module
+    from src_new.webModules import reg_page
+    from src_new.databaseModules import CityRegionDB_module
 
     cities_list = CityRegionDB_module().get_cities_list_with_region()
     print(request.form)
@@ -30,7 +30,7 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    from src.main.djangoModules.login_page import login_page
+    from src_new.webModules import login_page
     if request.method == 'POST':
         return login_page(request=request)
 

@@ -1,4 +1,4 @@
-from src.main.databaseModules.classUsersDB import UsersDB_module
+from src_new.databaseModules.classUsersDB import UsersDB_module
 from hash_password_usr import hasher_pass
 from flask import redirect, url_for, render_template
 

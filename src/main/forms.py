@@ -10,10 +10,12 @@ class UserRegistrationForm(forms.ModelForm):
         label='Пароль',
         widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Введите пароль'})
     )
+
     password_confirm = forms.CharField(
         label='Подтверждение пароля',
         widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Повторите пароль'})
     )
+
     patronymic = forms.CharField(
         label='Отчество',
         required=False,

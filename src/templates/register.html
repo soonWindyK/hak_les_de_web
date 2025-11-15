@@ -24,11 +24,12 @@
                     </div>
                     {% endif %}
 
+
                     <div class="form-group">
                         <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
                         {{ form.email }}
-                        {% if form.email.errors %}
-                        <div class="field-error">{{ form.email.errors.0 }}</div>
+                        {% if form.email.error %}
+                        <div class="field-error">{{ form.email.error }}</div>
                         {% endif %}
                     </div>
 

@@ -1,8 +1,7 @@
-import time
 import mysql.connector
 from queue import Queue
 from threading import Lock
-from data_from_env import db_table, db_user, db_host, db_pass, db_port
+from src_new.data_from_env import db_table, db_user, db_host, db_pass, db_port
 
 
 class ConnectionPool:

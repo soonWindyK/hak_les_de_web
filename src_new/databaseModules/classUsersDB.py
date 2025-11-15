@@ -1,4 +1,4 @@
-from ..databaseModules.helpModules import db_returner, get_db_connection
+from databaseModules.helpModules import db_returner, get_db_connection
 
 
 class UsersDB_module:
