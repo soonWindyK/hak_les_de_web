@@ -15,11 +15,14 @@
         <div class="container">
             <div class="admin-content">
                 <div class="admin-header">
-                    <h1>Добавить НКО</h1>
+                    <h1>Добавить НКО
+                            <font  color="red">{{ error_msg }}</font >
+                            <font  color="green">{{ succes_msg }}</font ></h1>
                     <a href="/nko" class="btn-secondary">Назад к списку</a>
                 </div>
                 <div class="admin-body">
                     <form class="admin-form" method="POST" enctype="multipart/form-data">
+
                         <div class="form-group">
                             <label for="name">Название организации *</label>
                             <input type="text" id="name" name="name"
@@ -109,8 +112,6 @@
                         </div>
 
                         <div class="form-actions">
-                            <font  color="red">{{ error_msg }}</font >
-                            <font  color="green">{{ succes_msg }}</font >
                             <button type="submit" name="action" value="btn-create-nko">Добавить НКО</button>
                         </div>
                     </form>
