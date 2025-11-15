@@ -32,8 +32,23 @@ class NkoDB_module:
                 f"cities.city_id = {self.nko_list}.citi_code "
                 f"and categories.id = {self.nko_list}.category_id "
                 f"and regions.region_code = cities.region_code "
+                f"and {self.nko_list}.deleted_at is null "
             )
             return self.cursor.fetchall()
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+
+
+    def delete_nko(self, nko_id):
+        try:
+            self.cursor.execute(
+                f'UPDATE {self.nko_list} SET deleted_at = CURRENT_TIMESTAMP '
+                f'WHERE nko_id = {nko_id}')
+            self.conn.commit()
+            return True
         except Exception as e:
             print(e)
             return False
