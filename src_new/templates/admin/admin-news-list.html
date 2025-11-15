@@ -14,10 +14,7 @@
             <div class="container">
                 <div class="page-header">
                     <h1 class="page-title">Управление новостями</h1>
-                    <div class="page-actions">
-                        <a href="{{ url_for('admin_news_add') }}" class="btn-admin btn-primary">Добавить новость</a>
-                        <a href="{{ url_for('admin_panel') }}" class="btn-secondary">Назад в панель</a>
-                    </div>
+                    <a href="{{ url_for('admin_panel') }}" class="btn-secondary">Назад в панель</a>
                 </div>
 
                 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -28,7 +25,7 @@
                     {% endif %}
                 {% endwith %}
 
-                <div class="news-grid">
+                <div class="news-grid admin-body">
                     {% if news %}
                         {% for item in news %}
                             <article class="news-card">

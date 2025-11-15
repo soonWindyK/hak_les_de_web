@@ -10,16 +10,14 @@
     {% include 'components/header.html' %}
 
     <main>
-        <div class="container_nko">
-            <div class="admin-content">
-                <div class="admin-header">
-                    <h1>Список НКО</h1>
-                    <a href="/nko/add" class="btn-admin btn-primary">Добавить НКО</a>
+        <div class="page-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Список НКО</h1>
                     <a href="{{ url_for('admin_panel') }}" class="btn-secondary">Назад в панель</a>
                 </div>
                 <div class="admin-body">
                     <p>Здесь будет список НКО с возможностью редактирования и удаления</p>
-                    <!-- Здесь вы добавите функционал работы с базой данных -->
                 </div>
             </div>
         </div>
