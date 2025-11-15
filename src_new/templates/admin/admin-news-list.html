@@ -29,8 +29,8 @@
                     {% if news %}
                         {% for item in news %}
                             <article class="news-card">
-                                {% if item.avatar %}
-                                    <img src="{{ url_for('static', filename=f'{item.avatar}') }}" alt="{{ item.title }}" class="news-image">
+                                {% if item.attached_files %}
+                                    <img src="{{ url_for(item.attached_files) }}" alt="{{ item.title }}" class="news-image">
                                 {% else %}
                                     <div class="news-image">📰</div>
                                 {% endif %}
@@ -45,9 +45,8 @@
                                         <a href="{{ url_for('static', filename=item.attached_files) }}" class="news-attachment" download>📎 Прикреплённый файл</a>
                                     {% endif %}
                                     <div class="news-actions">
-                                        <a href="{{ url_for('admin_news_edit', news_id=item.id) }}" class="btn-admin btn-primary">Редактировать</a>
-                                        <form method="POST" action="{{ url_for('admin_news_delete', news_id=item.id) }}" style="display: inline;">
-                                            <button type="submit" class="btn-secondary" onclick="return confirm('Вы уверены?')">Удалить</button>
+                                        <form method="POST" style="display: inline;">
+                                            <button type="submit" name="action" value="new_{{ item.id }}" class="btn-secondary" onclick="return confirm('Вы уверены?')">Удалить</button>
                                         </form>
                                     </div>
                                 </div>
