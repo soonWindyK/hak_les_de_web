@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить НКО - Администратор</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="container">
+            <div class="admin-content">
+                <div class="admin-header">
+                    <h1>Добавить НКО</h1>
+                    <a href="{{ url_for('volunteer_nko_list') if session.get('role_id') == 4 else url_for('admin_nko_list') }}" class="btn-secondary">Назад к списку</a>
+                </div>
+                <div class="admin-body">
+                    <form class="admin-form" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="name">Название организации *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Категория *</label>
+                            <select id="category" name="category" required>
+                                <option value="">Выберите категорию</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Описание *</label>
+                            <textarea id="description" name="description" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="about">О нас *</label>
+                            <textarea id="about" name="about" rows="6" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="volunteer_activities">Что делают волонтёры в организации *</label>
+                            <textarea id="volunteer_activities" name="volunteer_activities" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Адрес *</label>
+                            <input type="text" id="address" name="address" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city">Город *</label>
+                            <select id="city" name="city" required>
+                                <option value="">Выберите город</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Почта *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Номер телефона *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="social_media">Ссылка на основную соц.сеть</label>
+                            <input type="url" id="social_media" name="social_media">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="website">Ссылка на веб-сайт</label>
+                            <input type="url" id="website" name="website">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="avatar">Аватарка организации</label>
+                            <input type="file" id="avatar" name="avatar" accept="image/*">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-admin btn-primary">Добавить НКО</button>
+                            <a href="{{ url_for('volunteer_nko_list') if session.get('role_id') == 4 else url_for('admin_nko_list') }}" class="btn-admin">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+</body>
+</html>

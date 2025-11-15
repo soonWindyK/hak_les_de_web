@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои НКО - Волонтёр</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="container">
+            <div class="admin-content">
+                <div class="admin-header">
+                    <h1>Мои НКО</h1>
+                    <a href="{{ url_for('admin_nko_add') }}" class="btn-admin btn-primary">Создать НКО</a>
+                    <a href="{{ url_for('profile') }}" class="btn-admin">Назад</a>
+                </div>
+                <div class="admin-body">
+                    <p>Здесь будет список НКО созданных вами</p>
+                    <!-- Здесь будет отображаться список НКО созданных пользователем -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+</body>
+</html>
