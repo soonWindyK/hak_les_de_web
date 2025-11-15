@@ -31,42 +31,31 @@
                 </div>
 
                 <div class="news-grid">
-                    <article class="news-card">
-                        <div class="news-image">🌳</div>
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span>📅 15.11.2025</span>
-                                <span>📍 Саров</span>
-                            </div>
-                            <h2 class="news-title">Волонтёры высадили 500 деревьев</h2>
-                            <p class="news-excerpt">В рамках экологической акции волонтёры города высадили более 500 саженцев в городском парке</p>
-                            <a href="{{ url_for('news_detail', news_id=1) }}" class="btn-more">Читать далее</a>
-                        </div>
-                    </article>
-                    <article class="news-card">
-                        <div class="news-image">🎨</div>
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span>📅 12.11.2025</span>
-                                <span>📍 Обнинск</span>
-                            </div>
-                            <h2 class="news-title">Открылась выставка детских рисунков</h2>
-                            <p class="news-excerpt">В городском музее открылась выставка работ юных художников</p>
-                            <a href="{{ url_for('news_detail', news_id=2) }}" class="btn-more">Читать далее</a>
-                        </div>
-                    </article>
-                    <article class="news-card">
-                        <div class="news-image">🤝</div>
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span>📅 10.11.2025</span>
-                                <span>📍 Северск</span>
-                            </div>
-                            <h2 class="news-title">Благотворительная акция помогла 50 семьям</h2>
-                            <p class="news-excerpt">Волонтёры собрали и передали нуждающимся семьям продукты и вещи</p>
-                            <a href="{{ url_for('news_detail', news_id=3) }}" class="btn-more">Читать далее</a>
-                        </div>
-                    </article>
+                    {% if news %}
+                        {% for item in news %}
+                            <article class="news-card">
+                                {% if item.avatar %}
+                                    <img src="{{ url_for('static', filename=item.avatar) }}" alt="{{ item.title }}" class="news-image">
+                                {% else %}
+                                    <div class="news-image">📰</div>
+                                {% endif %}
+                                <div class="news-content">
+                                    <div class="news-meta">
+                                        <span>📅 {{ item.created_time.strftime('%d.%m.%Y') }}</span>
+                                        <span>📍 {{ item.city }}</span>
+                                    </div>
+                                    <h2 class="news-title">{{ item.title }}</h2>
+                                    <p class="news-excerpt">{{ item.description }}</p>
+                                    {% if item.attached_files %}
+                                        <a href="{{ url_for('static', filename=item.attached_files) }}" class="news-attachment" download>📎 Прикреплённый файл</a>
+                                    {% endif %}
+                                    <a href="{{ url_for('news_detail', news_id=item.id) }}" class="btn-more">Читать далее</a>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    {% else %}
+                        <p>Новости пока не добавлены.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
