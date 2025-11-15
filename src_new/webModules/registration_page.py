@@ -22,7 +22,7 @@ def reg_page(request):
 
     first_name = request['first_name']
     last_name = request['last_name']
-    father_name = request.get('patronymic', '')
+    father_name = request.get('father_name', '')
     user_mail = request['email']
     password = request['password']
     password_confirm = request['password_confirm']
