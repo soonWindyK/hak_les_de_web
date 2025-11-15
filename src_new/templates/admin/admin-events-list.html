@@ -29,10 +29,12 @@
                                     <p class="event-location">📍 {{ event.location }}</p>
                                     <p class="event-start-time">Время начала: {{event.start_time}}</p>
                                     <p class="event-end-time">Время окончания: {{event.end_time}}</p>
+                                    <button class="btn-admin btn-primary">Редактировать</button>
+                                    <button class="btn-secondary">Удалить</button>
                                 </div>
                             {% endfor %}
                         {% else %}
-                            <p class="no-organizations">Нет организаций для отображения</p>
+                            <p class="no-organizations">Нет событий для отображения</p>
                     {% endif %}
                     </div>
                 </div>

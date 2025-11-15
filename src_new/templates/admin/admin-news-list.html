@@ -30,7 +30,7 @@
                         {% for item in news %}
                             <article class="news-card">
                                 {% if item.avatar %}
-                                    <img src="{{ url_for('static', filename=item.avatar) }}" alt="{{ item.title }}" class="news-image">
+                                    <img src="{{ url_for('static', filename=f'{item.avatar}') }}" alt="{{ item.title }}" class="news-image">
                                 {% else %}
                                     <div class="news-image">📰</div>
                                 {% endif %}
