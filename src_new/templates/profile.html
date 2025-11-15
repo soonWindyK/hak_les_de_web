@@ -17,13 +17,14 @@
                 <aside class="profile-sidebar">
                     <div class="profile-user-info">
                         <div class="profile-avatar">👤</div>
-                        <div class="profile-name">Иван Иванов</div>
+                        <div class="profile-name">{{ data_profile.first_name }}</div>
+                        <div class="profile-name">{{ data_profile.last_name }}</div>
                         <span class="profile-role">Пользователь</span>
                     </div>
 
                     <ul class="profile-menu">
                         <li class="profile-menu-item">
-                            <a href="{{ url_for('profile') }}" class="profile-menu-link active">
+                            <a href="/profile" class="profile-menu-link active">
                                 <span class="profile-menu-icon">👤</span>
                                 <span>Мой профиль</span>
                             </a>

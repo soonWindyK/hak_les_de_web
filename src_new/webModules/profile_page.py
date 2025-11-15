@@ -5,7 +5,7 @@ from flask import render_template, redirect, session
 
 def before_profile_page(request):
     if 'username' in session:
-        return profile_page(request=request, mail=session['username'])
+        return profile_page(request=request.form, mail=session['username'])
 
     return redirect('/login')
 

@@ -5,7 +5,6 @@ import datetime
 
 
 def before_reg_page(request):
-    print(request.form)
     if request.method == 'POST':
         return reg_page(request=request.form)
 

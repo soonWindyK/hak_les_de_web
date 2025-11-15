@@ -15,12 +15,12 @@ def knowledge(): return render_template('knowledge.html')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     from webModules.login_page import before_login_page
-    return before_login_page(request=request.form)
+    return before_login_page(request=request)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     from webModules.registration_page import before_reg_page
-    return before_reg_page(request=request.form)
+    return before_reg_page(request=request)
 
 @app.route('/news')
 def news(): return render_template('news.html')
@@ -34,7 +34,7 @@ def nko_detail(nko_id): return render_template('nko-detail.html')
 @app.route('/profile')
 def profile():
     from webModules.profile_page import before_profile_page
-    return before_profile_page(request=request.form)
+    return before_profile_page(request=request)
 
 @app.route('/logout')
 def logout():

@@ -4,7 +4,6 @@ from flask import redirect, render_template, session
 
 
 def before_login_page(request):
-    print(request.form, request.method)
     if request.method == 'POST':
         return login_page(request=request.form)
 
