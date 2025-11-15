@@ -46,10 +46,8 @@
                                 {% endif %}
                                 
                                 <div class="theme-actions">
-                                    <a href="{{ url_for('admin_theme_edit', theme_id=theme.id) }}" class="btn-admin btn-primary">Редактировать</a>
-                                    <form method="POST" action="{{ url_for('admin_theme_delete', theme_id=theme.id) }}" style="display: inline;">
-                                        <button type="submit" class="btn-secondary" onclick="return confirm('Вы уверены?')">Удалить</button>
-                                    </form>
+                                    <button class="btn-admin btn-primary">Редактировать</button>
+                                    <button class="btn-secondary">Удалить</button>
                                 </div>
                             </div>
                         {% endfor %}
