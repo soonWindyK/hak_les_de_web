@@ -1,282 +1,59 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}{{ translations.calendar }} - {{ translations.pageTitle }}{% endblock %}
+{% block title %}Календарь событий - Добрые дела Росатома{% endblock %}
 
 {% block extra_css %}
-<style>
-.calendar-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.calendar-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.city-filter {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.city-filter select {
-    padding: 10px 15px;
-    border: 2px solid var(--primary-blue);
-    border-radius: 5px;
-    background-color: var(--white);
-    color: var(--text-dark);
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-body.dark-theme .city-filter select {
-    background-color: var(--bg-dark);
-    color: var(--text-light);
-}
-
-.calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: var(--card-light);
-    border-radius: 10px;
-}
-
-body.dark-theme .calendar-header {
-    background-color: var(--card-dark);
-}
-
-.calendar-nav {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.calendar-nav button {
-    background-color: var(--primary-blue);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.calendar-nav button:hover {
-    background-color: var(--light-blue);
-}
-
-.calendar-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-blue);
-}
-
-body.dark-theme .calendar-title {
-    color: var(--light-blue);
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-.calendar-day-header {
-    text-align: center;
-    padding: 10px;
-    font-weight: bold;
-    background-color: var(--primary-blue);
-    color: white;
-    border-radius: 5px;
-}
-
-.calendar-day {
-    min-height: 100px;
-    padding: 10px;
-    background-color: var(--card-light);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-}
-
-body.dark-theme .calendar-day {
-    background-color: var(--card-dark);
-}
-
-.calendar-day:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 15px var(--shadow-light);
-}
-
-.calendar-day.other-month {
-    opacity: 0.3;
-}
-
-.calendar-day.today {
-    border: 3px solid var(--primary-blue);
-}
-
-.calendar-day.has-events {
-    background-color: #e3f2fd;
-}
-
-body.dark-theme .calendar-day.has-events {
-    background-color: #1a3a52;
-}
-
-.day-number {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.event-indicator {
-    width: 8px;
-    height: 8px;
-    background-color: var(--primary-blue);
-    border-radius: 50%;
-    display: inline-block;
-    margin: 2px;
-}
-
-.events-list {
-    background-color: var(--card-light);
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 20px;
-}
-
-body.dark-theme .events-list {
-    background-color: var(--card-dark);
-}
-
-.event-card {
-    background-color: var(--bg-light);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    border-left: 4px solid var(--primary-blue);
-}
-
-body.dark-theme .event-card {
-    background-color: var(--bg-dark);
-}
-
-.event-time {
-    color: var(--primary-blue);
-    font-weight: bold;
-}
-
-@media (max-width: 768px) {
-    .calendar-controls {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .calendar-grid {
-        gap: 5px;
-    }
-    
-    .calendar-day {
-        min-height: 60px;
-        padding: 5px;
-    }
-    
-    .day-number {
-        font-size: 1rem;
-    }
-}
-</style>
+<link rel="stylesheet" href="{% static 'css/calendar.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="container calendar-container">
-    <h1>{{ translations.calendar }}</h1>
-    
-    <div class="calendar-controls">
-        <div class="city-filter">
-            <label for="cityFilter"><strong>{{ translations.filterByCity }}:</strong></label>
-            <select id="cityFilter" onchange="filterByCity(this.value)">
-                <option value="">{{ translations.allCities }}</option>
-                <option value="Саров" {% if city == 'Саров' %}selected{% endif %}>Саров</option>
-                <option value="Озерск" {% if city == 'Озерск' %}selected{% endif %}>Озерск</option>
-                <option value="Снежинск" {% if city == 'Снежинск' %}selected{% endif %}>Снежинск</option>
-                <option value="Трехгорный" {% if city == 'Трехгорный' %}selected{% endif %}>Трехгорный</option>
-                <option value="Заречный" {% if city == 'Заречный' %}selected{% endif %}>Заречный</option>
-                <option value="Новоуральск" {% if city == 'Новоуральск' %}selected{% endif %}>Новоуральск</option>
-                <option value="Лесной" {% if city == 'Лесной' %}selected{% endif %}>Лесной</option>
-                <option value="Северск" {% if city == 'Северск' %}selected{% endif %}>Северск</option>
-                <option value="Железногорск" {% if city == 'Железногорск' %}selected{% endif %}>Железногорск</option>
-                <option value="Зеленогорск" {% if city == 'Зеленогорск' %}selected{% endif %}>Зеленогорск</option>
-            </select>
+<div class="page-content">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Календарь событий</h1>
+            <p class="page-subtitle">Актуальные мероприятия и события в вашем городе</p>
         </div>
-        
-        {% if session.user %}
-        <a href="/organizer/create-event" class="btn btn-primary">➕ {{ translations.createEvent }}</a>
-        {% else %}
-        <a href="/login" class="btn btn-primary">{{ translations.loginToAddEvent }}</a>
-        {% endif %}
-    </div>
-    
-    <div class="calendar-header">
-        <div class="calendar-nav">
-            <button type="button" onclick="changeMonth(-1)">◀ {{ translations.prevMonth }}</button>
-            <span class="calendar-title" id="currentMonth"></span>
-            <button type="button" onclick="changeMonth(1)">{{ translations.nextMonth }} ▶</button>
+
+        <div class="calendar-container">
+            <aside class="calendar-sidebar">
+                <h3>Фильтры</h3>
+                <div class="calendar-filter">
+                    <label>
+                        <input type="checkbox" checked>
+                        Социальные
+                    </label>
+                    <label>
+                        <input type="checkbox" checked>
+                        Экологические
+                    </label>
+                    <label>
+                        <input type="checkbox" checked>
+                        Культурные
+                    </label>
+                    <label>
+                        <input type="checkbox" checked>
+                        Образовательные
+                    </label>
+                    <label>
+                        <input type="checkbox" checked>
+                        Спортивные
+                    </label>
+                </div>
+            </aside>
+
+            <div class="calendar-events">
+                {% for event in events_list %}
+                <div class="event-card">
+                    <span class="event-date">{{ event.date }}</span>
+                    <h3 class="event-title">{{ event.title }}</h3>
+                    <p class="event-organizer">Организатор: {{ event.organizer }}</p>
+                    <p class="event-description">{{ event.description }}</p>
+                    <p class="event-location">📍 {{ event.location }}</p>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        <button type="button" class="btn btn-primary" onclick="goToToday()">{{ translations.today }}</button>
-    </div>
-    
-    <div class="calendar-grid" id="calendarGrid">
-        <!-- Календарь генерируется JavaScript -->
-    </div>
-    
-    <div class="events-list" id="eventsList" style="display: none;">
-        <h2 id="selectedDate"></h2>
-        <div id="eventsContainer"></div>
     </div>
 </div>
-
-<script>
-// Данные событий из Flask
-const eventsData = {{ events|tojson|safe }};
-const translations = {{ translations|tojson|safe }};
-const currentCity = "{{ city if city else '' }}";
-
-let currentDate = new Date();
-let selectedDate = null;
-
-// Названия дней недели
-const dayNames = ['{{ translations.monday }}', '{{ translations.tuesday }}', '{{ translations.wednesday }}', 
-                  '{{ translations.thursday }}', '{{ translations.friday }}', '{{ translations.saturday }}', '{{ translations.sunday }}'];
-
-// Названия месяцев
-const monthNames = ['{{ translations.january }}', '{{ translations.february }}', '{{ translations.march }}', 
-                    '{{ translations.april }}', '{{ translations.may }}', '{{ translations.june }}',
-                    '{{ translations.july }}', '{{ translations.august }}', '{{ translations.september }}', 
-                    '{{ translations.october }}', '{{ translations.november }}', '{{ translations.december }}'];
-
-// Фильтрация по городу
-function filterByCity(city) {
-    const url = new URL(window.location);
-    if (city) {
-        url.searchParams.set('city', city);
-    } else {
-        url.searchParams.delete('city');
-    }
-    window.location.href = url.toString();
-}
-</script>
-
-<script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
 {% endblock %}

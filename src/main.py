@@ -1,6 +1,4 @@
-import json, os
-from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory
-from databaseModules import *
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 
 app = Flask(__name__)
 # avatars_folder = os.path.join(os.path.dirname(__file__), 'avatars')
@@ -20,8 +18,8 @@ def index():
 
 @app.route('/registration', methods=['GET', 'POST'])
 def register():
-    from flaskModules.registration_page import reg_page
-    from databaseModules.classCityRegionDB import CityRegionDB_module
+    from src.main.djangoModules.registration_page import reg_page
+    from src.main.databaseModules.classCityRegionDB import CityRegionDB_module
 
     cities_list = CityRegionDB_module().get_cities_list_with_region()
     print(request.form)
@@ -32,7 +30,7 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    from flaskModules.login_page import login_page
+    from src.main.djangoModules.login_page import login_page
     if request.method == 'POST':
         return login_page(request=request)
 
