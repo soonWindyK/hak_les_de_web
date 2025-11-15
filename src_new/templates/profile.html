@@ -78,6 +78,7 @@
                                 <div class="form-field">
                                     <label class="form-label">Дата рождения</label>
                                     <input type="date" name="birth_date" class="form-control" value="{{ data_profile.user_birthday }}">
+                                    <span id="birth_date_error" style="color: red; font-size: 14px; display: none;">Нельзя выбрать будущую дату рождения</span>
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Email</label>
@@ -132,5 +133,6 @@
     {% include 'components/footer.html' %}
 
     <script src="../static/js/script.js"></script>
+    
 </body>
 </html>

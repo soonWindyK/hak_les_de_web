@@ -224,3 +224,35 @@ if (document.readyState === 'loading') {
             }
         });
     }
+
+// Проверка даты рождения - запрет будущих дат при отправке формы
+document.addEventListener('DOMContentLoaded', function() {
+    const birthDateInput = document.querySelector('input[name="birth_date"]');
+    const birthDateError = document.getElementById('birth_date_error');
+    
+    if (birthDateInput && birthDateError) {
+        // Находим форму, содержащую поле даты рождения
+        const form = birthDateInput.closest('form');
+        
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const selectedDate = new Date(birthDateInput.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (birthDateInput.value && selectedDate > today) {
+                    e.preventDefault();
+                    birthDateError.style.display = 'block';
+                    birthDateInput.focus();
+                } else {
+                    birthDateError.style.display = 'none';
+                }
+            });
+            
+            // Скрываем ошибку при изменении даты
+            birthDateInput.addEventListener('input', function() {
+                birthDateError.style.display = 'none';
+            });
+        }
+    }
+});
