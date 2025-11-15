@@ -27,10 +27,15 @@ def register():
 def news(): return render_template('news.html')
 @app.route('/news/<int:news_id>', methods=['GET', 'POST'])
 def news_detail(news_id): return render_template('news-detail.html')
+
 @app.route('/nko', methods=['GET', 'POST'])
-def nko(): return render_template('nko.html')
+def nko():
+    from webModules.nkoModules.nko import nko_
+    return nko_(request=request)
+
 @app.route('/nko/<int:nko_id>', methods=['GET', 'POST'])
-def nko_detail(nko_id): return render_template('nko-detail.html')
+def nko_detail(nko_id):
+    return render_template('nko-detail.html')
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -66,9 +71,9 @@ def admin_nko_list():
 
 @app.route('/nko/add', methods=['GET', 'POST'])
 def nko_add():
-    from webModules.nkoModules.nko_add import nko_add
+    from webModules.nkoModules.nko_add import before_nko_add
     # Здесь будет логика добавления НКО
-    return nko_add(request=request)
+    return before_nko_add(request=request)
 
 
 # Маршруты для администратора - Новости

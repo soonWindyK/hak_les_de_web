@@ -1,5 +1,5 @@
 from databaseModules.classUsersDB import UsersDB_module
-from webModules.hash_password_usr import hasher_pass, verify_password
+from webModules.hash_password_usr import hasher_pass
 from flask import render_template, redirect, session
 
 
@@ -22,14 +22,11 @@ def change_password(request, mail):
     if not old_pass or not new_pass or not confirm_pass:
         return render_template('profile.html', data_profile=data_db_copy, error_pass='Заполните все поля')
 
-    if not verify_password(old_pass, data_db['user_pass']):
+    if hasher_pass(old_pass) == data_db['user_pass']:
         return render_template('profile.html', data_profile=data_db_copy, error_pass='Неверный текущий пароль')
 
     if new_pass != confirm_pass:
         return render_template('profile.html', data_profile=data_db_copy, error_pass='Новые пароли не совпадают')
-    
-    if len(new_pass) < 6:
-        return render_template('profile.html', data_profile=data_db_copy, error_pass='Пароль должен быть не менее 6 символов')
 
     if UsersDB_module().update_password(mail=mail, password=hasher_pass(new_pass)):
         return render_template('profile.html', data_profile=data_db_copy, succes_pass='Пароль успешно обновлён')

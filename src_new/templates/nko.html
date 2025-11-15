@@ -22,59 +22,33 @@
 
                 <div class="filters">
                     <select class="filter-select">
-                        <option value="">Все направления</option>
-                        <option value="social">Социальная помощь</option>
-                        <option value="ecology">Экология</option>
-                        <option value="culture">Культура</option>
-                        <option value="education">Образование</option>
-                        <option value="sport">Спорт</option>
+                        <option value="cat_id_0">Выберите категорию</option>
+                                {% for n, c in cats_list %}
+                                <option value="cat_id_{{n}}">{{c}}</option>
+                                {% endfor %}
                     </select>
                     <input type="text" class="search-input" placeholder="Поиск по названию...">
                 </div>
-
-                <div class="nko-grid">
-                    <div class="nko-card">
-                        <div class="nko-logo">🌳</div>
-                        <div class="nko-content">
-                            <span class="nko-category">Экология</span>
-                            <h3 class="nko-title">Зелёный город</h3>
-                            <p class="nko-description">Организация занимается озеленением города и экологическим просвещением</p>
-                            <p class="nko-address">📍 г. Саров, ул. Ленина, 10</p>
-                            <div class="nko-links">
-                                <a href="#" class="nko-link">🌐 Сайт</a>
-                                <a href="#" class="nko-link">📱 ВКонтакте</a>
+                {% if nko_list %}
+                    {% for nko in nko_list %}
+                        <div class="nko-card">
+                            <div class="nko-logo">{{ nko.icon }}</div>
+                            <div class="nko-content">
+                                <span class="nko-category">{{ nko.category_name }}</span>
+                                <h3 class="nko-title">{{ nko.name }}</h3>
+                                <p class="nko-description"> {{ nko.description }}</p>
+                                <p class="nko-address">📍 {{ nko.region_name }}, {{ nko.city_name }}, {{ nko.address }}</p>
+                                <div class="nko-links">
+                                    <a href="{{ nko.website }}" class="nko-link">🌐 Сайт</a>
+                                    <a href="{{ nko.link_social_net }}" class="nko-link">📱 Соц. сеть</a>
+                                </div>
+                                <a href="{{ url_for('nko_detail', nko_id=nko.nko_id) }}" class="btn-more">Подробнее</a>
                             </div>
-                            <a href="{{ url_for('nko_detail', nko_id=1) }}" class="btn-more">Подробнее</a>
                         </div>
-                    </div>
-                    <div class="nko-card">
-                        <div class="nko-logo">🤝</div>
-                        <div class="nko-content">
-                            <span class="nko-category">Социальная помощь</span>
-                            <h3 class="nko-title">Добрые сердца</h3>
-                            <p class="nko-description">Помощь нуждающимся семьям и пожилым людям</p>
-                            <p class="nko-address">📍 г. Обнинск, пр. Ленина, 25</p>
-                            <div class="nko-links">
-                                <a href="#" class="nko-link">🌐 Сайт</a>
-                                <a href="#" class="nko-link">📱 ВКонтакте</a>
-                            </div>
-                            <a href="{{ url_for('nko_detail', nko_id=2) }}" class="btn-more">Подробнее</a>
-                        </div>
-                    </div>
-                    <div class="nko-card">
-                        <div class="nko-logo">🎨</div>
-                        <div class="nko-content">
-                            <span class="nko-category">Культура</span>
-                            <h3 class="nko-title">Творческая мастерская</h3>
-                            <p class="nko-description">Развитие творческих способностей детей и взрослых</p>
-                            <p class="nko-address">📍 г. Северск, ул. Мира, 15</p>
-                            <div class="nko-links">
-                                <a href="#" class="nko-link">🌐 Сайт</a>
-                                <a href="#" class="nko-link">📱 ВКонтакте</a>
-                            </div>
-                            <a href="{{ url_for('nko_detail', nko_id=3) }}" class="btn-more">Подробнее</a>
-                        </div>
-                    </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="no-organizations">Нет организаций для отображения</p>
+                {% endif %}
                 </div>
             </div>
         </div>

@@ -5,6 +5,12 @@ from databaseModules.classSmallFuncsDB import SmallFuncsDB_module
 from databaseModules.classNkoDB import NkoDB_module
 
 
+def before_nko_add(request):
+    if 'username' in session:
+        return nko_add(request=request)
+
+    return redirect('/login')
+
 def nko_add(request):
     cities_list = CityRegionDB_module().get_cities_list_with_region()
     cats_list = SmallFuncsDB_module().select_all_categories()
@@ -29,6 +35,9 @@ def nko_add(request):
 
             form_data['category'] = form_data['category'].split("_")[-1]
             form_data['city'] = form_data['city'].split("_")[-1]
+
+            creator_id = UsersDB_module().select_with_mail(mail=session['username'])['user_id']
+            form_data['creator_id'] = creator_id
 
             # print(form_data.values())
             result = NkoDB_module().create_nko(data=tuple(form_data.values()))
