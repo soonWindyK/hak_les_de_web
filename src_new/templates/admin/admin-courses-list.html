@@ -39,7 +39,7 @@
                                         <a href="{{ url_for('admin_course_detail', course_id=course.id) }}" class="btn-view" style="width: 100%; margin-bottom: 10px;">Просмотр тем</a>
                                     </div>
                                     <div style="display: flex; gap: 10px;">
-                                        <!-- СДЕЛАТЬ ПЕРЕНАПРАВЛЕНИЕ НА admin-course-edit -->
+                                        <!-- СДЕЛАТЬ ПЕРЕНАПРАВЛЕНИЕ НА admin-course-edit  КЛАССЫ НЕ ТРОГАЙ И СТИЛИ МОЛЮ ТЕБЯ-->
                                         <!-- <a href="{{ url_for('admin_course_detail') }}" class="btn-admin btn-primary" style="flex: 1;">Редактировать</a>   -->
                                          <form method="POST">
                                             <button type="submit" name="action" style="flex: 1;" value="course_{{ course.id }}" class="btn-admin btn-delete">Удалить</button>
