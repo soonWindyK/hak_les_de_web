@@ -12,22 +12,15 @@ def calendar(): return render_template('calendar.html')
 @app.route('/knowledge')
 def knowledge(): return render_template('knowledge.html')
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    from webModules.login_page import login_page
-    if request.method == 'POST':
-        return login_page(request=request.form)
-
-    return render_template('login.html')
+    from webModules.login_page import before_login_page
+    return before_login_page(request=request.form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    from webModules.registration_page import reg_page
-    print(request.form)
-    if request.method == 'POST':
-        return reg_page(request=request.form)
-
-    return render_template('register.html')
+    from webModules.registration_page import before_reg_page
+    return before_reg_page(request=request.form)
 
 @app.route('/news')
 def news(): return render_template('news.html')
@@ -40,10 +33,8 @@ def nko_detail(nko_id): return render_template('nko-detail.html')
 
 @app.route('/profile')
 def profile():
-    if 'username' in session:
-        return render_template('profile.html')
-
-    return redirect('/login')
+    from webModules.profile_page import before_profile_page
+    return before_profile_page(request=request.form)
 
 @app.route('/logout')
 def logout():

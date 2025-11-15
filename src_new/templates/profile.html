@@ -62,27 +62,23 @@
                             <div class="form-grid">
                                 <div class="form-field">
                                     <label class="form-label">Фамилия</label>
-                                    <input type="text" name="last_name" class="form-control" value="Иванов">
+                                    <input type="text" name="last_name" class="form-control" value="{{ data_profile.last_name }}">
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Имя</label>
-                                    <input type="text" name="first_name" class="form-control" value="Иван">
+                                    <input type="text" name="first_name" class="form-control" value="{{ data_profile.first_name }}">
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Отчество</label>
-                                    <input type="text" name="middle_name" class="form-control" value="Иванович">
+                                    <input type="text" name="middle_name" class="form-control" value="{{ data_profile.father_name }}">
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Дата рождения</label>
-                                    <input type="date" name="birth_date" class="form-control" value="1990-01-01">
+                                    <input type="date" name="birth_date" class="form-control" value="{{ data_profile.user_birthday }}">
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Email</label>
-                                    <input type="email" name="email" class="form-control" value="ivan@example.com">
-                                </div>
-                                <div class="form-field">
-                                    <label class="form-label">Телефон</label>
-                                    <input type="tel" name="phone" class="form-control" placeholder="+7 (___) ___-__-__">
+                                    <input type="email" name="email" class="form-control" value="{{ data_profile.user_mail }}">
                                 </div>
                             </div>
                         </div>

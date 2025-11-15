@@ -3,6 +3,13 @@ from webModules.hash_password_usr import hasher_pass
 from flask import redirect, render_template, session
 
 
+def before_login_page(request):
+    print(request.form, request.method)
+    if request.method == 'POST':
+        return login_page(request=request.form)
+
+    return render_template('login.html')
+
 def login_page(request):
     user_mail = request['email']
     password = request['password']
@@ -13,8 +20,8 @@ def login_page(request):
         user = UsersDB_module().select_with_mail(mail=user_mail)
 
         if user['user_pass'] == hasher_pass(password):
-            # session['username'] = user_mail
-            return redirect('profile')
+            session['username'] = user_mail
+            return redirect('/profile')
         else:
             return render_template('login.html', error_msg='Пароль неверный')
     else:

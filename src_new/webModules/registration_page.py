@@ -4,6 +4,13 @@ from webModules.hash_password_usr import hasher_pass
 import datetime
 
 
+def before_reg_page(request):
+    print(request.form)
+    if request.method == 'POST':
+        return reg_page(request=request.form)
+
+    return render_template('register.html')
+
 def reg_page(request):
     form_data = {
         'first_name': request.get('first_name', ''),
