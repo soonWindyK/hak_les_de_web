@@ -1772,7 +1772,7 @@ textarea.form-control,
     margin-bottom: 10px;
 }
 
-.event-description {
+.event-description .event-start-time .event-end-time {
     font-size: 14px;
     line-height: 1.6;
     color: var(--text-color);
