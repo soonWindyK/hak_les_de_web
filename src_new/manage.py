@@ -77,18 +77,19 @@ def logout():
 def admin_panel():
     from webModules.adminModules.admin_panel import admin_panel
 
-    mail = session['username']
-    data_db = UsersDB_module().select_with_mail(mail=mail)
-    user_role = data_db['role_id']
-    print(session)
+    if 'username' in session:
+        mail = session['username']
+        data_db = UsersDB_module().select_with_mail(mail=mail)
+        user_role = data_db['role_id']
+        print(session)
 
-    if user_role == 2:  # admin
-        return admin_panel(request)
-    elif user_role == 3:  # moder
-        data_db.pop('user_pass', None)
-        return render_template('moderator/moderator-panel.html', data_profile=data_db)
-    else:
-        return redirect('/')
+        if user_role == 2:  # admin
+            return admin_panel(request)
+        elif user_role == 3:  # moder
+            data_db.pop('user_pass', None)
+            return render_template('moderator/moderator-panel.html', data_profile=data_db)
+
+    return redirect('/')
 
 
 # Маршруты для администратора - НКО

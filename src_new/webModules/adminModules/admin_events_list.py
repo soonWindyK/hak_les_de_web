@@ -7,7 +7,14 @@ from databaseModules.classCityRegionDB import CityRegionDB_module
 
 
 def before_admin_events():
-    return admin_events_()
+    if 'username' in session:
+        data_db = UsersDB_module().select_with_mail(mail=session['username'])
+        if data_db['user_role'] == 2:
+            return admin_events_()
+        else:
+            return redirect('/news')
+
+    return redirect('/login')
 
 
 def admin_events_():

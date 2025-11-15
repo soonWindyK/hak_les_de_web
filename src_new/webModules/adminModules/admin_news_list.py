@@ -7,7 +7,14 @@ from databaseModules.classCityRegionDB import CityRegionDB_module
 
 
 def before_admin_news():
-    return admin_news_()
+    if 'username' in session:
+        data_db = UsersDB_module().select_with_mail(mail=session['username'])
+        if data_db['user_role'] == 2:
+            return admin_news_()
+        else:
+            return redirect('/news')
+
+    return redirect('/login')
 
 
 def admin_news_():

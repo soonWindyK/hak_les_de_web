@@ -6,7 +6,14 @@ from databaseModules.classNkoDB import NkoDB_module
 
 
 def before_admin_nko_():
-    return admin_nko_()
+    if 'username' in session:
+        data_db = UsersDB_module().select_with_mail(mail=session['username'])
+        if data_db['user_role'] == 2:
+            return admin_nko_()
+        else:
+            return redirect('/news')
+
+    return redirect('/login')
 
 
 def admin_nko_():
