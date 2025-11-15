@@ -24,6 +24,7 @@ def login_page(request):
 
         if user['user_pass'] == hasher_pass(password):
             session['username'] = user_mail
+            session['user_role'] = user['user_role']
             return redirect('/profile')
         else:
             return render_template('login.html', error_msg='Пароль неверный')

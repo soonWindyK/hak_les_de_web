@@ -1,5 +1,6 @@
 from flask import Flask, render_template, session, redirect, url_for, request
 from datetime import datetime
+from databaseModules.classUsersDB import UsersDB_module
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
@@ -44,14 +45,18 @@ def logout():
 
 @app.route('/admin/panel', methods=['GET', 'POST'])
 def admin_panel():
-    # Проверка роли пользователя
-    user_role = session.get('user_role', 'user')
-    if user_role == 'admin':
-        return render_template('admin/admin-panel.html')
-    elif user_role == 'moderator':
+    from webModules.adminModules.admin_panel import admin_panel
+
+    user_role = UsersDB_module().select_with_mail(mail=session['username'])['role_id']
+    print(session)
+
+    if user_role == 2:  # admin
+        return admin_panel(request)
+    elif user_role == 3:  # moder
         return render_template('moderator/moderator-panel.html')
     else:
-        return redirect(url_for('home'))
+        return redirect('/')
+
 
 # Маршруты для администратора - НКО
 @app.route('/admin/nko', methods=['GET', 'POST'])

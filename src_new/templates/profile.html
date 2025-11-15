@@ -29,9 +29,9 @@
                                 <span>Мой профиль</span>
                             </a>
                         </li>
-                        {% if session.get('user_role') in ['admin', 'moderator'] %}
+                        {% if data_profile.role_id == 2 %}
                         <li class="profile-menu-item">
-                            <a href="{{ url_for('admin_panel') }}" class="profile-menu-link">
+                            <a href="/admin/panel" class="profile-menu-link">
                                 <span class="profile-menu-icon">⚙️</span>
                                 <span>Панель управления</span>
                             </a>

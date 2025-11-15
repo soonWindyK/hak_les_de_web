@@ -29,6 +29,9 @@ class UsersDB_module:
                                 f'WHERE user_mail = "{mail}" '
                                 f'and roles.role_id = {self.table_name}.user_role')
             return db_returner(data=self.cursor.fetchall())[0]
+        except Exception as e:
+            print(e)
+            return {'role_id': 1}
         finally:
             self.conn.close()
 
