@@ -81,6 +81,10 @@
                                     <label class="form-label">Email</label>
                                     <input type="email" name="email" class="form-control" value="{{ data_profile.user_mail }}">
                                 </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn-cancel">Отмена</button>
+                                    <button type="submit" class="btn-save" name="btn-save-profile">Сохранить изменения</button>
+                                </div>
                             </div>
                         </div>
 
@@ -99,12 +103,11 @@
                                     <label class="form-label">Подтверждение пароля</label>
                                     <input type="password" name="confirm_password" class="form-control">
                                 </div>
+                                <div class="form-actions-password">
+                                    <button type="button" class="btn-cancel">Отмена</button>
+                                    <button type="submit" class="btn-save" name="btn-save-password">Изменить пароль</button>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="button" class="btn-cancel">Отмена</button>
-                            <button type="submit" class="btn-save">Сохранить изменения</button>
                         </div>
                     </form>
                 </div>
