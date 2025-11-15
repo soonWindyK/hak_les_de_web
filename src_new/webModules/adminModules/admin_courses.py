@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash, session
-from databaseModules.classCoursesDB import CoursesDB_module
+from src_new.databaseModules.classKnowelegesDB import KnowelegesDB_module
 from werkzeug.utils import secure_filename
 import os
 
@@ -14,8 +14,7 @@ def allowed_file(filename):
 
 def admin_courses_list(request):
     """Список всех курсов для администратора"""
-    courses_db = CoursesDB_module()
-    courses = courses_db.get_all_courses()
+    courses = KnowelegesDB_module().get_all_courses()
     return render_template('admin/admin-courses-list.html', courses=courses)
 
 
@@ -27,9 +26,8 @@ def admin_course_add(request):
         if not course_name:
             flash('Название курса обязательно', 'error')
             return render_template('admin/admin-course-add.html')
-        
-        courses_db = CoursesDB_module()
-        course_id = courses_db.create_course(course_name)
+
+        course_id = KnowelegesDB_module().add_course(course_name)
         
         if course_id:
             flash('Курс успешно создан', 'success')
@@ -42,14 +40,14 @@ def admin_course_add(request):
 
 def admin_course_detail(request, course_id):
     """Детальная страница курса с темами"""
-    courses_db = CoursesDB_module()
-    course = courses_db.get_course_by_id(course_id)
+
+    course = KnowelegesDB_module().get_course_info(course_id)
     
     if not course:
         flash('Курс не найден', 'error')
         return redirect(url_for('admin_courses_list'))
     
-    themes = courses_db.get_themes_by_course(course_id)
+    themes = KnowelegesDB_module().get_themses_by_course_id(course_id)
     return render_template('admin/admin-course-detail.html', course=course, themes=themes)
 
 

@@ -107,8 +107,8 @@ def nko_add():
 # Маршруты для администратора - Новости
 @app.route('/admin/news', methods=['GET', 'POST'])
 def admin_news_list():
-    # Здесь будет логика отображения списка новостей
-    return render_template('admin/admin-news-list.html')
+    from webModules.adminModules.admin_news_list import before_admin_news
+    return before_admin_news()
 
 @app.route('/admin/news/add', methods=['GET', 'POST'])
 @csrf.exempt

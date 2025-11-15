@@ -58,3 +58,19 @@ class KnowelegesDB_module:
             return False
         finally:
             self.conn.close()
+
+    def add_course(self, name):
+        try:
+            self.cursor.execute(
+                f'INSERT INTO {self.courses_table}(name) '
+                f'VALUES("{name}")'
+            )
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+
+
