@@ -26,7 +26,9 @@ class UsersDB_module:
 
     def select_with_mail(self, mail):
         try:
-            self.cursor.execute(f'SELECT * FROM {self.table_name} WHERE user_mail = "{mail}"')
+            self.cursor.execute(f'SELECT * FROM {self.table_name}, roles '
+                                f'WHERE user_mail = "{mail}" '
+                                f'and roles.role_id = {self.table_name}.user_role')
             return db_returner(data=self.cursor.fetchall())[0]
         finally:
             self.conn.close()
