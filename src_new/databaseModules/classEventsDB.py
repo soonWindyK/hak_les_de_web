@@ -25,11 +25,26 @@ class EventsDB_module:
         try:
             self.cursor.execute(f'select * from {self.events}, cities, regions '
                                 f'WHERE cities.city_id = {self.events}.city_id '
-                                f'and regions.region_code = cities.region_code ')
+                                f'and regions.region_code = cities.region_code '
+                                f'and {self.events}.deleted_at is null')
             return self.cursor.fetchall()
         except Exception as e:
             print(e)
             return False
         finally:
             self.conn.close()
+
+    def delete_event(self, event_id):
+        try:
+            self.cursor.execute(
+                f'UPDATE {self.events} SET deleted_at = CURRENT_TIMESTAMP '
+                f'WHERE id = {event_id}')
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+
 

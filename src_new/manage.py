@@ -120,8 +120,8 @@ def admin_news_add():
 # Маршруты для администратора - События
 @app.route('/admin/events', methods=['GET', 'POST'])
 def admin_events_list():
-    # Здесь будет логика отображения списка событий
-    return render_template('admin/admin-events-list.html')
+    from webModules.adminModules.admin_events_list import before_admin_events
+    return before_admin_events()
 
 @app.route('/admin/events/add', methods=['GET', 'POST'])
 def admin_events_add():

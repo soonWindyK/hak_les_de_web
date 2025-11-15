@@ -30,7 +30,9 @@
                                     <p class="event-start-time">Время начала: {{event.start_time}}</p>
                                     <p class="event-end-time">Время окончания: {{event.end_time}}</p>
                                     <button class="btn-admin btn-primary">Редактировать</button>
-                                    <button class="btn-secondary">Удалить</button>
+                                    <form method="POST">
+                                        <button type="submit" name="action" value="event_{{ event.id }}" class="btn-admin">Удалить</button>
+                                    </form>
                                 </div>
                             {% endfor %}
                         {% else %}
