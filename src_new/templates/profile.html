@@ -55,7 +55,7 @@
                     <div class="profile-header">
                         <h1 class="profile-title">Мой профиль</h1>
                     </div>
-                        <form method="post" class="form-grid">
+                        
                             <div class="form-section">
                                 <h3 class="form-section-title">Личная информация</h3>
                                 <font color="red">{{ error_msg }}</font>
@@ -84,11 +84,13 @@
 
                                     <div class="form-actions">
                                         <button type="button" class="btn-cancel">Отмена</button>
-                                        <button type="submit" class="btn-save" name="action" value="change-profile">Сохранить изменения</button>
+                                        <form method="post">
+                                            <button type="submit" class="btn-save" name="action" value="change-profile">Сохранить изменения</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        
 
                         <div class="form-section form-margin">
                             <h3 class="form-section-title">Изменить пароль</h3>
