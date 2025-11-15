@@ -10,7 +10,7 @@ def db_returner(data, coloumn=False):
     else:
         return [dict(row)[coloumn] for row in data]
 
-from src_new.data_from_env import db_table, db_host, db_pass, db_user, db_port
+from data_from_env import db_table, db_host, db_pass, db_user, db_port
 import mysql.connector
 
 def get_db_connection():
