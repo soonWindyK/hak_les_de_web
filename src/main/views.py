@@ -45,7 +45,7 @@ def nko_list(request):
             'vk': '#'
         }
     ]
-    return render(request, 'nko.html', {'nko_list': nko_list})
+    return render(request, 'nkoModules.html', {'nko_list': nko_list})
 
 
 def nko_detail(request, nko_id):
@@ -65,7 +65,7 @@ def nko_detail(request, nko_id):
         'website': 'https://green-city.ru',
         'vk': 'https://vk.com/greencity'
     }
-    return render(request, 'nko_detail.html', {'nko': nko})
+    return render(request, 'nko_detail.html', {'nkoModules': nko})
 
 
 def news_list(request):

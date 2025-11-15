@@ -6,8 +6,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('nko/', views.nko_list, name='nko'),
-    path('nko/<int:nko_id>/', views.nko_detail, name='nko_detail'),
+    path('nkoModules/', views.nko_list, name='nkoModules'),
+    path('nkoModules/<int:nko_id>/', views.nko_detail, name='nko_detail'),
     path('news/', views.news_list, name='news'),
     path('news/<int:news_id>/', views.news_detail, name='news_detail'),
     path('calendar/', views.calendar_view, name='calendar'),

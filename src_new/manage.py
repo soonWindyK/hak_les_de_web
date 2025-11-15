@@ -66,8 +66,9 @@ def admin_nko_list():
 
 @app.route('/nko/add', methods=['GET', 'POST'])
 def nko_add():
+    from webModules.nkoModules.nko_add import nko_add
     # Здесь будет логика добавления НКО
-    return render_template('nko-add.html')
+    return nko_add(request=request)
 
 
 # Маршруты для администратора - Новости

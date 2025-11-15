@@ -22,61 +22,85 @@
                     <form class="admin-form" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name">Название организации *</label>
-                            <input type="text" id="name" name="name" required>
+                            <input type="text" id="name" name="name"
+                                   minlength="2" maxlength="128" value="{{ form_data.name if form_data else '' }}"
+                                   required>
                         </div>
 
                         <div class="form-group">
                             <label for="category">Категория *</label>
                             <select id="category" name="category" required>
-                                <option value="">Выберите категорию</option>
+                                <option value="cat_id_0">Выберите категорию</option>
+                                {% for n, c in cats_list %}
+                                <option value="cat_id_{{n}}">{{c}}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="description">Описание *</label>
-                            <textarea id="description" name="description" rows="4" required></textarea>
+                            <textarea id="description" name="description" rows="4"
+                                      minlength="10" maxlength="512"
+                                      required>{{ form_data.description if form_data else '' }}</textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="about">О нас *</label>
-                            <textarea id="about" name="about" rows="6" required></textarea>
+                            <textarea id="about" name="about" rows="6"
+                                      minlength="10" maxlength="256"
+                                      required>{{ form_data.about if form_data else '' }}</textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="volunteer_activities">Что делают волонтёры в организации *</label>
-                            <textarea id="volunteer_activities" name="volunteer_activities" rows="4" required></textarea>
+                            <textarea id="volunteer_activities" name="volunteer_activities" rows="4"
+                                      minlength="10" maxlength="512"
+                                      required>{{ form_data.volunteer_activities if form_data else '' }}</textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="address">Адрес *</label>
-                            <input type="text" id="address" name="address" required>
+                            <input type="text" id="address" name="address"
+                                   minlength="10" maxlength="128" value="{{ form_data.address if form_data else '' }}"
+                                   required>
                         </div>
 
                         <div class="form-group">
                             <label for="city">Город *</label>
                             <select id="city" name="city" required>
-                                <option value="">Выберите город</option>
+                                <option value="city_id_0">Выберите город</option>
+                                {% for n, c, r in cities_list %}
+                                <option value="city_id_{{n}}">{{c}}, {{r}}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Почта *</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email"
+                                   minlength="5" maxlength="256" value="{{ form_data.email if form_data else '' }}"
+                                   required>
                         </div>
 
                         <div class="form-group">
                             <label for="phone">Номер телефона *</label>
-                            <input type="tel" id="phone" name="phone" required>
+                            <input type="tel" id="phone" name="phone"
+                                   minlength="11" maxlength="15" value="{{ form_data.phone if form_data else '' }}"
+                                   required>
                         </div>
 
                         <div class="form-group">
                             <label for="social_media">Ссылка на основную соц.сеть</label>
-                            <input type="url" id="social_media" name="social_media">
+                            <input type="url" id="social_media" name="social_media"
+                                   value="{{ form_data.social_media if form_data else '' }}"
+                            >
                         </div>
 
                         <div class="form-group">
                             <label for="website">Ссылка на веб-сайт</label>
-                            <input type="url" id="website" name="website">
+                            <input type="url" id="website" name="website"
+                            value="{{ form_data.website if form_data else '' }}"
+                            >
                         </div>
 
                         <div class="form-group">
@@ -85,8 +109,9 @@
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" class="btn-admin btn-primary">Добавить НКО</button>
-                            <a href="{{ url_for('admin_nko_list') }}" class="btn-admin">Отмена</a>
+                            <font  color="red">{{ error_msg }}</font >
+                            <font  color="green">{{ succes_msg }}</font >
+                            <button type="submit" name="action" value="btn-create-nko">Добавить НКО</button>
                         </div>
                     </form>
                 </div>
