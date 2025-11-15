@@ -34,7 +34,14 @@
                                 <span>Панель управления</span>
                             </a>
                         </li>
-                        {% endif %}
+                        {% elif data_profile.role_id == 3 %}
+                        <li class="profile-menu-item">
+                            <a href="/admin/panel" class="profile-menu-link">
+                                <span class="profile-menu-icon">⚙️</span>
+                                <span>Панель управления</span>
+                            </a>
+                        {%endif%}
+                        </li>
                         <li class="profile-menu-item">
                             <a href="{{ url_for('home') }}" class="profile-menu-link">
                                 <span class="profile-menu-icon">🏠</span>

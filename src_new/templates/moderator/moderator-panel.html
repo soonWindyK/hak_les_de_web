@@ -15,8 +15,9 @@
                 <aside class="profile-sidebar">
                     <div class="profile-user-info">
                         <div class="profile-avatar">👤</div>
-                        <div class="profile-name">{{ session.get('user_name', 'Модератор') }}</div>
-                        <span class="profile-role">{{ session.get('user_role', 'moderator') }}</span>
+                        <div class="profile-name">{{ data_profile.first_name }}</div>
+                        <div class="profile-name">{{ data_profile.last_name }}</div>
+                        <span class="profile-role"> {{ data_profile.role_name }} </span>
                     </div>
 
                     <ul class="profile-menu">
@@ -59,7 +60,6 @@
                             <p class="admin-section-description">Проверка и одобрение заявок на добавление НКО</p>
                             <div class="admin-actions">
                                 <a href="{{ url_for('moderator_nko_pending') }}" class="btn-admin">На модерации</a>
-                                <a href="{{ url_for('moderator_nko_all') }}" class="btn-admin">Все НКО</a>
                             </div>
                         </div>
 
@@ -68,7 +68,6 @@
                             <p class="admin-section-description">Проверка и одобрение пользовательских событий</p>
                             <div class="admin-actions">
                                 <a href="{{ url_for('moderator_events_pending') }}" class="btn-admin">На модерации</a>
-                                <a href="{{ url_for('moderator_events_all') }}" class="btn-admin">Все события</a>
                             </div>
                         </div>
 

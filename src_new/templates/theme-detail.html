@@ -7,119 +7,83 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/rosatom-main.css') }}">
 </head>
 <body>
-    <div class="container">
-        <nav class="breadcrumb">
-            <a href="{{ url_for('home') }}">Главная</a> / 
-            <a href="{{ url_for('knowledge') }}">База знаний</a> / 
-            <a href="{{ url_for('course_detail', course_id=course.id) }}">{{ course.name }}</a> / 
-            <span>{{ theme.title }}</span>
-        </nav>
+    {% include 'components/header.html' %}
 
-        <h1>{{ theme.title }}</h1>
-        
-        <div class="theme-info">
-            <p><strong>Курс:</strong> {{ course.name }}</p>
-            <p><strong>Спикер:</strong> {{ theme.speaker }}</p>
+    <main>
+        <div class="container">
+            <h1>{{ theme.title }}</h1>
+            
+            <div class="theme-info">
+                <p><strong>Курс:</strong> {{ course.name }}</p>
+                <p><strong>Спикер:</strong> {{ theme.speaker }}</p>
+            </div>
+
+            <div class="theme-description">
+                <h2>Описание</h2>
+                <p>{{ theme.description }}</p>
+            </div>
+
+            <div class="theme-content">
+                {% if theme.url %}
+                    <h2>Видеоматериал</h2>
+                    <div class="video-container">
+                        {% if 'youtube.com' in theme.url or 'youtu.be' in theme.url %}
+                            {% set video_id = theme.url.split('v=')[-1].split('&')[0] if 'v=' in theme.url else theme.url.split('/')[-1] %}
+                            <iframe width="100%" height="500" 
+                                    src="https://www.youtube.com/embed/{{ video_id }}" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                            </iframe>
+                        {% elif 'vk.com' in theme.url or 'vkvideo.ru' in theme.url %}
+                            <iframe src="{{ theme.url }}" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+                        {% elif 'rutube.ru' in theme.url %}
+                            <iframe width="100%" height="500" src="{{ theme.url }}" frameborder="0" allowfullscreen></iframe>
+                        {% else %}
+                            <p>Ссылка на видео: <a href="{{ theme.url }}" target="_blank">{{ theme.url }}</a></p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% if theme.file %}
+                    <h2>Файл материала</h2>
+                    <div class="file-container">
+                        {% set file_ext = theme.file.split('.')[-1].lower() %}
+                        
+                        {% if file_ext == 'pdf' %}
+                            <embed src="{{ url_for('static', filename=theme.file) }}" 
+                                type="application/pdf" 
+                                width="100%" 
+                                height="600px">
+                        {% elif file_ext in ['mp4', 'avi', 'mov', 'mkv'] %}
+                            <video width="100%" height="500" controls>
+                                <source src="{{ url_for('static', filename=theme.file) }}" type="video/{{ file_ext }}">
+                                Ваш браузер не поддерживает видео.
+                            </video>
+                        {% else %}
+                            <p>
+                                <a href="{{ url_for('static', filename=theme.file) }}" 
+                                class="btn btn-download" 
+                                download>
+                                    Скачать файл ({{ file_ext.upper() }})
+                                </a>
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% if not theme.url and not theme.file %}
+                    <p>Материалы для этой темы пока не загружены.</p>
+                {% endif %}
+            </div>
+            <div class="back-link">
+                <a href="{{ url_for('course_detail', course_id=course.id) }}" class="btn-secondary">Вернуться к курсу</a>
+            </div>
         </div>
+    </main>
 
-        <div class="theme-description">
-            <h2>Описание</h2>
-            <p>{{ theme.description }}</p>
-        </div>
+    {% include 'components/footer.html' %}
 
-        <div class="theme-content">
-            {% if theme.url %}
-                <h2>Видеоматериал</h2>
-                <div class="video-container">
-                    {% if 'youtube.com' in theme.url or 'youtu.be' in theme.url %}
-                        {% set video_id = theme.url.split('v=')[-1].split('&')[0] if 'v=' in theme.url else theme.url.split('/')[-1] %}
-                        <iframe width="100%" height="500" 
-                                src="https://www.youtube.com/embed/{{ video_id }}" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                        </iframe>
-                    {% elif 'vk.com' in theme.url or 'vkvideo.ru' in theme.url %}
-                        <iframe src="{{ theme.url }}" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
-                    {% elif 'rutube.ru' in theme.url %}
-                        <iframe width="100%" height="500" src="{{ theme.url }}" frameborder="0" allowfullscreen></iframe>
-                    {% else %}
-                        <p>Ссылка на видео: <a href="{{ theme.url }}" target="_blank">{{ theme.url }}</a></p>
-                    {% endif %}
-                </div>
-            {% endif %}
-
-            {% if theme.file %}
-                <h2>Файл материала</h2>
-                <div class="file-container">
-                    {% set file_ext = theme.file.split('.')[-1].lower() %}
-                    
-                    {% if file_ext == 'pdf' %}
-                        <embed src="{{ url_for('static', filename=theme.file) }}" 
-                               type="application/pdf" 
-                               width="100%" 
-                               height="600px">
-                    {% elif file_ext in ['mp4', 'avi', 'mov', 'mkv'] %}
-                        <video width="100%" height="500" controls>
-                            <source src="{{ url_for('static', filename=theme.file) }}" type="video/{{ file_ext }}">
-                            Ваш браузер не поддерживает видео.
-                        </video>
-                    {% else %}
-                        <p>
-                            <a href="{{ url_for('static', filename=theme.file) }}" 
-                               class="btn btn-download" 
-                               download>
-                                Скачать файл ({{ file_ext.upper() }})
-                            </a>
-                        </p>
-                    {% endif %}
-                </div>
-            {% endif %}
-
-            {% if not theme.url and not theme.file %}
-                <p>Материалы для этой темы пока не загружены.</p>
-            {% endif %}
-        </div>
-
-        <div class="back-link">
-            <a href="{{ url_for('course_detail', course_id=course.id) }}" class="btn btn-secondary">Вернуться к курсу</a>
-        </div>
-    </div>
-
-    <style>
-        .video-container {
-            margin: 20px 0;
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-        }
-        
-        .video-container iframe,
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .file-container {
-            margin: 20px 0;
-        }
-        
-        .btn-download {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        
-        .btn-download:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
