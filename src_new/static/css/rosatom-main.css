@@ -48,12 +48,12 @@ main {
     padding-bottom: 20px;
 }
 .container_nko {
-    display:flex;
-    justify-content:center;
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
+
 
 /* ============================================
    HEADER - ШАПКА САЙТА
