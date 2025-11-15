@@ -188,5 +188,9 @@ def moderator_stats():
     # Здесь будет логика отображения статистики
     return render_template('moderator/moderator-stats.html')
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 if __name__ == '__main__':
     app.run(debug=True)
