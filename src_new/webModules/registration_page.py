@@ -13,6 +13,7 @@ def reg_page(request):
         'city_id': request.get('city_id', ''),
         'birthday': request.get('birthday', '')
     }
+
     first_name = request['first_name']
     last_name = request['last_name']
     father_name = request.get('patronymic', '')
@@ -23,6 +24,7 @@ def reg_page(request):
     user_birthday = request.get('birthday', datetime.datetime.now())
     user_role = 1
     city_id = 1
+
     if password != password_confirm:
         return render_template('register.html', error_pass='Пароли разные!', form_data=form_data)
 

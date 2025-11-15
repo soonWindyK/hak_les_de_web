@@ -6,12 +6,19 @@ app.secret_key = 'your-secret-key'
 
 @app.route('/')
 def home(): return render_template('index.html')
+
 @app.route('/calendar')
 def calendar(): return render_template('calendar.html')
 @app.route('/knowledge')
 def knowledge(): return render_template('knowledge.html')
+
 @app.route('/login')
-def login(): return render_template('login.html')
+def login():
+    from webModules.login_page import login_page
+    if request.method == 'POST':
+        return login_page(request=request.form)
+
+    return render_template('login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -32,7 +39,11 @@ def nko(): return render_template('nko.html')
 def nko_detail(nko_id): return render_template('nko-detail.html')
 
 @app.route('/profile')
-def profile(): return render_template('profile.html')
+def profile():
+    if 'username' in session:
+        return render_template('profile.html')
+
+    return redirect('/login')
 
 @app.route('/logout')
 def logout():
