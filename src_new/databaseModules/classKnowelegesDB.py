@@ -11,7 +11,7 @@ class KnowelegesDB_module:
     def get_all_courses(self):
         try:
             self.cursor.execute(
-                f'SElECT * FROM {self.courses_table}'
+                f'SElECT * FROM {self.courses_table} WHERE {self.courses_table}.deleted_at is null'
             )
             return self.cursor.fetchall()
         except Exception as e:
@@ -37,7 +37,7 @@ class KnowelegesDB_module:
     def get_theme_info(self, id):
         try:
             self.cursor.execute(
-                f'SElECT * FROM {self.themes_table} where id = {id}'
+                f'SElECT * FROM {self.themes_table} where id = {id} and {self.themes_table}.deleted_at is null'
             )
             return self.cursor.fetchall()[0]
         except Exception as e:
@@ -50,7 +50,7 @@ class KnowelegesDB_module:
     def get_themses_by_course_id(self, id):
         try:
             self.cursor.execute(
-                f'SElECT * FROM {self.themes_table} where id = {id}'
+                f'SElECT * FROM {self.themes_table} where id = {id} where {self.themes_table}.deleted_at is null '
             )
             return self.cursor.fetchall()
         except Exception as e:
@@ -65,6 +65,49 @@ class KnowelegesDB_module:
                 f'INSERT INTO {self.courses_table}(name) '
                 f'VALUES("{name}")'
             )
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+
+
+    def add_theme(self, name):
+        try:
+            self.cursor.execute(
+                f'INSERT INTO {self.courses_table}(name) '
+                f'VALUES("{name}")'
+            )
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+
+
+    def delete_theme(self, them_id):
+        try:
+            self.cursor.execute(
+                f'UPDATE {self.themes_table} SET deleted_at = CURRENT_TIMESTAMP '
+                f'WHERE id = {them_id}')
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+
+
+    def delete_course(self, course_id):
+        try:
+            self.cursor.execute(
+                f'UPDATE {self.courses_table} SET deleted_at = CURRENT_TIMESTAMP '
+                f'WHERE id = {course_id}')
             self.conn.commit()
             return True
         except Exception as e:

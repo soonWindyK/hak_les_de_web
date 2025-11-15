@@ -40,7 +40,9 @@
                                     </div>
                                     <div style="display: flex; gap: 10px;">
                                         <button class="btn-admin btn-primary" style="flex: 1;">Редактировать</button>
-                                        <button class="btn-secondary" style="flex: 1;">Удалить</button>
+                                         <form method="POST">
+                                            <button type="submit" name="action" value="course_{{ course.id }}" class="btn-admin">Удалить</button>
+                                        </form>
                                     </div>
 
 

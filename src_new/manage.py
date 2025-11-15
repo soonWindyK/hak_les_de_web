@@ -134,32 +134,32 @@ def admin_events_add():
 # Маршруты для администратора - База знаний (Курсы)
 @app.route('/admin/courses', methods=['GET', 'POST'])
 def admin_courses_list():
-    from webModules.adminModules.admin_courses import admin_courses_list
-    return admin_courses_list(request)
+    from webModules.adminModules.admin_courses_list import admin_courses_list
+    return admin_courses_list()
 
 @app.route('/admin/course/add', methods=['GET', 'POST'])
 def admin_course_add():
-    from webModules.adminModules.admin_courses import admin_course_add
+    from webModules.adminModules.admin_courses_list import admin_course_add
     return admin_course_add(request)
 
 @app.route('/admin/course/<int:course_id>', methods=['GET', 'POST'])
 def admin_course_detail(course_id):
-    from webModules.adminModules.admin_courses import admin_course_detail
-    return admin_course_detail(request, course_id)
+    from webModules.adminModules.admin_courses_list import admin_course_detail
+    return admin_course_detail(course_id)
 
 @app.route('/admin/course/<int:course_id>/theme/add', methods=['GET', 'POST'])
 def admin_theme_add(course_id):
-    from webModules.adminModules.admin_courses import admin_theme_add
-    return admin_theme_add(request, course_id)
+    from webModules.adminModules.admin_courses_list import admin_theme_add
+    return admin_theme_add(course_id)
 
 @app.route('/admin/theme/<int:theme_id>/edit', methods=['GET', 'POST'])
 def admin_theme_edit(theme_id):
-    from webModules.adminModules.admin_courses import admin_theme_edit
+    from webModules.adminModules.admin_courses_list import admin_theme_edit
     return admin_theme_edit(request, theme_id)
 
 @app.route('/admin/theme/<int:theme_id>/delete', methods=['POST'])
 def admin_theme_delete(theme_id):
-    from webModules.adminModules.admin_courses import admin_theme_delete
+    from webModules.adminModules.admin_courses_list import admin_theme_delete
     return admin_theme_delete(request, theme_id)
 
 # Маршруты для модератора - НКО

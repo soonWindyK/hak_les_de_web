@@ -1,10 +1,12 @@
-from flask import render_template, redirect, url_for, flash, session
-from src_new.databaseModules.classKnowelegesDB import KnowelegesDB_module
+from flask import render_template, redirect, url_for, flash, session, request
+from databaseModules.classKnowelegesDB import KnowelegesDB_module
+from databaseModules.classUsersDB import UsersDB_module
 from werkzeug.utils import secure_filename
 import os
+from ..admin_checker import check_admin
 
 
-UPLOAD_FOLDER = 'static/uploads/courses'
+UPLOAD_FOLDER = 'file_dir/courses'
 ALLOWED_EXTENSIONS = {'pdf', 'mp4', 'avi', 'mov', 'mkv', 'doc', 'docx', 'ppt', 'pptx'}
 
 
@@ -12,10 +14,19 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def admin_courses_list(request):
-    """Список всех курсов для администратора"""
-    courses = KnowelegesDB_module().get_all_courses()
-    return render_template('admin/admin-courses-list.html', courses=courses)
+def admin_courses_list():
+    if check_admin():
+        if request.method == 'POST':
+            action = request.form.get('action', None)
+            if "course_" in action:
+                course_id = int(action.split("_")[-1])
+                if KnowelegesDB_module().delete_course(course_id):
+                    print('Удалено')
+                else:
+                    flash('Курс не удалось удалить', 'error')
+
+        courses = KnowelegesDB_module().get_all_courses()
+        return render_template('admin/admin-courses-list.html', courses=courses)
 
 
 def admin_course_add(request):
@@ -31,34 +42,39 @@ def admin_course_add(request):
         
         if course_id:
             flash('Курс успешно создан', 'success')
-            return redirect(url_for('admin_course_detail', course_id=course_id))
+            return redirect('/admin/courses')
         else:
             flash('Ошибка при создании курса', 'error')
     
     return render_template('admin/admin-course-add.html')
 
 
-def admin_course_detail(request, course_id):
+def admin_course_detail(course_id):
     """Детальная страница курса с темами"""
+    if check_admin():
+        course = KnowelegesDB_module().get_course_info(course_id)
+        if not course: return redirect('/admin/courses')
 
-    course = KnowelegesDB_module().get_course_info(course_id)
-    
-    if not course:
-        flash('Курс не найден', 'error')
-        return redirect(url_for('admin_courses_list'))
-    
-    themes = KnowelegesDB_module().get_themses_by_course_id(course_id)
-    return render_template('admin/admin-course-detail.html', course=course, themes=themes)
+        if request.method == 'POST':
+            action = request.form.get('action', None)
+            if "theme_" in action:
+                theme_id = int(action.split("_")[-1])
+                if KnowelegesDB_module().delete_theme(theme_id):
+                    print('Удалено')
+                else:
+                    flash('Тему не удалось удалить', 'error')
+
+        themes = KnowelegesDB_module().get_themses_by_course_id(course_id)
+        return render_template('admin/admin-course-detail.html', course=course, themes=themes)
 
 
-def admin_theme_add(request, course_id):
+def admin_theme_add(course_id):
     """Добавление новой темы к курсу"""
-    courses_db = CoursesDB_module()
-    course = courses_db.get_course_by_id(course_id)
-    
-    if not course:
-        flash('Курс не найден', 'error')
-        return redirect(url_for('admin_courses_list'))
+    course = KnowelegesDB_module().get_course_info(course_id)
+
+    # if not course:
+    #     flash('Курс не найден', 'error')
+    #     return redirect(url_for('admin_courses_list'))
     
     if request.method == 'POST':
         title = request.form.get('title')
@@ -83,30 +99,27 @@ def admin_theme_add(request, course_id):
                 file_path = os.path.join(UPLOAD_FOLDER, unique_filename)
                 file.save(file_path)
                 # Сохраняем относительный путь
-                file_path = f"uploads/courses/{unique_filename}"
-        
-        if not title or not description or not speaker:
-            flash('Заполните все обязательные поля', 'error')
-            return render_template('admin/admin-theme-add.html', course=course)
-        
+                file_path = f"file_dir/courses/{unique_filename}"
+
+
         if not file_path and not video_url:
             flash('Необходимо загрузить файл или указать ссылку на видео', 'error')
             return render_template('admin/admin-theme-add.html', course=course)
         
-        theme_id = courses_db.create_theme(
-            title=title,
-            description=description,
-            courses_id=course_id,
-            speaker=speaker,
-            file_path=file_path,
-            url=video_url
-        )
+        # theme_id = courses_db.create_theme(
+        #     title=title,
+        #     description=description,
+        #     courses_id=course_id,
+        #     speaker=speaker,
+        #     file_path=file_path,
+        #     url=video_url
+        # )
         
-        if theme_id:
-            flash('Тема успешно добавлена', 'success')
-            return redirect(url_for('admin_course_detail', course_id=course_id))
-        else:
-            flash('Ошибка при добавлении темы', 'error')
+        # if theme_id:
+        #     flash('Тема успешно добавлена', 'success')
+        #     return redirect(url_for('admin_course_detail', course_id=course_id))
+        # else:
+        #     flash('Ошибка при добавлении темы', 'error')
     
     return render_template('admin/admin-theme-add.html', course=course)
 
@@ -153,20 +166,3 @@ def admin_theme_edit(request, theme_id):
     return render_template('admin/admin-theme-edit.html', theme=theme, course=course)
 
 
-def admin_theme_delete(request, theme_id):
-    """Удаление темы"""
-    courses_db = CoursesDB_module()
-    theme = courses_db.get_theme_by_id(theme_id)
-    
-    if not theme:
-        flash('Тема не найдена', 'error')
-        return redirect(url_for('admin_courses_list'))
-    
-    course_id = theme['courses_id']
-    
-    if courses_db.delete_theme(theme_id):
-        flash('Тема успешно удалена', 'success')
-    else:
-        flash('Ошибка при удалении темы', 'error')
-    
-    return redirect(url_for('admin_course_detail', course_id=course_id))
