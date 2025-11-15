@@ -1,5 +1,4 @@
 from flask import Flask, render_template, session, redirect, url_for, request
-from datetime import datetime
 from databaseModules.classUsersDB import UsersDB_module
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
@@ -12,12 +11,12 @@ def home(): return render_template('index.html')
 def calendar(): return render_template('calendar.html')
 @app.route('/knowledge', methods=['GET', 'POST'])
 def knowledge():
-    from webModules.coursesModules.courses_page import courses_list_page
-    return courses_list_page()
+    from webModules.knowelegeModules.courses_page import before_courses
+    return before_courses(request=request)
 
 @app.route('/course/<int:course_id>', methods=['GET', 'POST'])
 def course_detail(course_id):
-    from webModules.coursesModules.courses_page import course_detail_page
+    from webModules.knowelegeModules.courses_page import course_detail_page
     return course_detail_page(course_id)
 
 @app.route('/nko/map')
@@ -26,7 +25,7 @@ def nko_map():
 
 @app.route('/theme/<int:theme_id>', methods=['GET', 'POST'])
 def theme_detail(theme_id):
-    from webModules.coursesModules.courses_page import theme_detail_page
+    from webModules.knowelegeModules.courses_page import theme_detail_page
     return theme_detail_page(theme_id)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -41,6 +40,7 @@ def register():
 
 @app.route('/news', methods=['GET', 'POST'])
 def news(): return render_template('news.html')
+
 @app.route('/news/<int:news_id>', methods=['GET', 'POST'])
 def news_detail(news_id):
     return render_template('news-detail.html')
@@ -50,9 +50,9 @@ def nko():
     from webModules.nkoModules.nko import nko_
     return nko_(request=request)
 
-@app.route('/nko/<int:nko_id>', methods=['GET', 'POST'])
-def nko_detail(nko_id):
-    return render_template('nko-detail.html')
+# @app.route('/nko/<int:nko_id>', methods=['GET', 'POST'])
+# def nko_detail(nko_id):
+#     return render_template('nko-detail.html')
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
