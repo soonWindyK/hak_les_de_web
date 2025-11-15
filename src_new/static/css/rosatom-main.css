@@ -811,11 +811,11 @@ textarea.form-control,
 }
 
 .form-actions {
+    grid-column: 1 / -1;
     display: flex;
     gap: 15px;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 2px solid var(--medium-gray);
+    justify-content: flex-end;
+    margin-top: 20px;
 }
 
 .form-actions button {
