@@ -12,7 +12,7 @@ def before_admin_events():
         if data_db['user_role'] == 2:
             return admin_events_()
 
-    return redirect('/login')
+    return redirect('/')
 
 
 def admin_events_():

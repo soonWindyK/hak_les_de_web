@@ -10,10 +10,8 @@ def before_admin_nko_():
         data_db = UsersDB_module().select_with_mail(mail=session['username'])
         if data_db['user_role'] == 2:
             return admin_nko_()
-        else:
-            return redirect('/news')
 
-    return redirect('/login')
+    return redirect('/')
 
 
 def admin_nko_():
