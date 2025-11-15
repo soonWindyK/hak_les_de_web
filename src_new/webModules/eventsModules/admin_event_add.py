@@ -14,7 +14,7 @@ def before_admin_event_add():
         else:
             return redirect('/news')
 
-    return redirect('/login')
+    return redirect('/')
 
 
 def admin_news_add():
