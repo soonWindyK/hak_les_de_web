@@ -69,12 +69,6 @@ def nko_add():
     # Здесь будет логика добавления НКО
     return render_template('nko-add.html')
 
-# Маршруты для волонтёра - НКО
-@app.route('/volunteer/nko', methods=['GET', 'POST'])
-def volunteer_nko_list():
-    # Здесь будет логика отображения списка НКО созданных волонтёром
-    return render_template('volunteer-nko-list.html')
-
 
 # Маршруты для администратора - Новости
 @app.route('/admin/news', methods=['GET', 'POST'])
