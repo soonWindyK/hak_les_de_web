@@ -1420,6 +1420,7 @@ textarea.form-control,
     display: flex;
     gap: 20px;
     height: 100%;
+    margin-top: 20px;
 }
 
 .nko-card:hover {
