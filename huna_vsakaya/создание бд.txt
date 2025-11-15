@@ -1,0 +1,138 @@
+1. ТАБЛИЦА ГОРОДОВ
+sql
+CREATE TABLE cities (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+2. ТАБЛИЦА ПОЛЬЗОВАТЕЛЕЙ
+sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL DEFAULT 'user', -- 'user', 'ngo', 'admin'
+    full_name VARCHAR(100),
+    phone VARCHAR(20),
+    organization_id INTEGER, -- ссылка на организацию, если пользователь представляет НКО
+    city_id INTEGER REFERENCES cities(id),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+3. ТАБЛИЦА ОРГАНИЗАЦИЙ (НКО)
+sql
+CREATE TABLE organizations (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NOT NULL, -- 'экология', 'образование', 'культура' и т.д.
+    description TEXT,
+    full_description TEXT,
+    address TEXT,
+    logo_url VARCHAR(500),
+    website_url VARCHAR(500),
+    social_links JSONB, -- {vk: 'url', telegram: 'url'}
+    contact_email VARCHAR(255),
+    contact_phone VARCHAR(20),
+    city_id INTEGER NOT NULL REFERENCES cities(id),
+    user_id INTEGER NOT NULL REFERENCES users(id), -- создатель организации
+    is_approved BOOLEAN DEFAULT FALSE, -- модерация
+    views_count INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+4. ТАБЛИЦА НОВОСТЕЙ
+sql
+CREATE TABLE news (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(500) NOT NULL,
+    content TEXT NOT NULL,
+    excerpt TEXT, -- краткое описание
+    image_url VARCHAR(500),
+    attachments JSONB, -- [{'name': 'file.pdf', 'url': '...'}]
+    city_id INTEGER REFERENCES cities(id), -- если NULL - новость для всех городов
+    is_global BOOLEAN DEFAULT FALSE,
+    author_id INTEGER NOT NULL REFERENCES users(id),
+    is_published BOOLEAN DEFAULT TRUE,
+    views_count INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+5. ТАБЛИЦА СОБЫТИЙ
+sql
+CREATE TABLE events (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(500) NOT NULL,
+    description TEXT NOT NULL,
+    short_description TEXT,
+    event_date TIMESTAMP NOT NULL,
+    event_end_date TIMESTAMP,
+    location VARCHAR(500),
+    image_url VARCHAR(500),
+    organization_id INTEGER REFERENCES organizations(id),
+    city_id INTEGER NOT NULL REFERENCES cities(id),
+    user_id INTEGER NOT NULL REFERENCES users(id), -- создатель события
+    event_type VARCHAR(50), -- 'волонтерство', 'мероприятие', 'сбор'
+    max_participants INTEGER,
+    is_approved BOOLEAN DEFAULT FALSE, -- модерация
+    registration_required BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+6. ТАБЛИЦА БАЗЫ ЗНАНИЙ
+sql
+CREATE TABLE knowledge_base (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(500) NOT NULL,
+    type VARCHAR(50) NOT NULL, -- 'file', 'video', 'link', 'article'
+    file_url VARCHAR(500),
+    video_url VARCHAR(500), -- для встроенного видео
+    external_url VARCHAR(500), -- для внешних ссылок
+    content TEXT, -- для статей
+    description TEXT,
+    category VARCHAR(100) NOT NULL, -- 'обучение', 'документы', 'ресурсы'
+    file_size INTEGER, -- в байтах
+    author_id INTEGER NOT NULL REFERENCES users(id),
+    is_published BOOLEAN DEFAULT TRUE,
+    download_count INTEGER DEFAULT 0,
+    view_count INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+⭐ СИСТЕМА ИЗБРАННОГО - ОТДЕЛЬНЫЕ ТАБЛИЦЫ
+7. ТАБЛИЦА ИЗБРАННЫХ НОВОСТЕЙ
+sql
+CREATE TABLE favorite_news (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    news_id INTEGER NOT NULL REFERENCES news(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, news_id) -- чтобы нельзя было добавить дважды
+);
+8. ТАБЛИЦА ИЗБРАННЫХ СОБЫТИЙ
+sql
+CREATE TABLE favorite_events (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    event_id INTEGER NOT NULL REFERENCES events(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, event_id)
+);
+9. ТАБЛИЦА ИЗБРАННЫХ МАТЕРИАЛОВ
+sql
+CREATE TABLE favorite_knowledge (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    knowledge_id INTEGER NOT NULL REFERENCES knowledge_base(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, knowledge_id)
+);
+10. ТАБЛИЦА ИЗБРАННЫХ ОРГАНИЗАЦИЙ
+sql
+CREATE TABLE favorite_organizations (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    organization_id INTEGER NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, organization_id)
+);
