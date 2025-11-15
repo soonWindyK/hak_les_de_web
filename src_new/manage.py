@@ -1,8 +1,11 @@
 from flask import Flask, render_template, session, redirect, url_for, request
 from databaseModules.classUsersDB import UsersDB_module
+from flask_wtf.csrf import CSRFProtect
 
+csrf = CSRFProtect()
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.secret_key = 'your-secret-key'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 @app.route('/', methods=['GET', 'POST'])
 def home(): return render_template('index.html')
@@ -39,7 +42,9 @@ def register():
     return before_reg_page(request=request)
 
 @app.route('/news', methods=['GET', 'POST'])
-def news(): return render_template('news.html')
+def news():
+    from webModules.newsModules.news import before_news
+    return before_news()
 
 @app.route('/news/<int:news_id>', methods=['GET', 'POST'])
 def news_detail(news_id):
@@ -100,9 +105,11 @@ def admin_news_list():
     return render_template('admin/admin-news-list.html')
 
 @app.route('/admin/news/add', methods=['GET', 'POST'])
+@csrf.exempt
 def admin_news_add():
-    # Здесь будет логика добавления новости
-    return render_template('admin/admin-news-add.html')
+    from webModules.newsModules.admin_news_add import before_admin_new_add
+    return before_admin_new_add()
+
 
 # Маршруты для администратора - События
 @app.route('/admin/events', methods=['GET', 'POST'])
