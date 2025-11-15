@@ -13,10 +13,6 @@
                     <a href="{{ url_for('news') }}" class="nav-link">Новости</a>
                 </nav>
                 <div class="header-actions">
-                    <button type="button" class="city-toggle-btn" id="cityToggleBtn">
-                        <span id="selectedCityText">Выберите город</span>
-                        <span class="dropdown-arrow">▼</span>
-                    </button>
                     {% if session.get('user_id') %}
                         <div class="user-menu">
                             <button type="button" class="user-menu-btn" id="userMenuBtn">
