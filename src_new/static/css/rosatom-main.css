@@ -39,7 +39,13 @@ main {
 }
 
 .container {
-
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.container_nko {
+    display:flex;
+    justify-content:center;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
@@ -830,6 +836,9 @@ textarea.form-control,
     background-color: var(--light-gray);
     padding: 20px;
     border-radius: 8px;
+}
+.form-margin {
+    margin-top:20px;
 }
 
 .form-section-title {
