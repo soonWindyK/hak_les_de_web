@@ -64,8 +64,8 @@ def admin_nko_list():
     # Здесь будет логика отображения списка НКО
     return render_template('admin/admin-nko-list.html')
 
-@app.route('/admin/nko/add', methods=['GET', 'POST'])
-def admin_nko_add():
+@app.route('/nko/add', methods=['GET', 'POST'])
+def nko_add():
     # Здесь будет логика добавления НКО
     return render_template('nko-add.html')
 
@@ -74,6 +74,7 @@ def admin_nko_add():
 def volunteer_nko_list():
     # Здесь будет логика отображения списка НКО созданных волонтёром
     return render_template('volunteer-nko-list.html')
+
 
 # Маршруты для администратора - Новости
 @app.route('/admin/news', methods=['GET', 'POST'])
