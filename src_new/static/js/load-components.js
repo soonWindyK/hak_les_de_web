@@ -1,3 +1,13 @@
+// Функция инициализации компонентов
+function initComponents() {
+    const cityBar = document.querySelector('.city-bar');
+    const cityToggleBtn = document.querySelector('.city-toggle');
+    const citySearch = document.querySelector('.city-search');
+    const cityItems = document.querySelectorAll('.city-item');
+    const selectedCityText = document.querySelector('.selected-city-text');
+
+    if (!cityBar || !cityToggleBtn) return;
+
     // Закрытие при клике вне полоски
     document.addEventListener('click', function(e) {
         if (cityBar && cityBar.classList.contains('active')) {
@@ -114,8 +124,22 @@ function filterContentByCity(city, cityName) {
     console.log('Фильтрация контента для города:', city);
 }
 
+// Функция загрузки компонентов
+function loadComponent(placeholderId, componentPath) {
+    const placeholder = document.getElementById(placeholderId);
+    if (placeholder) {
+        fetch(componentPath)
+            .then(response => response.text())
+            .then(html => {
+                placeholder.innerHTML = html;
+            })
+            .catch(error => console.error('Ошибка загрузки компонента:', error));
+    }
+}
+
 // Загрузка компонентов при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
+    initComponents();
     loadComponent('header-placeholder', 'components/header.html');
     loadComponent('footer-placeholder', 'components/footer.html');
 });

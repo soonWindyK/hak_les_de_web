@@ -25,9 +25,12 @@ class UsersDB_module:
 
     def select_with_mail(self, mail):
         try:
-            self.cursor.execute(f'SELECT * FROM {self.table_name}, roles '
-                                f'WHERE user_mail = "{mail}" '
-                                f'and roles.role_id = {self.table_name}.user_role')
+            self.cursor.execute(
+                f'SELECT * FROM {self.table_name}, roles '
+                f'WHERE user_mail = %s '
+                f'AND roles.role_id = {self.table_name}.user_role',
+                (mail,)
+            )
             return db_returner(data=self.cursor.fetchall())[0]
         except Exception as e:
             print(e)
@@ -37,8 +40,10 @@ class UsersDB_module:
 
     def update_password(self, mail, password):
         try:
-            self.cursor.execute(f'UPDATE {self.table_name} SET user_pass = "{password}" '
-                                f'WHERE user_mail = "{mail}"')
+            self.cursor.execute(
+                f'UPDATE {self.table_name} SET user_pass = %s WHERE user_mail = %s',
+                (password, mail)
+            )
             self.conn.commit()
             return True
         except Exception as e:
@@ -49,7 +54,10 @@ class UsersDB_module:
 
     def check_presence_mail(self, mail):
         try:
-            self.cursor.execute(f"SELECT user_mail FROM {self.table_name} WHERE user_mail = '{mail}'")
+            self.cursor.execute(
+                f"SELECT user_mail FROM {self.table_name} WHERE user_mail = %s",
+                (mail,)
+            )
             db_returner(self.cursor.fetchall())[0]['user_mail']
             return True
         except Exception as e:

@@ -3,12 +3,7 @@
     "development"
   ],
   "hints": {
-    "axe/forms": [
-      "default",
-      {
-        "label": "off"
-      }
-    ],
+    "axe/forms": "off",
     "compat-api/css": [
       "default",
       {
@@ -16,6 +11,7 @@
           "backdrop-filter"
         ]
       }
-    ]
+    ],
+    "disown-opener": "off"
   }
 }

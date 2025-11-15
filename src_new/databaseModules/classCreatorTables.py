@@ -1,4 +1,4 @@
-from src_new.databaseModules.helpModules import get_db_connection
+from databaseModules.helpModules import get_db_connection
 
 
 class CreatorTables:
@@ -68,7 +68,7 @@ class CreatorTables:
                                 'user_role INTEGER NOT NULL,'
                                 'user_birthday DATETIME NOT NULL,'
                                 'user_mail VARCHAR(256) NOT NULL UNIQUE,'
-                                'user_pass VARCHAR(64) NOT NULL,'
+                                'user_pass VARCHAR(256) NOT NULL,'
                                 'city_id INTEGER NOT NULL,'
                                 'user_created_time DATETIME DEFAULT CURRENT_TIMESTAMP,'
                                 f'FOREIGN KEY(user_role) REFERENCES {self.role}(role_id),'
@@ -78,171 +78,200 @@ class CreatorTables:
         finally:
             self.conn.close()
 
-#vv 
+    def create_nko_categories(self):
+        try:
+            self.cursor.execute(
+                'CREATE TABLE IF NOT EXISTS nko_categories ('
+                'category_id INTEGER AUTO_INCREMENT PRIMARY KEY,'
+                'category_name VARCHAR(100) NOT NULL UNIQUE,'
+                'category_description TEXT'
+                ')'
+            )
+            self.conn.commit()
+        finally:
+            self.conn.close()
 
-def create_nko_categories(self): 
-    try:
-        self.cursor.execute(
-            f'CREATE TABLE IF NOT EXISTS {self.organization} ('
-            'category_id SERIAL PRIMARY KEY,'
-            'category VARCHAR(100) NOT NULL,'
-            ')'
-        )
-        self.conn.commit()
-    finally:
-        self.conn.close()
+    def create_organizations(self):
+        try:
+            self.cursor.execute(
+                f'CREATE TABLE IF NOT EXISTS {self.organization} ('
+                'org_id INTEGER AUTO_INCREMENT PRIMARY KEY,'
+                'org_name VARCHAR(255) NOT NULL,'
+                'category_id INTEGER,'
+                'short_description TEXT,'
+                'full_description TEXT,'
+                'volunteer_functions TEXT,'
+                'address VARCHAR(500),'
+                'logo_url VARCHAR(500),'
+                'website_url VARCHAR(500),'
+                'vk_url VARCHAR(500),'
+                'telegram_url VARCHAR(500),'
+                'contact_email VARCHAR(255),'
+                'contact_phone VARCHAR(50),'
+                'city_id INTEGER NOT NULL,'
+                'user_id INTEGER NOT NULL,'
+                'is_approved BOOLEAN DEFAULT FALSE,'
+                'views_count INTEGER DEFAULT 0,'
+                'created_at DATETIME DEFAULT CURRENT_TIMESTAMP,'
+                'updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,'
+                f'FOREIGN KEY(city_id) REFERENCES {self.city}(city_id),'
+                f'FOREIGN KEY(user_id) REFERENCES {self.user}(user_id),'
+                'FOREIGN KEY(category_id) REFERENCES nko_categories(category_id)'
+                ')'
+            )
+            self.conn.commit()
+        finally:
+            self.conn.close()
 
+    def create_news(self):
+        try:
+            self.cursor.execute(
+                f'CREATE TABLE IF NOT EXISTS {self.news} ('
+                'news_id INTEGER AUTO_INCREMENT PRIMARY KEY,'
+                'title VARCHAR(500) NOT NULL,'
+                'content TEXT NOT NULL,'
+                'excerpt TEXT,'
+                'image_url VARCHAR(500),'
+                'attachments TEXT,'
+                'city_id INTEGER,'
+                'is_global BOOLEAN DEFAULT FALSE,'
+                'author_id INTEGER NOT NULL,'
+                'is_published BOOLEAN DEFAULT TRUE,'
+                'views_count INTEGER DEFAULT 0,'
+                'created_at DATETIME DEFAULT CURRENT_TIMESTAMP,'
+                'updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,'
+                f'FOREIGN KEY(city_id) REFERENCES {self.city}(city_id),'
+                f'FOREIGN KEY(author_id) REFERENCES {self.user}(user_id)'
+                ')'
+            )
+            self.conn.commit()
+        finally:
+            self.conn.close()
 
-def create_organizations(self):
-    try:
-        self.cursor.execute(
-            f'CREATE TABLE IF NOT EXISTS {self.organization} ('
-            'id SERIAL PRIMARY KEY,'
-            'name VARCHAR(255) NOT NULL,'
-            'description TEXT,'
-            'full_description TEXT,'
-            'address TEXT,'
-            'category_id INTEGER'
-            'logo_url VARCHAR(500),'
-            'website_url VARCHAR(500),'
-            'social_links JSONB,'
-            'contact_email VARCHAR(255),'
-            'contact_phone VARCHAR(20),'
-            'city_id INTEGER NOT NULL,'
-            'user_id INTEGER NOT NULL,'
-            'is_approved BOOLEAN DEFAULT FALSE,'
-            'views_count INTEGER DEFAULT 0,'
-            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
-            'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
-            f'FOREIGN KEY(city_id) REFERENCES {self.city}(id),'
-            f'FOREIGN KEY(user_id) REFERENCES {self.user}(user_id)'
-            f'FOREIGN KEY(category_id) REFERENCES {self.category}(category_id)'
-            ')'
-        )
-        self.conn.commit()
-    finally:
-        self.conn.close()
+    def create_events(self):
+        try:
+            self.cursor.execute(
+                f'CREATE TABLE IF NOT EXISTS {self.events} ('
+                'event_id INTEGER AUTO_INCREMENT PRIMARY KEY,'
+                'title VARCHAR(500) NOT NULL,'
+                'description TEXT NOT NULL,'
+                'short_description TEXT,'
+                'event_date DATETIME NOT NULL,'
+                'event_end_date DATETIME,'
+                'location VARCHAR(500),'
+                'image_url VARCHAR(500),'
+                'organization_id INTEGER,'
+                'city_id INTEGER NOT NULL,'
+                'user_id INTEGER NOT NULL,'
+                'event_type VARCHAR(50),'
+                'max_participants INTEGER,'
+                'is_approved BOOLEAN DEFAULT FALSE,'
+                'registration_required BOOLEAN DEFAULT FALSE,'
+                'created_at DATETIME DEFAULT CURRENT_TIMESTAMP,'
+                'updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,'
+                f'FOREIGN KEY(organization_id) REFERENCES {self.organization}(org_id),'
+                f'FOREIGN KEY(city_id) REFERENCES {self.city}(city_id),'
+                f'FOREIGN KEY(user_id) REFERENCES {self.user}(user_id)'
+                ')'
+            )
+            self.conn.commit()
+        finally:
+            self.conn.close()
 
-def create_news(self):
-    try:
-        self.cursor.execute(
-            f'CREATE TABLE IF NOT EXISTS {self.news} ('
-            'id SERIAL PRIMARY KEY,'
-            'title VARCHAR(500) NOT NULL,'
-            'content TEXT NOT NULL,'
-            'excerpt TEXT,'
-            'image_url VARCHAR(500),'
-            'attachments JSONB,'
-            'city_id INTEGER REFERENCES cities(id),'
-            'is_global BOOLEAN DEFAULT FALSE,'
-            'author_id INTEGER NOT NULL REFERENCES users(user_id),'
-            'is_published BOOLEAN DEFAULT TRUE,'
-            'views_count INTEGER DEFAULT 0,'
-            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
-            'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
-            ')'
-        )
-        self.conn.commit()
-    finally:
-        self.conn.close()
+    def create_knowledge_base(self):
+        try:
+            self.cursor.execute(
+                f'CREATE TABLE IF NOT EXISTS {self.knowledge_base} ('
+                'knowledge_id INTEGER AUTO_INCREMENT PRIMARY KEY,'
+                'title VARCHAR(500) NOT NULL,'
+                'type VARCHAR(50) NOT NULL,'
+                'file_url VARCHAR(500),'
+                'video_url VARCHAR(500),'
+                'external_url VARCHAR(500),'
+                'content TEXT,'
+                'description TEXT,'
+                'category VARCHAR(100) NOT NULL,'
+                'file_size INTEGER,'
+                'author_id INTEGER NOT NULL,'
+                'is_published BOOLEAN DEFAULT TRUE,'
+                'download_count INTEGER DEFAULT 0,'
+                'view_count INTEGER DEFAULT 0,'
+                'created_at DATETIME DEFAULT CURRENT_TIMESTAMP,'
+                'updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,'
+                f'FOREIGN KEY(author_id) REFERENCES {self.user}(user_id)'
+                ')'
+            )
+            self.conn.commit()
+        finally:
+            self.conn.close()
 
-def create_events(self):
-    try:
-        self.cursor.execute(
-            f'CREATE TABLE IF NOT EXISTS {self.events} ('
-            'id SERIAL PRIMARY KEY,'
-            'title VARCHAR(500) NOT NULL,'
-            'description TEXT NOT NULL,'
-            'short_description TEXT,'
-            'event_date TIMESTAMP NOT NULL,'
-            'event_end_date TIMESTAMP,'
-            'location VARCHAR(500),'
-            'image_url VARCHAR(500),'
-            'organization_id INTEGER REFERENCES organizations(id),'
-            'city_id INTEGER NOT NULL REFERENCES cities(id),'
-            'user_id INTEGER NOT NULL REFERENCES users(user_id),'
-            'event_type VARCHAR(50),'
-            'max_participants INTEGER,'
-            'is_approved BOOLEAN DEFAULT FALSE,'
-            'registration_required BOOLEAN DEFAULT FALSE,'
-            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
-            'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
-            ')'
-        )
-        self.conn.commit()
-    finally:
-        self.conn.close()
+    def create_favorite_news(self):
+        try:
+            self.cursor.execute(
+                f'CREATE TABLE IF NOT EXISTS {self.favorite_news} ('
+                'fav_news_id INTEGER AUTO_INCREMENT PRIMARY KEY,'
+                'user_id INTEGER NOT NULL,'
+                'news_id INTEGER NOT NULL,'
+                'created_at DATETIME DEFAULT CURRENT_TIMESTAMP,'
+                f'FOREIGN KEY(user_id) REFERENCES {self.user}(user_id) ON DELETE CASCADE,'
+                f'FOREIGN KEY(news_id) REFERENCES {self.news}(news_id) ON DELETE CASCADE,'
+                'UNIQUE KEY unique_user_news (user_id, news_id)'
+                ')'
+            )
+            self.conn.commit()
+        finally:
+            self.conn.close()
 
-def create_knowledge_base(self):
-    try:
-        self.cursor.execute(
-            f'CREATE TABLE IF NOT EXISTS {self.knowledge_base} ('
-            'id SERIAL PRIMARY KEY,'
-            'title VARCHAR(500) NOT NULL,'
-            'type VARCHAR(50) NOT NULL,'
-            'file_url VARCHAR(500),'
-            'video_url VARCHAR(500),'
-            'external_url VARCHAR(500),'
-            'content TEXT,'
-            'description TEXT,'
-            'category VARCHAR(100) NOT NULL,'
-            'file_size INTEGER,'
-            'author_id INTEGER NOT NULL REFERENCES users(user_id),'
-            'is_published BOOLEAN DEFAULT TRUE,'
-            'download_count INTEGER DEFAULT 0,'
-            'view_count INTEGER DEFAULT 0,'
-            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
-            'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
-            ')'
-        )
-        self.conn.commit()
-    finally:
-        self.conn.close()
+    def create_favorite_events(self):
+        try:
+            self.cursor.execute(
+                f'CREATE TABLE IF NOT EXISTS {self.favorite_events} ('
+                'fav_event_id INTEGER AUTO_INCREMENT PRIMARY KEY,'
+                'user_id INTEGER NOT NULL,'
+                'event_id INTEGER NOT NULL,'
+                'created_at DATETIME DEFAULT CURRENT_TIMESTAMP,'
+                f'FOREIGN KEY(user_id) REFERENCES {self.user}(user_id) ON DELETE CASCADE,'
+                f'FOREIGN KEY(event_id) REFERENCES {self.events}(event_id) ON DELETE CASCADE,'
+                'UNIQUE KEY unique_user_event (user_id, event_id)'
+                ')'
+            )
+            self.conn.commit()
+        finally:
+            self.conn.close()
 
-def create_favorite_news(self):
-    try:
-        self.cursor.execute(
-            f'CREATE TABLE IF NOT EXISTS {self.favorite_news} ('
-            'id SERIAL PRIMARY KEY,'
-            'user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,'
-            'news_id INTEGER NOT NULL REFERENCES news(id) ON DELETE CASCADE,'
-            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
-            'UNIQUE(user_id, news_id)'
-            ')'
-        )
-        self.conn.commit()
-    finally:
-        self.conn.close()
+    def create_favorite_knowledge(self):
+        try:
+            self.cursor.execute(
+                f'CREATE TABLE IF NOT EXISTS {self.favorite_knowledge} ('
+                'fav_knowledge_id INTEGER AUTO_INCREMENT PRIMARY KEY,'
+                'user_id INTEGER NOT NULL,'
+                'knowledge_id INTEGER NOT NULL,'
+                'created_at DATETIME DEFAULT CURRENT_TIMESTAMP,'
+                f'FOREIGN KEY(user_id) REFERENCES {self.user}(user_id) ON DELETE CASCADE,'
+                f'FOREIGN KEY(knowledge_id) REFERENCES {self.knowledge_base}(knowledge_id) ON DELETE CASCADE,'
+                'UNIQUE KEY unique_user_knowledge (user_id, knowledge_id)'
+                ')'
+            )
+            self.conn.commit()
+        finally:
+            self.conn.close()
 
-def create_favorite_events(self):
-    try:
-        self.cursor.execute(
-            f'CREATE TABLE IF NOT EXISTS {self.favorite_events} ('
-            'id SERIAL PRIMARY KEY,'
-            'user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,'
-            'event_id INTEGER NOT NULL REFERENCES events(id) ON DELETE CASCADE,'
-            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
-            'UNIQUE(user_id, event_id)'
-            ')'
-        )
-        self.conn.commit()
-    finally:
-        self.conn.close()
-
-def create_favorite_knowledge(self):
-    try:
-        self.cursor.execute(
-            f'CREATE TABLE IF NOT EXISTS {self.favorite_knowledge} ('
-            'id SERIAL PRIMARY KEY,'
-            'user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,'
-            'knowledge_id INTEGER NOT NULL REFERENCES knowledge_base(id) ON DELETE CASCADE,'
-            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
-            'UNIQUE(user_id, knowledge_id)'
-            ')'
-        )
-        self.conn.commit()
-    finally:
-        self.conn.close()
+    def create_favorite_organizations(self):
+        try:
+            self.cursor.execute(
+                f'CREATE TABLE IF NOT EXISTS {self.favorite_organizations} ('
+                'fav_org_id INTEGER AUTO_INCREMENT PRIMARY KEY,'
+                'user_id INTEGER NOT NULL,'
+                'org_id INTEGER NOT NULL,'
+                'created_at DATETIME DEFAULT CURRENT_TIMESTAMP,'
+                f'FOREIGN KEY(user_id) REFERENCES {self.user}(user_id) ON DELETE CASCADE,'
+                f'FOREIGN KEY(org_id) REFERENCES {self.organization}(org_id) ON DELETE CASCADE,'
+                'UNIQUE KEY unique_user_org (user_id, org_id)'
+                ')'
+            )
+            self.conn.commit()
+        finally:
+            self.conn.close()
 
 
 
