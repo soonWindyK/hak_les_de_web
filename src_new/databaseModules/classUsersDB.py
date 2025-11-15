@@ -34,7 +34,7 @@ class UsersDB_module:
 
     def update_password(self, mail, password):
         try:
-            self.cursor.execute(f'UPDATE {self.table_name} SET user_pass = {password} '
+            self.cursor.execute(f'UPDATE {self.table_name} SET user_pass = "{password}" '
                                 f'WHERE user_mail = "{mail}"')
             self.conn.commit()
             return True
