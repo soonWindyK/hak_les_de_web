@@ -9,4 +9,8 @@ def before_admin_panel(request):
 
 
 def admin_panel(request):
-    return render_template('admin/admin-panel.html')
+    mail = session['username']
+    data_db = UsersDB_module().select_with_mail(mail=mail)
+    data_db.pop('user_pass', None)
+    
+    return render_template('admin/admin-panel.html', data_profile=data_db)

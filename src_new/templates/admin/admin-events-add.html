@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить событие - Добрые дела Росатома</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rosatom-main.css') }}">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="page-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Добавить событие</h1>
+                    <p class="page-subtitle">Создание нового события</p>
+                </div>
+
+                <form method="POST" class="event-form">
+                    <div class="form-group">
+                        <label for="title">Название события</label>
+                        <input type="text" id="title" name="title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Описание</label>
+                        <textarea id="description" name="description" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="organizer">Организатор</label>
+                        <input type="text" id="organizer" name="organizer" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Место проведения</label>
+                        <input type="text" id="location" name="location" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">Город</label>
+                        <select id="city" name="city" required>
+                            {% for city in cities %}
+                            <option value="{{ city.id }}">{{ city.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Дата</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time_start">Время начала</label>
+                        <input type="time" id="time_start" name="time_start" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time_end">Время окончания</label>
+                        <input type="time" id="time_end" name="time_end" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Создать событие</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
