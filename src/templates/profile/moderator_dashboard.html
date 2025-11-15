@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Панель модератора - Добрые дела Росатома{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="profile-container">
+        {% include 'profile/sidebar.html' with role='moderator' %}
+        
+        <div class="profile-content">
+            <div class="profile-header">
+                <h1 class="profile-title">Панель модератора</h1>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">НКО на модерации</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">События на модерации</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Одобрено сегодня</div>
+                </div>
+            </div>
+
+            <h2 style="margin-bottom: 20px;">Требуют модерации</h2>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Тип</th>
+                        <th>Название</th>
+                        <th>Автор</th>
+                        <th>Дата создания</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>НКО</td>
+                        <td>Добрые сердца</td>
+                        <td>user123</td>
+                        <td>14.11.2025</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-action btn-approve">Одобрить</button>
+                                <a href="#" class="btn-action btn-edit">Редактировать</a>
+                                <button class="btn-action btn-delete">Отклонить</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Событие</td>
+                        <td>Мастер-класс по рисованию</td>
+                        <td>user456</td>
+                        <td>15.11.2025</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-action btn-approve">Одобрить</button>
+                                <a href="#" class="btn-action btn-edit">Редактировать</a>
+                                <button class="btn-action btn-delete">Отклонить</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
