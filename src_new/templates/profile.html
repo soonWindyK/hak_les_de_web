@@ -19,7 +19,7 @@
                         <div class="profile-avatar">👤</div>
                         <div class="profile-name">{{ data_profile.first_name }}</div>
                         <div class="profile-name">{{ data_profile.last_name }}</div>
-                        <span class="profile-role">Пользователь</span>
+                        <span class="profile-role"> {{ data_profile.role_name }} </span>
                     </div>
 
                     <ul class="profile-menu">
@@ -94,19 +94,28 @@
                             <div class="form-grid">
                                 <div class="form-field full-width">
                                     <label class="form-label">Текущий пароль</label>
-                                    <input type="password" name="current_password" class="form-control">
+                                    <input type="password" name="current_password" class="form-control"
+                                    minlength="6" maxlength="64">
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Новый пароль</label>
-                                    <input type="password" name="new_password" class="form-control">
+                                    <input type="password" name="new_password" class="form-control"
+                                    minlength="6" maxlength="64">
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Подтверждение пароля</label>
-                                    <input type="password" name="confirm_password" class="form-control">
+                                    <input type="password" name="confirm_password" class="form-control"
+                                    minlength="6" maxlength="64">
                                 </div>
+
                                 <div class="form-actions-password">
-                                    <button type="button" class="btn-cancel">Отмена</button>
-                                    <button type="submit" class="btn-save" name="btn-save-password">Изменить пароль</button>
+                                    <font  color="red">{{ error_pass }}</font >
+                                    <font  color="green">{{ succes_pass }}</font >
+                                    <form method="GET">
+                                        <button type="button" class="btn-cancel" name="action" value="btn-cancel-pass">Отмена</button>
+                                        <button type="submit" class="btn-save" name="action" value="btn-save-password">Изменить пароль</button>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>

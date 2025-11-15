@@ -23,13 +23,24 @@ class UsersDB_module:
         finally:
             self.conn.close()
 
-
     def select_with_mail(self, mail):
         try:
             self.cursor.execute(f'SELECT * FROM {self.table_name}, roles '
                                 f'WHERE user_mail = "{mail}" '
                                 f'and roles.role_id = {self.table_name}.user_role')
             return db_returner(data=self.cursor.fetchall())[0]
+        finally:
+            self.conn.close()
+
+    def update_password(self, mail, password):
+        try:
+            self.cursor.execute(f'UPDATE {self.table_name} SET user_pass = {password} '
+                                f'WHERE user_mail = "{mail}"')
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
         finally:
             self.conn.close()
 
