@@ -15,54 +15,60 @@
                 <div class="page-header">
                     <h1 class="page-title">Добавить событие</h1>
                     <p class="page-subtitle">Создание нового события</p>
+                    <font color="red">{{ error_msg }}</font>
                 </div>
 
                 <form method="POST" class="event-form">
                     <div class="form-group">
-                        <label for="title">Название события</label>
-                        <input type="text" id="title" name="title" required>
+                        <label for="title">Название события *</label>
+                        <input type="text" id="title" name="title" value="{{ data_from.title if data_from else '' }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Описание</label>
-                        <textarea id="description" name="description" required></textarea>
+                        <label for="description">Описание *</label>
+                        <textarea id="description" name="description" required>{{ data_from.description if data_from else '' }}</textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="organizer">Организатор</label>
-                        <input type="text" id="organizer" name="organizer" required>
+                        <label for="organizer">Организатор *</label>
+                        <input type="text" id="organizer" name="organizer" value="{{ data_from.organizer if data_from else '' }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="location">Место проведения</label>
-                        <input type="text" id="location" name="location" required>
+                        <label for="location">Место проведения *</label>
+                        <input type="text" id="location" name="location" value="{{ data_from.location if data_from else '' }}" required>
                     </div>
 
+
                     <div class="form-group">
-                        <label for="city">Город</label>
+                        <label for="city">Город *</label>
                         <select id="city" name="city" required>
-                            {% for city in cities %}
-                            <option value="{{ city.id }}">{{ city.name }}</option>
+                            <option value="city_id_0">Выберите город</option>
+                            {% for n, c, r in cities_list %}
+                            <option value="city_id_{{n}}"
+                                    {% if data_from and data_from.city == 'city_id_' ~ n|string %}selected{% endif %}>
+                                {{c}}, {{r}}
+                            </option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="date">Дата</label>
-                        <input type="date" id="date" name="date" required>
+                        <label for="date">Дата *</label>
+                        <input type="date" id="date" name="date" value="{{ data_from.date if data_from else '' }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="time_start">Время начала</label>
-                        <input type="time" id="time_start" name="time_start" required>
+                        <label for="time_start">Время начала *</label>
+                        <input type="time" id="time_start" name="time_start" value="{{ data_from.time_start if data_from else '' }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="time_end">Время окончания</label>
-                        <input type="time" id="time_end" name="time_end" required>
+                        <label for="time_end">Время окончания *</label>
+                        <input type="time" id="time_end" name="time_end" value="{{ data_from.time_end if data_from else '' }}" required>
                     </div>
 
-                    <button type="submit" class="btn-primary">Создать событие</button>
+                    <button type="submit" name="action" class="btn-primary" value="create-event">Создать событие</button>
                 </form>
             </div>
         </div>

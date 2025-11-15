@@ -11,7 +11,11 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 def home(): return render_template('index.html')
 
 @app.route('/calendar', methods=['GET', 'POST'])
-def calendar(): return render_template('calendar.html')
+def calendar():
+    from webModules.eventsModules.calendar import before_calendar
+    return before_calendar()
+
+
 @app.route('/knowledge', methods=['GET', 'POST'])
 def knowledge():
     from webModules.knowelegeModules.courses_page import before_courses
@@ -23,8 +27,7 @@ def course_detail(course_id):
     return course_detail_page(course_id)
 
 @app.route('/nko/map')
-def nko_map():
-    return render_template('nko-map.html')
+def nko_map(): return render_template('nko-map.html')
 
 @app.route('/theme/<int:theme_id>', methods=['GET', 'POST'])
 def theme_detail(theme_id):
@@ -119,8 +122,9 @@ def admin_events_list():
 
 @app.route('/admin/events/add', methods=['GET', 'POST'])
 def admin_events_add():
+    from webModules.eventsModules.admin_event_add import before_admin_event_add
     # Здесь будет логика добавления события
-    return render_template('admin/admin-events-add.html')
+    return before_admin_event_add()
 
 # Маршруты для администратора - База знаний (Курсы)
 @app.route('/admin/courses', methods=['GET', 'POST'])
