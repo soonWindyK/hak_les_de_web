@@ -16,6 +16,7 @@ def profile_page(request, mail):
     data_db = UsersDB_module().select_with_mail(mail=mail)
     data_db.pop('user_pass')
     action = request.form.get('action')
+    print(action)
 
     if action == 'btn-save-password':
         data_db = UsersDB_module().select_with_mail(mail=mail)

@@ -106,10 +106,11 @@
                                     <input type="password" name="confirm_password" class="form-control"
                                     minlength="6" maxlength="64">
                                 </div>
+
                                 <div class="form-actions-password">
                                     <font  color="red">{{ error_pass }}</font >
                                     <font  color="green">{{ succes_pass }}</font >
-                                    <form method="post">
+                                    <form method="GET">
                                         <button type="button" class="btn-cancel" name="action" value="btn-cancel-pass">Отмена</button>
                                         <button type="submit" class="btn-save" name="action" value="btn-save-password">Изменить пароль</button>
                                     </form>

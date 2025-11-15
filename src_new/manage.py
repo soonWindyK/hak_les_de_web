@@ -31,18 +31,18 @@ def nko(): return render_template('nko.html')
 @app.route('/nko/<int:nko_id>')
 def nko_detail(nko_id): return render_template('nko-detail.html')
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
     from webModules.profile_page import before_profile_page
     return before_profile_page(request=request)
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
     # Здесь будет логика выхода из системы
     session.clear()
     return redirect(url_for('home'))
 
-@app.route('/admin/panel')
+@app.route('/admin/panel', methods=['GET', 'POST'])
 def admin_panel():
     # Проверка роли пользователя
     user_role = session.get('user_role', 'user')
