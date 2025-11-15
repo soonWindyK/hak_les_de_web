@@ -412,6 +412,7 @@ main {
     background-color: var(--white);
     color: var(--primary-color);
     display: inline-block;
+    width: auto;
 }
 
 .btn-admin:hover {
