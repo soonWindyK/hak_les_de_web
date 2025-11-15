@@ -9,7 +9,7 @@ def before_nko_add(request):
     if 'username' in session:
         return nko_add(request=request)
 
-    return redirect('/login')
+    return redirect('/')
 
 def nko_add(request):
     cities_list = CityRegionDB_module().get_cities_list_with_region()

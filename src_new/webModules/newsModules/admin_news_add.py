@@ -12,10 +12,8 @@ def before_admin_new_add():
         data_db = UsersDB_module().select_with_mail(mail=session['username'])
         if data_db['user_role'] == 2:
             return admin_news_add()
-        else:
-            return redirect('/news')
 
-    return redirect('/login')
+    return redirect('/')
 
 
 def admin_news_add():
