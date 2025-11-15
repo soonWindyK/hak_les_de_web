@@ -15,8 +15,9 @@
                 <aside class="profile-sidebar">
                     <div class="profile-user-info">
                         <div class="profile-avatar">👤</div>
-                        <div class="profile-name">{{ session.get('user_name', 'Администратор') }}</div>
-                        <span class="profile-role">{{ session.get('user_role', 'admin') }}</span>
+                        <div class="profile-name">{{ data_profile.first_name }}</div>
+                        <div class="profile-name">{{ data_profile.last_name }}</div>
+                        <span class="profile-role"> {{ data_profile.role_name }} </span>
                     </div>
 
                     <ul class="profile-menu">
