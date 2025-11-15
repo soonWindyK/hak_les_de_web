@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}{{ nko.name }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        {% if nko.logo %}
+        <img src="{{ nko.logo }}" alt="{{ nko.name }}" style="max-width: 200px; margin-bottom: 20px;">
+        {% endif %}
+        
+        <h1>{{ nko.name }}</h1>
+        
+        <p><strong>{{ translations.category }}:</strong> {{ nko.category }}</p>
+        
+        <h3>{{ translations.description }}</h3>
+        <p>{{ nko.description }}</p>
+        
+        <h3>{{ translations.volunteers }}</h3>
+        <p>{{ nko.volunteers }}</p>
+        
+        {% if nko.address %}
+        <p><strong>{{ translations.address }}:</strong> {{ nko.address }}</p>
+        {% endif %}
+        
+        {% if nko.city %}
+        <p><strong>{{ translations.city }}:</strong> {{ nko.city }}</p>
+        {% endif %}
+        
+        {% if nko.website or nko.social %}
+        <h3>{{ translations.contacts }}</h3>
+        {% if nko.website %}
+        <p><a href="{{ nko.website }}" target="_blank">{{ translations.website }}</a></p>
+        {% endif %}
+        {% if nko.social %}
+        <p>{{ translations.social }}: {{ nko.social }}</p>
+        {% endif %}
+        {% endif %}
+        
+        <a href="/nko" class="btn btn-secondary">{{ translations.back }}</a>
+    </div>
+</div>
+{% endblock %}

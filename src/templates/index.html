@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+.hero {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.map-container {
+    background-color: var(--card-light);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    margin: 30px 0;
+}
+
+body.dark-theme .map-container {
+    background-color: var(--card-dark);
+}
+
+#map {
+    height: 600px;
+    border-radius: 10px;
+    border: 2px solid var(--primary-blue);
+}
+
+.info-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.city-info {
+    min-height: 200px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.legend-marker {
+    width: 20px;
+    height: 20px;
+    background-color: var(--primary-blue);
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .info-section {
+        grid-template-columns: 1fr;
+    }
+    
+    #map {
+        height: 400px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="hero">
+        <h1>{{ translations.mainTitle }}</h1>
+        <p style="font-size: 1.2rem; margin: 20px 0;">{{ translations.mainDescription }}</p>
+    </div>
+    
+    <div class="card" style="margin: 30px 0;">
+        <h2>{{ translations.whatYouCanDo }}</h2>
+        <ul style="line-height: 2; font-size: 1.1rem;">
+            <li>{{ translations.feature1 }}</li>
+            <li>{{ translations.feature2 }}</li>
+            <li>{{ translations.feature3 }}</li>
+            <li>{{ translations.feature4 }}</li>
+        </ul>
+    </div>
+    
+    <div style="text-align: center; margin: 40px 0;">
+        <h2>{{ translations.joinUs }}</h2>
+        <p style="font-size: 1.1rem; margin: 20px 0;">{{ translations.joinDescription }}</p>
+    </div>
+    
+    <div class="grid grid-2" style="margin: 30px 0;">
+        <div class="card" style="text-align: center;">
+            <h3>🗺️ {{ translations.mapTitle }}</h3>
+            <p>{{ translations.mapDescription }}</p>
+        </div>
+        <div class="card" style="text-align: center;">
+            <h3>📚 {{ translations.knowledgeTitle }}</h3>
+            <p>{{ translations.knowledgeDescription }}</p>
+        </div>
+        <div class="card" style="text-align: center;">
+            <h3>📅 {{ translations.calendarTitle }}</h3>
+            <p>{{ translations.calendarDescription }}</p>
+        </div>
+        <div class="card" style="text-align: center;">
+            <h3>📰 {{ translations.newsTitle }}</h3>
+            <p>{{ translations.newsDescription }}</p>
+        </div>
+    </div>
+    
+    <div class="map-container">
+        <h2 style="text-align: center; margin-bottom: 20px;">{{ translations.selectYourCity }}</h2>
+        <div id="map"></div>
+    </div>
+    
+    <div class="info-section">
+        <div class="card">
+            <h3 id="infoPanelTitle">{{ translations.infoPanelTitle }}</h3>
+            <div id="cityInfo" class="city-info">
+                <p id="selectCityText">{{ translations.selectCityText }}</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h4 id="legendTitle">{{ translations.legendTitle }}</h4>
+            <div class="legend-item">
+                <span class="legend-marker"></span>
+                <span id="legendText">{{ translations.legendText }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+{% endblock %}

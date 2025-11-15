@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}База знаний - Добрые дела Росатома{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/knowledge.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">База знаний</h1>
+            <p class="page-subtitle">Полезные материалы, видео и документы для волонтёров и НКО</p>
+        </div>
+
+        <div class="filters">
+            <select class="filter-select">
+                <option value="">Все категории</option>
+                <option value="video">Видео</option>
+                <option value="document">Документы</option>
+                <option value="guide">Руководства</option>
+                <option value="presentation">Презентации</option>
+            </select>
+            <input type="text" class="search-input" placeholder="Поиск материалов...">
+        </div>
+
+        <div class="knowledge-grid">
+            {% for item in knowledge_list %}
+            <div class="knowledge-card">
+                <div class="knowledge-thumbnail">{{ item.icon }}</div>
+                <div class="knowledge-content">
+                    <span class="knowledge-type">{{ item.type }}</span>
+                    <h3 class="knowledge-title">{{ item.title }}</h3>
+                    <p class="knowledge-description">{{ item.description }}</p>
+                    <div class="knowledge-actions">
+                        <a href="{{ item.view_url }}" class="btn-view">
+                            {% if item.type == 'Видео' %}Смотреть{% else %}Просмотр{% endif %}
+                        </a>
+                        {% if item.download_url %}
+                        <a href="{{ item.download_url }}" class="btn-download">Скачать</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

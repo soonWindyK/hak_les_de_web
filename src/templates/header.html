@@ -1,0 +1,46 @@
+<nav class="navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <span class="brand-text">РОСАТОМ</span>
+        </a>
+        
+        <button type="button" class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <div class="nav-menu" id="navMenu">
+            <a href="/" class="nav-link">{{ translations.home }}</a>
+            <a href="/nko" class="nav-link">{{ translations.nko }}</a>
+            <a href="/knowledge" class="nav-link">{{ translations.knowledge }}</a>
+            <a href="/calendar" class="nav-link">{{ translations.calendar }}</a>
+            <a href="/news" class="nav-link">{{ translations.news }}</a>
+            
+            <div class="nav-controls">
+                {% if session.user %}
+                <a href="/profile" class="nav-link user-link">
+                    <span>👤 {{ session.user.name }}</span>
+                </a>
+                <a href="/logout" class="btn btn-secondary">{{ translations.logout }}</a>
+                {% else %}
+                <a href="/login" class="btn btn-primary">{{ translations.login }}</a>
+                {% endif %}
+                
+                <div class="lang-switcher">
+                    <button type="button" onclick="toggleLangMenu()" class="lang-btn" id="currentLang">
+                        {{ 'RU' if lang == 'ru' else 'EN' }}
+                    </button>
+                    <div class="lang-menu" id="langMenu">
+                        <a href="#" onclick="changeLanguage('ru'); return false;">Русский</a>
+                        <a href="#" onclick="changeLanguage('en'); return false;">English</a>
+                    </div>
+                </div>
+                
+                <button type="button" class="theme-btn" onclick="toggleTheme()" id="themeBtn" aria-label="Переключить тему">
+                    <span id="themeIcon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>

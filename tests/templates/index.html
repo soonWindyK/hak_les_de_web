@@ -1,44 +1,61 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="container main-content">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center my-4" id="pageTitle">{{ translations.pageTitle }}</h1>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-12">
-            <div class="map-container">
-                <div id="map"></div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="row mt-4">
-        <div class="col-lg-8 col-md-12">
-            <div class="info-panel">
-                <h3 id="infoPanelTitle">{{ translations.infoPanelTitle }}</h3>
-                <div id="cityInfo" class="city-info">
-                    <p id="selectCityText">{{ translations.selectCityText }}</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4 col-md-12">
-            <div class="legend">
-                <h4 id="legendTitle">{{ translations.legendTitle }}</h4>
-                <div class="legend-item">
-                    <span class="legend-marker"></span>
-                    <span id="legendText">{{ translations.legendText }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
+{% block title %}Добрые дела Росатома - Главная{% endblock %}
 
-{% block extra_js %}
-<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <h1 class="hero-title">Добрые дела Росатома — все инициативы вашего города в одном месте</h1>
+        <p class="hero-text">
+            Единый портал для жителей, волонтёров и НКО, где собрана вся информация о социальных, 
+            экологических, культурных, образовательных и спортивных инициативах в городах присутствия Росатома.
+        </p>
+        <div class="hero-features">
+            <div class="feature-item">
+                <div class="feature-icon">🏢</div>
+                <p>Узнать, какие НКО и волонтёрские проекты работают в вашем городе</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📅</div>
+                <p>Посмотреть актуальные мероприятия и события</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📚</div>
+                <p>Найти полезные ресурсы и обучающие материалы</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🤝</div>
+                <p>Получить контакты координаторов для участия или поддержки инициатив</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <h2 class="section-title">Станьте частью добрых дел в вашем городе!</h2>
+        <div class="cta-grid">
+            <a href="{% url 'nko' %}" class="cta-card">
+                <div class="cta-icon">🗺️</div>
+                <h3>Карта НКО</h3>
+                <p>Найдите организации по городу и направлению деятельности</p>
+            </a>
+            <a href="{% url 'knowledge' %}" class="cta-card">
+                <div class="cta-icon">📖</div>
+                <h3>База знаний</h3>
+                <p>Просматривайте видео и материалы для скачивания</p>
+            </a>
+            <a href="{% url 'calendar' %}" class="cta-card">
+                <div class="cta-icon">📆</div>
+                <h3>Календарь</h3>
+                <p>Отметьте интересные события, чтобы ничего не пропустить</p>
+            </a>
+            <a href="{% url 'news' %}" class="cta-card">
+                <div class="cta-icon">📰</div>
+                <h3>Новости</h3>
+                <p>Будьте в курсе последних инициатив и грантов</p>
+            </a>
+        </div>
+    </div>
+</section>
 {% endblock %}

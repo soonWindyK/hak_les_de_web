@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ translations.calendar }} - {{ translations.pageTitle }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.event-card {
+    border-left: 4px solid var(--primary-blue);
+}
+
+.event-date {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ translations.calendar }}</h1>
+    
+    {% if city %}
+    <p>{{ translations.selectedCity }}: <strong>{{ city }}</strong></p>
+    {% endif %}
+    
+    <div class="grid grid-2">
+        {% for event in events %}
+        <div class="card event-card">
+            <div class="event-date">{{ event.date }}</div>
+            <h3>{{ event.title }}</h3>
+            <p><strong>{{ translations.time }}:</strong> {{ event.time }}</p>
+            {% if event.location %}
+            <p><strong>{{ translations.location }}:</strong> {{ event.location }}</p>
+            {% endif %}
+            {% if event.city %}
+            <p><strong>{{ translations.city }}:</strong> {{ event.city }}</p>
+            {% endif %}
+            <p>{{ event.description }}</p>
+            {% if event.organizer %}
+            <p><strong>{{ translations.organizer }}:</strong> {{ event.organizer }}</p>
+            {% endif %}
+        </div>
+        {% else %}
+        <p>{{ translations.noEvents }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

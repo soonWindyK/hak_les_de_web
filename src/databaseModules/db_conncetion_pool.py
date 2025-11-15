@@ -39,9 +39,7 @@ class ConnectionPool:
                     return conn
 
     def release_connection(self, conn):
-        """Возвращает использованное соединение обратно в пул"""
-        with self.lock:
-            self.queue.put(conn)
+        with self.lock: self.queue.put(conn)
 
 
 # Глобальные переменные для примера
