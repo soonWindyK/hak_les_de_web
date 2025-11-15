@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование НКО</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rosatom-main.css') }}">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="page-content">
+            <div class="container">
+                <div class="admin-form-container">
+                    <h1>Редактирование НКО</h1>
+                    
+                    <form method="POST" class="admin-form">
+                        <div class="form-group">
+                            <label for="name">Название</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Описание</label>
+                            <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Категория</label>
+                            <select id="category" name="category" class="form-control" required>
+                                <option value="">Выберите категорию</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="about">О нас</label>
+                            <textarea id="about" name="about" class="form-control" rows="4"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="volunteer_help">Помощь волонтёров</label>
+                            <textarea id="volunteer_help" name="volunteer_help" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Адрес</label>
+                            <input type="text" id="address" name="address" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Телефон</label>
+                            <input type="tel" id="phone" name="phone" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="social_link">Ссылка на соц. сеть</label>
+                            <input type="url" id="social_link" name="social_link" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="website">Ссылка на веб. сайт</label>
+                            <input type="url" id="website" name="website" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="icon">Путь к иконке</label>
+                            <input type="text" id="icon" name="icon" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city">Город</label>
+                            <select id="city" name="city" class="form-control" required>
+                                <option value="">Выберите город</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-admin btn-primary">Сохранить</button>
+                            <a href="{{ url_for('admin_nko_list') }}" class="btn-secondary">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+</body>
+</html>
