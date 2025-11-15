@@ -183,6 +183,20 @@ body {
     display: none;
 }
 
+.user-name {
+    color: var(--text-color);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.user-name:hover {
+    color: var(--primary-color);
+    background-color: var(--light-gray);
+}
+
 .btn-login {
     padding: 8px 20px;
     background-color: var(--primary-color);
@@ -192,6 +206,8 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .btn-login:hover {
@@ -369,4 +385,181 @@ body {
     .cta-grid {
         grid-template-columns: 1fr;
     }
+}
+
+
+/* User Menu Dropdown */
+.user-menu {
+    position: relative;
+}
+
+.user-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: var(--white);
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.user-menu-btn:hover {
+    background-color: var(--light-gray);
+}
+
+.user-avatar {
+    font-size: 20px;
+}
+
+.user-name {
+    font-weight: 500;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 220px;
+    overflow: hidden;
+    z-index: 1001;
+}
+
+.user-menu:hover .user-dropdown {
+    display: block;
+}
+
+.user-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.user-dropdown-item:hover {
+    background-color: var(--light-gray);
+}
+
+.dropdown-icon {
+    font-size: 18px;
+}
+
+/* Admin Panel Styles */
+.admin-content {
+    padding: 40px 0;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--medium-gray);
+}
+
+.admin-header h1 {
+    font-size: 32px;
+    color: var(--dark-color);
+}
+
+.admin-body {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-sections {
+    display: grid;
+    gap: 24px;
+}
+
+.admin-section {
+    background-color: var(--white);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--medium-gray);
+    transition: box-shadow 0.3s ease;
+}
+
+.admin-section:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.admin-section-title {
+    font-size: 22px;
+    color: var(--dark-color);
+    margin-bottom: 8px;
+}
+
+.admin-section-description {
+    color: #666;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-admin {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 2px solid var(--primary-color);
+    background-color: var(--white);
+    color: var(--primary-color);
+    display: inline-block;
+}
+
+.btn-admin:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-admin.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-admin.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-secondary {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 2px solid var(--medium-gray);
+    background-color: var(--white);
+    color: var(--text-color);
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background-color: var(--light-gray);
+}
+
+.profile-subtitle {
+    color: #666;
+    font-size: 16px;
+    margin-top: 8px;
 }

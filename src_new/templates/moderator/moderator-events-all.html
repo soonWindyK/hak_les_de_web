@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все события - Модератор</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/pages.css">
+    <link rel="stylesheet" href="../static/css/profile.css">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="container">
+            <div class="admin-content">
+                <div class="admin-header">
+                    <h1>Все события</h1>
+                    <a href="{{ url_for('moderator_events_pending') }}" class="btn-secondary">На модерации</a>
+                </div>
+                <div class="admin-body">
+                    <p>Здесь будет список всех событий</p>
+                    <!-- Здесь вы добавите функционал просмотра -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+</body>
+</html>

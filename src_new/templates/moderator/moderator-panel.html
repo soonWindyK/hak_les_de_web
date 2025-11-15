@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления - Модератор</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/pages.css">
+    <link rel="stylesheet" href="../static/css/profile.css">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="container">
+            <div class="profile-container">
+                <aside class="profile-sidebar">
+                    <div class="profile-user-info">
+                        <div class="profile-avatar">👤</div>
+                        <div class="profile-name">{{ session.get('user_name', 'Модератор') }}</div>
+                        <span class="profile-role">{{ session.get('user_role', 'moderator') }}</span>
+                    </div>
+
+                    <ul class="profile-menu">
+                        <li class="profile-menu-item">
+                            <a href="{{ url_for('profile') }}" class="profile-menu-link">
+                                <span class="profile-menu-icon">👤</span>
+                                <span>Мой профиль</span>
+                            </a>
+                        </li>
+                        <li class="profile-menu-item">
+                            <a href="{{ url_for('admin_panel') }}" class="profile-menu-link active">
+                                <span class="profile-menu-icon">⚙️</span>
+                                <span>Панель управления</span>
+                            </a>
+                        </li>
+                        <li class="profile-menu-item">
+                            <a href="{{ url_for('home') }}" class="profile-menu-link">
+                                <span class="profile-menu-icon">🏠</span>
+                                <span>На главную</span>
+                            </a>
+                        </li>
+                        <li class="profile-menu-item">
+                            <a href="{{ url_for('logout') }}" class="profile-menu-link">
+                                <span class="profile-menu-icon">🚪</span>
+                                <span>Выход</span>
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+                
+                <div class="profile-content">
+                    <div class="profile-header">
+                        <h1 class="profile-title">Панель управления</h1>
+                        <p class="profile-subtitle">Модератор</p>
+                    </div>
+
+                    <div class="admin-sections">
+                        <div class="admin-section">
+                            <h2 class="admin-section-title">Модерация НКО</h2>
+                            <p class="admin-section-description">Проверка и одобрение заявок на добавление НКО</p>
+                            <div class="admin-actions">
+                                <a href="{{ url_for('moderator_nko_pending') }}" class="btn-admin">На модерации</a>
+                                <a href="{{ url_for('moderator_nko_all') }}" class="btn-admin">Все НКО</a>
+                            </div>
+                        </div>
+
+                        <div class="admin-section">
+                            <h2 class="admin-section-title">Модерация событий</h2>
+                            <p class="admin-section-description">Проверка и одобрение пользовательских событий</p>
+                            <div class="admin-actions">
+                                <a href="{{ url_for('moderator_events_pending') }}" class="btn-admin">На модерации</a>
+                                <a href="{{ url_for('moderator_events_all') }}" class="btn-admin">Все события</a>
+                            </div>
+                        </div>
+
+                        <div class="admin-section">
+                            <h2 class="admin-section-title">Статистика модерации</h2>
+                            <p class="admin-section-description">Просмотр статистики модерации контента</p>
+                            <div class="admin-actions">
+                                <a href="{{ url_for('moderator_stats') }}" class="btn-admin">Статистика</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>

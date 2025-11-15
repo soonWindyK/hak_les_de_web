@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - Добрые дела Росатома</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/pages.css">
+    <link rel="stylesheet" href="../static/css/auth.css">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="page-content">
+            <div class="container">
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <h1 class="auth-title">Регистрация</h1>
+                        <p class="auth-subtitle">Создайте аккаунт для участия в добрых делах</p>
+
+                        <form method="post" class="auth-form">
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="last_name">Фамилия</label>
+                                <input type="text" id="last_name" name="last_name" class="form-control" required>
+                            </div>
+
+                            <div class="form-row">
+                                
+                                <div class="form-group">
+                                    <label for="first_name">Имя</label>
+                                    <input type="text" id="first_name" name="first_name" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="patronymic">Отчество</label>
+                                    <input type="text" id="patronymic" name="patronymic" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="birth_date">Дата рождения</label>
+                                <input type="date" id="birth_date" name="birth_date" class="form-control" required>
+                            </div>
+            
+                            <div class="form-group">
+                                <label for="password">Пароль</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password_confirm">Подтверждение пароля</label>
+                                <input type="password" id="password_confirm" name="password_confirm" class="form-control" required>
+                            </div>
+
+                            <button type="submit" class="btn-submit">Зарегистрироваться</button>
+                        </form>
+
+                        <div class="auth-footer">
+                            <p>Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>

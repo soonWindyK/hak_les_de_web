@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зелёный город - Добрые дела Росатома</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/pages.css">
+    <link rel="stylesheet" href="../static/css/nko.css">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="page-content">
+            <div class="container">
+                <div class="nko-detail">
+                    <div class="nko-detail-header">
+                        <div class="nko-detail-logo">🌳</div>
+                        <div class="nko-detail-info">
+                            <span class="nko-category">Экология</span>
+                            <h1>Зелёный город</h1>
+                        </div>
+                    </div>
+
+                    <div class="nko-detail-section">
+                        <h2>О нас</h2>
+                        <p>Некоммерческая организация "Зелёный город" работает с 2015 года и занимается озеленением города, организацией экологических акций и просветительской деятельностью среди населения.</p>
+                    </div>
+
+                    <div class="nko-detail-section">
+                        <h2>Направления деятельности</h2>
+                        <p>Озеленение городских территорий, организация субботников, экологическое просвещение, работа с молодёжью, проведение экологических акций и мероприятий.</p>
+                    </div>
+
+                    <div class="nko-detail-section">
+                        <h2>Как помогают волонтёры</h2>
+                        <p>Волонтёры участвуют в посадке деревьев и кустарников, уборке территорий, проведении экологических уроков в школах, организации мероприятий и акций.</p>
+                    </div>
+
+                    <div class="nko-detail-section">
+                        <h2>Контактная информация</h2>
+                        <div class="contact-info">
+                            <div class="contact-item">📍 Адрес: г. Саров, ул. Ленина, 10</div>
+                            <div class="contact-item">📧 Email: <a href="mailto:info@green-city.ru">info@green-city.ru</a></div>
+                            <div class="contact-item">📱 Телефон: <a href="tel:+79001234567">+7 (900) 123-45-67</a></div>
+                            <div class="contact-item">🌐 Сайт: <a href="https://green-city.ru" target="_blank">green-city.ru</a></div>
+                            <div class="contact-item">📱 ВКонтакте: <a href="https://vk.com/green_city" target="_blank">vk.com/green_city</a></div>
+                        </div>
+                    </div>
+
+                    <div class="nko-detail-section">
+                        <a href="{{ url_for('nko') }}" class="btn-more">← Вернуться к списку НКО</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>

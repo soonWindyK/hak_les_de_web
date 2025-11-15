@@ -1,53 +1,59 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}{{ translations.calendar }} - {{ translations.pageTitle }}{% endblock %}
+{% block title %}Календарь событий - Добрые дела Росатома{% endblock %}
 
 {% block extra_css %}
-<style>
-.event-card {
-    border-left: 4px solid var(--primary-blue);
-}
-
-.event-date {
-    background-color: var(--primary-blue);
-    color: var(--white);
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-</style>
+<link rel="stylesheet" href="{% static 'css/calendar.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ translations.calendar }}</h1>
-    
-    {% if city %}
-    <p>{{ translations.selectedCity }}: <strong>{{ city }}</strong></p>
-    {% endif %}
-    
-    <div class="grid grid-2">
-        {% for event in events %}
-        <div class="card event-card">
-            <div class="event-date">{{ event.date }}</div>
-            <h3>{{ event.title }}</h3>
-            <p><strong>{{ translations.time }}:</strong> {{ event.time }}</p>
-            {% if event.location %}
-            <p><strong>{{ translations.location }}:</strong> {{ event.location }}</p>
-            {% endif %}
-            {% if event.city %}
-            <p><strong>{{ translations.city }}:</strong> {{ event.city }}</p>
-            {% endif %}
-            <p>{{ event.description }}</p>
-            {% if event.organizer %}
-            <p><strong>{{ translations.organizer }}:</strong> {{ event.organizer }}</p>
-            {% endif %}
+<div class="page-content">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Календарь событий</h1>
+            <p class="page-subtitle">Актуальные мероприятия и события в вашем городе</p>
         </div>
-        {% else %}
-        <p>{{ translations.noEvents }}</p>
-        {% endfor %}
+
+        <div class="calendar-container">
+            <aside class="calendar-sidebar">
+                <h3>Фильтры</h3>
+                <div class="calendar-filter">
+                    <label>
+                        <input type="checkbox" checked>
+                        Социальные
+                    </label>
+                    <label>
+                        <input type="checkbox" checked>
+                        Экологические
+                    </label>
+                    <label>
+                        <input type="checkbox" checked>
+                        Культурные
+                    </label>
+                    <label>
+                        <input type="checkbox" checked>
+                        Образовательные
+                    </label>
+                    <label>
+                        <input type="checkbox" checked>
+                        Спортивные
+                    </label>
+                </div>
+            </aside>
+
+            <div class="calendar-events">
+                {% for event in events_list %}
+                <div class="event-card">
+                    <span class="event-date">{{ event.date }}</span>
+                    <h3 class="event-title">{{ event.title }}</h3>
+                    <p class="event-organizer">Организатор: {{ event.organizer }}</p>
+                    <p class="event-description">{{ event.description }}</p>
+                    <p class="event-location">📍 {{ event.location }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

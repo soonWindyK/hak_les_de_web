@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости - Добрые дела Росатома</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/pages.css">
+    <link rel="stylesheet" href="../static/css/news.css">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="page-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Новости</h1>
+                    <p class="page-subtitle">Последние события и инициативы в городах присутствия Росатома</p>
+                </div>
+
+                <div class="filters">
+                    <select class="filter-select">
+                        <option value="">Все категории</option>
+                        <option value="social">Социальные</option>
+                        <option value="ecology">Экология</option>
+                        <option value="culture">Культура</option>
+                        <option value="education">Образование</option>
+                        <option value="sport">Спорт</option>
+                    </select>
+                </div>
+
+                <div class="news-grid">
+                    <article class="news-card">
+                        <div class="news-image">🌳</div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span>📅 15.11.2025</span>
+                                <span>📍 Саров</span>
+                            </div>
+                            <h2 class="news-title">Волонтёры высадили 500 деревьев</h2>
+                            <p class="news-excerpt">В рамках экологической акции волонтёры города высадили более 500 саженцев в городском парке</p>
+                            <a href="{{ url_for('news_detail', news_id=1) }}" class="btn-more">Читать далее</a>
+                        </div>
+                    </article>
+                    <article class="news-card">
+                        <div class="news-image">🎨</div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span>📅 12.11.2025</span>
+                                <span>📍 Обнинск</span>
+                            </div>
+                            <h2 class="news-title">Открылась выставка детских рисунков</h2>
+                            <p class="news-excerpt">В городском музее открылась выставка работ юных художников</p>
+                            <a href="{{ url_for('news_detail', news_id=2) }}" class="btn-more">Читать далее</a>
+                        </div>
+                    </article>
+                    <article class="news-card">
+                        <div class="news-image">🤝</div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span>📅 10.11.2025</span>
+                                <span>📍 Северск</span>
+                            </div>
+                            <h2 class="news-title">Благотворительная акция помогла 50 семьям</h2>
+                            <p class="news-excerpt">Волонтёры собрали и передали нуждающимся семьям продукты и вещи</p>
+                            <a href="{{ url_for('news_detail', news_id=3) }}" class="btn-more">Читать далее</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>

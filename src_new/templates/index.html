@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добрые дела Росатома - Главная</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/pages.css">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">Добрые дела Росатома — все инициативы вашего города в одном месте</h1>
+                <p class="hero-text">
+                    Единый портал для жителей, волонтёров и НКО, где собрана вся информация о социальных, 
+                    экологических, культурных, образовательных и спортивных инициативах в городах присутствия Росатома.
+                </p>
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🏢</div>
+                        <p>Узнать, какие НКО и волонтёрские проекты работают в вашем городе</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📅</div>
+                        <p>Посмотреть актуальные мероприятия и события</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📚</div>
+                        <p>Найти полезные ресурсы и обучающие материалы</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🤝</div>
+                        <p>Получить контакты координаторов для участия или поддержки инициатив</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="section-title">Станьте частью добрых дел в вашем городе!</h2>
+                <div class="cta-grid">
+                    <a href="{{ url_for('nko') }}" class="cta-card">
+                        <div class="cta-icon">🗺️</div>
+                        <h3>Карта НКО</h3>
+                        <p>Найдите организации по городу и направлению деятельности</p>
+                    </a>
+                    <a href="{{ url_for('knowledge') }}" class="cta-card">
+                        <div class="cta-icon">📖</div>
+                        <h3>База знаний</h3>
+                        <p>Просматривайте видео и материалы для скачивания</p>
+                    </a>
+                    <a href="{{ url_for('calendar') }}" class="cta-card">
+                        <div class="cta-icon">📆</div>
+                        <h3>Календарь</h3>
+                        <p>Отметьте интересные события, чтобы ничего не пропустить</p>
+                    </a>
+                    <a href="{{ url_for('news') }}" class="cta-card">
+                        <div class="cta-icon">📰</div>
+                        <h3>Новости</h3>
+                        <p>Будьте в курсе последних инициатив и грантов</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
