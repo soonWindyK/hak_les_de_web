@@ -74,13 +74,16 @@ def logout():
 def admin_panel():
     from webModules.adminModules.admin_panel import admin_panel
 
-    user_role = UsersDB_module().select_with_mail(mail=session['username'])['role_id']
+    mail = session['username']
+    data_db = UsersDB_module().select_with_mail(mail=mail)
+    user_role = data_db['role_id']
     print(session)
 
     if user_role == 2:  # admin
         return admin_panel(request)
     elif user_role == 3:  # moder
-        return render_template('moderator/moderator-panel.html')
+        data_db.pop('user_pass', None)
+        return render_template('moderator/moderator-panel.html', data_profile=data_db)
     else:
         return redirect('/')
 
