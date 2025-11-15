@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/knowledge.css') }}">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="page-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">{{ course.name }}</h1>
+                    <a href="{{ url_for('knowledge') }}" class="btn btn-secondary">Вернуться к курсам</a>
+                </div>
+
+                <div class="knowledge-grid">
+                    {% if themes %}
+                        {% for theme in themes %}
+                            <div class="knowledge-card">
+                                <div class="knowledge-thumbnail">📖</div>
+                                <div class="knowledge-content">
+                                    <span class="knowledge-type">Тема</span>
+                                    <h3 class="knowledge-title">{{ theme.title }}</h3>
+                                    <p class="theme-speaker"><strong>Спикер:</strong> {{ theme.speaker }}</p>
+                                    <p class="knowledge-description">{{ theme.description }}</p>
+                                    <div class="knowledge-actions">
+                                        <a href="{{ url_for('theme_detail', theme_id=theme.id) }}" class="btn-view">Просмотреть материал</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>В этом курсе пока нет тем.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

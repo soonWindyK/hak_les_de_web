@@ -3,25 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список новостей - Администратор</title>
+    <title>Управление новостями</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/news.css') }}">
 </head>
 <body>
     {% include 'components/header.html' %}
 
     <main>
-        <div class="container">
-            <div class="admin-content">
-                <div class="admin-header">
-                    <h1>Список новостей</h1>
-                    <a href="{{ url_for('admin_news_add') }}" class="btn-admin btn-primary">Добавить новость</a>
-                    <a href="{{ url_for('admin_panel') }}" class="btn-admin">Назад</a>
+        <div class="page-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Управление новостями</h1>
+                    <div class="page-actions">
+                        <a href="{{ url_for('admin_news_add') }}" class="btn-admin btn-primary">Добавить новость</a>
+                        <a href="{{ url_for('admin_panel') }}" class="btn-secondary">Назад в панель</a>
+                    </div>
                 </div>
-                <div class="admin-body">
-                    <p>Здесь будет список новостей с возможностью редактирования и удаления</p>
-                    <!-- Здесь вы добавите функционал работы с базой данных -->
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div class="news-grid">
+                    {% if news %}
+                        {% for item in news %}
+                            <article class="news-card">
+                                {% if item.avatar %}
+                                    <img src="{{ url_for('static', filename=item.avatar) }}" alt="{{ item.title }}" class="news-image">
+                                {% else %}
+                                    <div class="news-image">📰</div>
+                                {% endif %}
+                                <div class="news-content">
+                                    <div class="news-meta">
+                                        <span>📅 {{ item.created_time.strftime('%d.%m.%Y') }}</span>
+                                        <span>📍 {{ item.city }}</span>
+                                    </div>
+                                    <h2 class="news-title">{{ item.title }}</h2>
+                                    <p class="news-excerpt">{{ item.description }}</p>
+                                    {% if item.attached_files %}
+                                        <a href="{{ url_for('static', filename=item.attached_files) }}" class="news-attachment" download>📎 Прикреплённый файл</a>
+                                    {% endif %}
+                                    <div class="news-actions">
+                                        <a href="{{ url_for('admin_news_edit', news_id=item.id) }}" class="btn-admin btn-primary">Редактировать</a>
+                                        <form method="POST" action="{{ url_for('admin_news_delete', news_id=item.id) }}" style="display: inline;">
+                                            <button type="submit" class="btn-secondary" onclick="return confirm('Вы уверены?')">Удалить</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    {% else %}
+                        <p>Новости пока не добавлены.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

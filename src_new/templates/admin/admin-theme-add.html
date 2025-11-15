@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить тему</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/knowledge.css') }}">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="page-content">
+            <div class="container">
+                <div class="admin-form-container">
+                    <h1>Добавить тему к курсу: {{ course.name }}</h1>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form method="POST" enctype="multipart/form-data" class="admin-form">
+                        <div class="form-group">
+                            <label for="title">Название темы *</label>
+                            <input type="text" id="title" name="title" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Описание *</label>
+                            <textarea id="description" name="description" rows="5" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="speaker">Спикер *</label>
+                            <input type="text" id="speaker" name="speaker" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Загрузить файл (PDF, видео, документы)</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="file" name="file" class="file-upload-input" accept=".pdf,.mp4,.avi,.mov,.mkv,.doc,.docx,.ppt,.pptx">
+                                <label for="file" class="file-upload-label">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 15V3M12 3L8 7M12 3L16 7" stroke="#00A3E0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 17L2 19C2 20.1046 2.89543 21 4 21L20 21C21.1046 21 22 20.1046 22 19V17" stroke="#00A3E0" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                    <div class="file-upload-text">
+                                        <strong>Нажмите для выбора файла</strong>
+                                        <span>Допустимые форматы: PDF, MP4, AVI, MOV, MKV, DOC, DOCX, PPT, PPTX</span>
+                                    </div>
+                                </label>
+                                <div id="file-name" class="file-name"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="video_url">Или укажите ссылку на видео (YouTube, VK и т.д.)</label>
+                            <input type="url" id="video_url" name="video_url" placeholder="https://...">
+                        </div>
+
+                        <p><small>* Необходимо загрузить файл или указать ссылку на видео</small></p>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-admin btn-primary">Добавить тему</button>
+                            <a href="{{ url_for('admin_course_detail', course_id=course.id) }}" class="btn-secondary">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script>
+        document.getElementById('file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            const fileNameDiv = document.getElementById('file-name');
+            if (fileName) {
+                fileNameDiv.textContent = 'Выбран файл: ' + fileName;
+                fileNameDiv.style.display = 'block';
+            } else {
+                fileNameDiv.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

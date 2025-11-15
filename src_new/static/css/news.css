@@ -136,3 +136,27 @@
         gap: 5px;
     }
 }
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.news-attachment {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.news-attachment:hover {
+    text-decoration: underline;
+}
+
+.news-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}

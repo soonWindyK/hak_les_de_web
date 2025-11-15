@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>База знаний - Добрые дела Росатома</title>
+    <title>Управление курсами</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/knowledge.css') }}">
@@ -15,20 +15,20 @@
         <div class="page-content">
             <div class="container">
                 <div class="page-header">
-                    <h1 class="page-title">База знаний</h1>
-                    <p class="page-subtitle">Полезные материалы, видео и документы для волонтёров и НКО</p>
+                    <h1 class="page-title">Управление курсами</h1>
+                    <div class="page-actions">
+                        <a href="{{ url_for('admin_course_add') }}" class="btn-admin btn-primary">Добавить курс</a>
+                        <a href="{{ url_for('admin_panel') }}" class="btn-secondary">Назад в панель</a>
+                    </div>
                 </div>
 
-                <div class="filters">
-                    <select class="filter-select">
-                        <option value="">Все категории</option>
-                        <option value="video">Видео</option>
-                        <option value="document">Документы</option>
-                        <option value="guide">Руководства</option>
-                        <option value="presentation">Презентации</option>
-                    </select>
-                    <input type="text" class="search-input" placeholder="Поиск материалов...">
-                </div>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
 
                 <div class="knowledge-grid">
                     {% if courses %}
@@ -38,7 +38,7 @@
                                 <div class="knowledge-content">
                                     <h3 class="knowledge-title">{{ course.name }}</h3>
                                     <div class="knowledge-actions">
-                                        <a href="{{ url_for('course_detail', course_id=course.id) }}" class="btn-view">Просмотреть темы</a>
+                                        <a href="{{ url_for('admin_course_detail', course_id=course.id) }}" class="btn-view">Просмотр тем</a>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,5 @@
     </main>
 
     {% include 'components/footer.html' %}
-
-    <script src="../static/js/script.js"></script>
 </body>
 </html>

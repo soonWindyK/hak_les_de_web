@@ -11,7 +11,19 @@ def home(): return render_template('index.html')
 @app.route('/calendar', methods=['GET', 'POST'])
 def calendar(): return render_template('calendar.html')
 @app.route('/knowledge', methods=['GET', 'POST'])
-def knowledge(): return render_template('knowledge.html')
+def knowledge():
+    from webModules.coursesModules.courses_page import courses_list_page
+    return courses_list_page()
+
+@app.route('/course/<int:course_id>', methods=['GET', 'POST'])
+def course_detail(course_id):
+    from webModules.coursesModules.courses_page import course_detail_page
+    return course_detail_page(course_id)
+
+@app.route('/theme/<int:theme_id>', methods=['GET', 'POST'])
+def theme_detail(theme_id):
+    from webModules.coursesModules.courses_page import theme_detail_page
+    return theme_detail_page(theme_id)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -98,16 +110,36 @@ def admin_events_add():
     # Здесь будет логика добавления события
     return render_template('admin/admin-events-add.html')
 
-# Маршруты для администратора - База знаний
-@app.route('/admin/knowledge', methods=['GET', 'POST'])
-def admin_knowledge_list():
-    # Здесь будет логика отображения списка материалов
-    return render_template('admin/admin-knowledge-list.html')
+# Маршруты для администратора - База знаний (Курсы)
+@app.route('/admin/courses', methods=['GET', 'POST'])
+def admin_courses_list():
+    from webModules.adminModules.admin_courses import admin_courses_list
+    return admin_courses_list(request)
 
-@app.route('/admin/knowledge/add', methods=['GET', 'POST'])
-def admin_knowledge_add():
-    # Здесь будет логика добавления материала
-    return render_template('admin/admin-knowledge-add.html')
+@app.route('/admin/course/add', methods=['GET', 'POST'])
+def admin_course_add():
+    from webModules.adminModules.admin_courses import admin_course_add
+    return admin_course_add(request)
+
+@app.route('/admin/course/<int:course_id>', methods=['GET', 'POST'])
+def admin_course_detail(course_id):
+    from webModules.adminModules.admin_courses import admin_course_detail
+    return admin_course_detail(request, course_id)
+
+@app.route('/admin/course/<int:course_id>/theme/add', methods=['GET', 'POST'])
+def admin_theme_add(course_id):
+    from webModules.adminModules.admin_courses import admin_theme_add
+    return admin_theme_add(request, course_id)
+
+@app.route('/admin/theme/<int:theme_id>/edit', methods=['GET', 'POST'])
+def admin_theme_edit(theme_id):
+    from webModules.adminModules.admin_courses import admin_theme_edit
+    return admin_theme_edit(request, theme_id)
+
+@app.route('/admin/theme/<int:theme_id>/delete', methods=['POST'])
+def admin_theme_delete(theme_id):
+    from webModules.adminModules.admin_courses import admin_theme_delete
+    return admin_theme_delete(request, theme_id)
 
 # Маршруты для модератора - НКО
 @app.route('/moderator/nko/pending', methods=['GET', 'POST'])

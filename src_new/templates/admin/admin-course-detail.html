@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.name }} - Темы</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/knowledge.css') }}">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="page-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Курс: {{ course.name }}</h1>
+                    <div class="page-actions">
+                        <a href="{{ url_for('admin_theme_add', course_id=course.id) }}" class="btn-admin btn-primary">Добавить тему</a>
+                        <a href="{{ url_for('admin_courses_list') }}" class="btn-secondary">К списку курсов</a>
+                    </div>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div class="themes-list">
+                    <h2>Темы курса</h2>
+                    {% if themes %}
+                        {% for theme in themes %}
+                            <div class="theme-item">
+                                <h3>{{ theme.title }}</h3>
+                                <p><strong>Спикер:</strong> {{ theme.speaker }}</p>
+                                <p>{{ theme.description }}</p>
+                                
+                                {% if theme.file %}
+                                    <p><strong>Файл:</strong> <a href="{{ url_for('static', filename=theme.file) }}" target="_blank">Скачать</a></p>
+                                {% endif %}
+                                
+                                {% if theme.url %}
+                                    <p><strong>Видео:</strong> <a href="{{ theme.url }}" target="_blank">Смотреть</a></p>
+                                {% endif %}
+                                
+                                <div class="theme-actions">
+                                    <a href="{{ url_for('admin_theme_edit', theme_id=theme.id) }}" class="btn-admin btn-primary">Редактировать</a>
+                                    <form method="POST" action="{{ url_for('admin_theme_delete', theme_id=theme.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn-secondary" onclick="return confirm('Вы уверены?')">Удалить</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Темы не найдены. Добавьте первую тему.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+</body>
+</html>
