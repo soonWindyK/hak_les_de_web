@@ -1,0 +1,96 @@
+<header class="header">
+    <div class="header-main">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="{{ url_for('home') }}" class="logo-text">Добрые дела Росатома</a>
+                </div>
+                <nav class="nav">
+                    <a href="{{ url_for('home') }}" class="nav-link">Главная</a>
+                    <a href="{{ url_for('nko') }}" class="nav-link">НКО</a>
+                    <a href="{{ url_for('knowledge') }}" class="nav-link">База знаний</a>
+                    <a href="{{ url_for('calendar') }}" class="nav-link">Календарь</a>
+                    <a href="{{ url_for('news') }}" class="nav-link">Новости</a>
+                </nav>
+                <div class="header-actions">
+                    <button type="button" class="city-toggle-btn" id="cityToggleBtn">
+                        <span id="selectedCityText">Выберите город</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    {% if session.get('user_id') %}
+                        <div class="user-menu">
+                            <button type="button" class="user-menu-btn" id="userMenuBtn">
+                                <span class="user-avatar">👤</span>
+                                <span class="user-name">{{ session.get('user_name', 'Пользователь') }}</span>
+                                <span class="dropdown-arrow">▼</span>
+                            </button>
+                            <div class="user-dropdown" id="userDropdown">
+                                <a href="{{ url_for('profile') }}" class="user-dropdown-item">
+                                    <span class="dropdown-icon">👤</span>
+                                    <span>Мой профиль</span>
+                                </a>
+                                {% if session.get('user_role') in ['admin', 'moderator'] %}
+                                <a href="{{ url_for('admin_panel') }}" class="user-dropdown-item">
+                                    <span class="dropdown-icon">⚙️</span>
+                                    <span>Панель управления</span>
+                                </a>
+                                {% endif %}
+                                <a href="{{ url_for('logout') }}" class="user-dropdown-item">
+                                    <span class="dropdown-icon">🚪</span>
+                                    <span>Выход</span>
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="btn-login">Войти</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="city-bar" id="cityBar">
+        <div class="container">
+            <div class="city-bar-content">
+                <div class="city-search-wrapper">
+                    <input type="text" class="city-search-input" id="citySearch" placeholder="Поиск города...">
+                </div>
+                <div class="city-grid" id="cityGrid">
+                    <div class="city-grid-item" data-city="">Все города</div>
+                    <div class="city-grid-item" data-city="angarsk">Ангарск</div>
+                    <div class="city-grid-item" data-city="baikalsk">Байкальск</div>
+                    <div class="city-grid-item" data-city="balakovo">Балаково</div>
+                    <div class="city-grid-item" data-city="bilibino">Билибино</div>
+                    <div class="city-grid-item" data-city="volgodonsk">Волгодонск</div>
+                    <div class="city-grid-item" data-city="glazov">Глазов</div>
+                    <div class="city-grid-item" data-city="desnogorsk">Десногорск</div>
+                    <div class="city-grid-item" data-city="dimitrovgrad">Димитровград</div>
+                    <div class="city-grid-item" data-city="zheleznogorsk">Железногорск</div>
+                    <div class="city-grid-item" data-city="zarechny-penza">Заречный (Пензенская обл.)</div>
+                    <div class="city-grid-item" data-city="zarechny-sverdlovsk">Заречный (Свердловская обл.)</div>
+                    <div class="city-grid-item" data-city="zelenogorsk">Зеленогорск</div>
+                    <div class="city-grid-item" data-city="krasnokamensk">Краснокаменск</div>
+                    <div class="city-grid-item" data-city="kurchatov">Курчатов</div>
+                    <div class="city-grid-item" data-city="lesnoy">Лесной</div>
+                    <div class="city-grid-item" data-city="neman">Неман</div>
+                    <div class="city-grid-item" data-city="novovoronezh">Нововоронеж</div>
+                    <div class="city-grid-item" data-city="novouralsk">Новоуральск</div>
+                    <div class="city-grid-item" data-city="obninsk">Обнинск</div>
+                    <div class="city-grid-item" data-city="ozersk">Озерск</div>
+                    <div class="city-grid-item" data-city="pevek">Певек</div>
+                    <div class="city-grid-item" data-city="polyarnye-zori">Полярные Зори</div>
+                    <div class="city-grid-item" data-city="sarov">Саров</div>
+                    <div class="city-grid-item" data-city="seversk">Северск</div>
+                    <div class="city-grid-item" data-city="snezhinsk">Снежинск</div>
+                    <div class="city-grid-item" data-city="sovetsk">Советск</div>
+                    <div class="city-grid-item" data-city="sosnovy-bor">Сосновый Бор</div>
+                    <div class="city-grid-item" data-city="trekhgorny">Трехгорный</div>
+                    <div class="city-grid-item" data-city="udomlya">Удомля</div>
+                    <div class="city-grid-item" data-city="usolye-sibirskoe">Усолье-Сибирское</div>
+                    <div class="city-grid-item" data-city="elektrostal">Электросталь</div>
+                    <div class="city-grid-item" data-city="energodar">Энергодар</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
