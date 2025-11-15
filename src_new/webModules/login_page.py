@@ -4,10 +4,14 @@ from flask import redirect, render_template, session
 
 
 def before_login_page(request):
-    if request.method == 'POST':
-        return login_page(request=request.form)
+    if 'username' not in session:
+        if request.method == 'POST':
+            return login_page(request=request.form)
 
-    return render_template('login.html')
+        return render_template('login.html')
+    else:
+        return redirect('/profile')
+
 
 def login_page(request):
     user_mail = request['email']
