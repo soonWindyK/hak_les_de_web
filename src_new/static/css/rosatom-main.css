@@ -39,6 +39,7 @@ main {
 }
 
 .container {
+
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
@@ -321,6 +322,8 @@ main {
 }
 
 .btn-more {
+    width:100%;
+    margin-top:20px;
     display: inline-block;
     padding: 8px 20px;
     background-color: var(--primary-color);
@@ -766,6 +769,8 @@ main {
     transition: border-color 0.3s;
     width: 100%;
     font-family: inherit;
+    display:flex;
+    justify-content:center;
 }
 
 .form-input:focus,
@@ -1239,6 +1244,8 @@ textarea.form-control,
    ============================================ */
 
 .admin-content {
+    
+    max-width:600px;
     padding: 40px 0;
 }
 
@@ -2054,3 +2061,46 @@ textarea.form-control,
         max-width: none;
     }
 }
+/* ============================================
+   СТИЛИ ДЛЯ КАРТЫ
+   ============================================ */
+   .map-container {
+            padding: 40px 0;
+        }
+
+        .map-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .map-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .back-button {
+            padding: 8px 20px;
+            width: 100%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #0052a3;
+        }
+
+        #map {
+            width: 100%;
+            height: 600px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
