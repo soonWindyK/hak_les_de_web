@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Добрые дела Росатома - Главная</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rosatom-main.css') }}">
 </head>
 <body>
     {% include 'components/header.html' %}
@@ -43,7 +42,7 @@
             <div class="container">
                 <h2 class="section-title">Станьте частью добрых дел в вашем городе!</h2>
                 <div class="cta-grid">
-                    <a href="{{ url_for('nko') }}" class="cta-card">
+                    <a href="{{ url_for('nko_map') }}" class="cta-card">
                         <div class="cta-icon">🗺️</div>
                         <h3>Карта НКО</h3>
                         <p>Найдите организации по городу и направлению деятельности</p>

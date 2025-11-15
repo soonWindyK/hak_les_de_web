@@ -20,6 +20,10 @@ def course_detail(course_id):
     from webModules.coursesModules.courses_page import course_detail_page
     return course_detail_page(course_id)
 
+@app.route('/nko/map')
+def nko_map():
+    return render_template('nko-map.html')
+
 @app.route('/theme/<int:theme_id>', methods=['GET', 'POST'])
 def theme_detail(theme_id):
     from webModules.coursesModules.courses_page import theme_detail_page
@@ -38,7 +42,8 @@ def register():
 @app.route('/news', methods=['GET', 'POST'])
 def news(): return render_template('news.html')
 @app.route('/news/<int:news_id>', methods=['GET', 'POST'])
-def news_detail(news_id): return render_template('news-detail.html')
+def news_detail(news_id):
+    return render_template('news-detail.html')
 
 @app.route('/nko', methods=['GET', 'POST'])
 def nko():

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карта НКО - Добрые дела Росатома</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rosatom-main.css') }}">
+    <!-- Подключение API Яндекс.Карт -->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ВАШ_API_КЛЮЧ&lang=ru_RU" type="text/javascript"></script>
+    <style>
+        .map-container {
+            padding: 40px 0;
+        }
+        
+        .map-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .map-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .back-button:hover {
+            background-color: #0052a3;
+        }
+        
+        #map {
+            width: 100%;
+            height: 600px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <section class="map-container">
+            <div class="container">
+                <div class="map-header">
+                    <a href="{{ url_for('home') }}" class="back-button">← Вернуться на главную</a>
+                    <h1>Карта НКО организаций</h1>
+                    <p>Найдите организации на карте вашего города</p>
+                </div>
+                
+                <!-- Контейнер для Яндекс.Карты -->
+                <div id="map"></div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script>
+        // Инициализация карты после загрузки API
+        ymaps.ready(init);
+        
+        function init() {
+            // Создание карты с центром и зумом
+            // НАСТРОЙКА: измените координаты центра карты [широта, долгота] и zoom (уровень приближения)
+            var myMap = new ymaps.Map("map", {
+                center: [55.751574, 37.573856], // Координаты центра (по умолчанию Москва)
+                zoom: 10 // Уровень приближения карты
+            });
+
+            // ========================================
+            // ДОБАВЛЕНИЕ МЕТОК НКО НА КАРТУ
+            // ========================================
+            // Для добавления новой метки скопируйте блок ниже и измените данные
+            
+            // МЕТКА 1: Пример НКО организации
+            var placemark1 = new ymaps.Placemark(
+                [55.751574, 37.573856], // Координаты метки [широта, долгота]
+                {
+                    balloonContentHeader: "Название НКО организации", // Заголовок в балуне
+                    balloonContentBody: "Описание деятельности организации", // Описание
+                    balloonContentFooter: "Телефон: +7 (XXX) XXX-XX-XX<br>Email: info@example.com", // Контакты
+                    hintContent: "Название НКО" // Подсказка при наведении
+                },
+                {
+                    preset: 'islands#blueCircleDotIcon' // Иконка метки (можно изменить цвет: red, green, blue и т.д.)
+                }
+            );
+            myMap.geoObjects.add(placemark1);
+
+            // МЕТКА 2: Добавьте следующую организацию (скопируйте блок выше)
+            // var placemark2 = new ymaps.Placemark(
+            //     [55.755814, 37.617635], // Координаты второй метки
+            //     {
+            //         balloonContentHeader: "Вторая НКО организация",
+            //         balloonContentBody: "Описание второй организации",
+            //         balloonContentFooter: "Телефон: +7 (XXX) XXX-XX-XX",
+            //         hintContent: "Вторая НКО"
+            //     },
+            //     {
+            //         preset: 'islands#greenCircleDotIcon'
+            //     }
+            // );
+            // myMap.geoObjects.add(placemark2);
+
+            // МЕТКА 3: Добавьте третью организацию
+            // var placemark3 = new ymaps.Placemark(
+            //     [55.745814, 37.627635], // Координаты третьей метки
+            //     {
+            //         balloonContentHeader: "Третья НКО организация",
+            //         balloonContentBody: "Описание третьей организации",
+            //         balloonContentFooter: "Телефон: +7 (XXX) XXX-XX-XX",
+            //         hintContent: "Третья НКО"
+            //     },
+            //     {
+            //         preset: 'islands#redCircleDotIcon'
+            //     }
+            // );
+            // myMap.geoObjects.add(placemark3);
+
+            // ========================================
+            // ИНСТРУКЦИЯ ПО ДОБАВЛЕНИЮ НОВЫХ МЕТОК:
+            // ========================================
+            // 1. Скопируйте блок кода метки (от var placemark до myMap.geoObjects.add)
+            // 2. Измените номер переменной (placemark4, placemark5 и т.д.)
+            // 3. Укажите координаты организации [широта, долгота]
+            // 4. Заполните информацию: название, описание, контакты
+            // 5. Выберите цвет иконки: blue, red, green, orange, violet и т.д.
+            // 6. Раскомментируйте код (уберите //)
+            
+            // Добавление элементов управления на карту
+            myMap.controls.add('zoomControl'); // Кнопки зума
+            myMap.controls.add('fullscreenControl'); // Полноэкранный режим
+            myMap.controls.add('geolocationControl'); // Определение местоположения
+        }
+    </script>
+</body>
+</html>
