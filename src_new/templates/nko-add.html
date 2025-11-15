@@ -16,7 +16,7 @@
             <div class="admin-content">
                 <div class="admin-header">
                     <h1>Добавить НКО</h1>
-                    <a href="{{ url_for('volunteer_nko_list') if session.get('role_id') == 4 else url_for('admin_nko_list') }}" class="btn-secondary">Назад к списку</a>
+                    <a href="{{ url_for('admin_nko_list') }}" class="btn-secondary">Назад к списку</a>
                 </div>
                 <div class="admin-body">
                     <form class="admin-form" method="POST" enctype="multipart/form-data">
@@ -86,7 +86,7 @@
 
                         <div class="form-actions">
                             <button type="submit" class="btn-admin btn-primary">Добавить НКО</button>
-                            <a href="{{ url_for('volunteer_nko_list') if session.get('role_id') == 4 else url_for('admin_nko_list') }}" class="btn-admin">Отмена</a>
+                            <a href="{{ url_for('admin_nko_list') }}" class="btn-admin">Отмена</a>
                         </div>
                     </form>
                 </div>
