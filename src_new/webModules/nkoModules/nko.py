@@ -15,6 +15,7 @@ def nko_(request):
     cities_list = CityRegionDB_module().get_cities_list_with_region()
     nko_list = False
     city_selected = region_sel = ''
+
     if request.method == 'POST':
         action = request.form.get('action')
         print(action, request.form)
