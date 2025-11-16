@@ -2226,3 +2226,62 @@ textarea.form-control,
     margin: 20px 0;
 }
 
+
+/* ============================================
+   СТИЛИ ДЛЯ ФИЛЬТРОВ
+   ============================================ */
+
+.content-with-sidebar {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+}
+
+.filter-sidebar {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+}
+
+.filter-sidebar h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: var(--dark-color);
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--dark-color);
+}
+
+.filter-select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--medium-gray);
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: var(--white);
+    cursor: pointer;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.filter-sidebar .btn-view {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.content-main {
+    width: 100%;
+}

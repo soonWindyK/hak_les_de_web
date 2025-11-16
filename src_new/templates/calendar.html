@@ -18,8 +18,25 @@
                     <a href="/event/add" class="btn-more">Создать событие</a>
                 </div>
 
-                <div class="calendar-container">
-                    <div class="calendar-events">
+                <div class="content-with-sidebar">
+                    <aside class="filter-sidebar">
+                        <h3>Фильтры</h3>
+                        <form method="POST">
+                            <div class="filter-group">
+                                <label for="city">Город</label>
+                                <select id="city" name="city" class="filter-select" required>
+                                    <option value="city_id_0">Выберите город</option>
+                                    {% for n, c, r in cities_list %}
+                                    <option value="cityid{{n}}">{{c}}, {{r}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button class="btn-view" type="submit" name="action" value="btn-create-nko">Применить фильтр</button>
+                        </form>
+                    </aside>
+
+                    <div class="content-main">
+                        <div class="calendar-events">
                         {% for event in events %}
                             <div class="event-card" data-category="{{ event.category_id }}">
                                 <span class="event-date">{{ event.date }}</span>
@@ -31,6 +48,7 @@
                                 <p class="event-end-time">Время окончания: {{event.end_time}}</p>
                             </div>
                         {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
