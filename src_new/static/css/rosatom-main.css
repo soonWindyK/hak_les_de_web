@@ -2315,7 +2315,7 @@ img.news-image {
 
 .nko-favorite-btn:hover {
     background-color: var(--light-gray);
-    color: var(--accent-color);
+    color:#FF0033;
     transform: scale(1.1);
 }
 
