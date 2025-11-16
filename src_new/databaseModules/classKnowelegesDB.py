@@ -51,11 +51,11 @@ class KnowelegesDB_module:
     def get_themses_by_course_id(self, id):
         try:
             self.cursor.execute(
-                f'SElECT * FROM {self.themes_table} where id = {id} where {self.themes_table}.deleted_at is null '
+                f'SElECT * FROM {self.themes_table} where courses_id = {id} and deleted_at is null '
             )
             return self.cursor.fetchall()
         except Exception as e:
-            print(e)
+            print('xxx',e)
             return False
         finally:
             self.conn.close()
