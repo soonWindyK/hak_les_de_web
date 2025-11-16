@@ -6,7 +6,7 @@
     <title>Карта НКО - Добрые дела Росатома</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/rosatom-main.css') }}">
     <!-- Подключение API Яндекс.Карт -->
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=ВАШ_API_КЛЮЧ&lang=ru_RU" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=bad29cff-15c0-4a63-b49a-c4e8f0d40873&lang=ru_RU" type="text/javascript"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/rosatom-main.css') }}">
 </head>
 <body>
@@ -41,7 +41,7 @@
             // НАСТРОЙКА: измените координаты центра карты [широта, долгота] и zoom (уровень приближения)
             var myMap = new ymaps.Map("map", {
                 center: [55.751574, 37.573856], // Координаты центра (по умолчанию Москва)
-                zoom: 10 // Уровень приближения карты
+                zoom: 5 // Уровень приближения карты
             });
 
             // ========================================
@@ -51,44 +51,80 @@
             
             // МЕТКА 1: Пример НКО организации
             var placemark1 = new ymaps.Placemark(
-                [55.751574, 37.573856], // Координаты метки [широта, долгота]
+                [56.313634, 43.975424], // Координаты метки [широта, долгота]
                 {
-                    balloonContentHeader: "Название НКО организации", // Заголовок в балуне
-                    balloonContentBody: "Описание деятельности организации", // Описание
+                    balloonContentHeader: "БФ «Планета кошек»", // Заголовок в балуне
+                    balloonContentBody: "Благотворительный Фонд «Планета Кошек» — это проект помощи бездомным животным в Нижнем Новгороде! Благотворительный Фонд Планета Кошек входит в состав многофункционального Центра помощи и реабилитации животных. Деятельность Фонда направлена на спасение животных, оказавшихся в сложных жизненных ситуация, брошенных на улице, нуждающихся в ветеринарной помощи!", // Описание
                     balloonContentFooter: "Телефон: +7 (XXX) XXX-XX-XX<br>Email: info@example.com", // Контакты
-                    hintContent: "Название НКО" // Подсказка при наведении
+                    hintContent: "БФ Планета Кошек" // Подсказка при наведении
                 },
                 {
-                    preset: 'islands#blueCircleDotIcon' // Иконка метки (можно изменить цвет: red, green, blue и т.д.)
+                    preset: 'islands#redDotIcon' // Иконка метки (можно изменить цвет: red, green, blue и т.д.)
                 }
             );
-            ymaps.geocode("г.Москва, ш.Энтузиастов").then(function (res) {
-                var coord = res.geoObjects.get(0).geometry.getCoordinates();
-                var myPlacemark = new ymaps.Placemark(coord, null,{
-                    iconLayout: 'default#image',
-                    iconImageHref: "/map.png",
-                    iconImageSize: [30, 44],
-                    iconImageOffset: [-15, -44]
-                });
-                myMap.geoObjects.add(myPlacemark);
-                });	
-                
-            // МЕТКА 2: Добавьте следующую организацию (скопируйте блок выше)
-            // var placemark2 = new ymaps.Placemark(
-            //     [55.755814, 37.617635], // Координаты второй метки
-            //     {
-            //         balloonContentHeader: "Вторая НКО организация",
-            //         balloonContentBody: "Описание второй организации",
-            //         balloonContentFooter: "Телефон: +7 (XXX) XXX-XX-XX",
-            //         hintContent: "Вторая НКО"
-            //     },
-            //     {
-            //         preset: 'islands#greenCircleDotIcon'
-            //     }
-            // );
-            // myMap.geoObjects.add(placemark2);
+            myMap.geoObjects.add(placemark1);
 
-            // МЕТКА 3: Добавьте третью организацию
+            //МЕТКА 2: Добавьте следующую организацию (скопируйте блок выше)
+            var placemark2 = new ymaps.Placemark(
+                [58.13789065118995, 52.66533528914721], // Координаты второй метки
+                {
+                    balloonContentHeader: "Культурная база Короленко 8 МБУ ЦМиТО УКСиМП",
+                    balloonContentBody: "Основная деятельность: Ресурсный центр помощи НКО и сообществам, учреждениям культуры, образования ЦА: Инициативные жители, сообщества, НКО, учреждения города",
+                    balloonContentFooter: "Телефон: +7 (999) 999-99-99",
+                    hintContent: "Культурная база Короленко"
+                },
+                {
+                    preset: 'islands#redDotIcon'
+                }
+            );
+            myMap.geoObjects.add(placemark2);
+
+            //МЕТКА 3: 
+            var placemark3 = new ymaps.Placemark(
+                [56.0960786649855, 94.55612930853987], // Координаты второй метки
+                {
+                    balloonContentHeader: "Федерация картинга",
+                    balloonContentBody: "Основная деятельность: ",
+                    balloonContentFooter: "Телефон: +7 (999) 999-99-99",
+                    hintContent: "Федерация картинга"
+                },
+                {
+                    preset: 'islands#redDotIcon'
+                }
+            );
+            myMap.geoObjects.add(placemark3);
+
+            //МЕТКА 4: 
+            var placemark4= new ymaps.Placemark(
+                [55.104432, 36.618490], // Координаты второй метки
+                {
+                    balloonContentHeader: "АНО ДПО Техническая академия Росатома",
+                    balloonContentBody: "На данный момент НКО нет. Находится на стадии формирования концепции и формализации идеи.",
+                    balloonContentFooter: "Телефон: +7 (999) 999-99-99",
+                    hintContent: "Техническая академия Росатома"
+                },
+                {
+                    preset: 'islands#redDotIcon'
+                }
+            );
+            myMap.geoObjects.add(placemark4);
+
+            //МЕТКА 5:
+            var placemark5 = new ymaps.Placemark(
+                [55.762215, 60.699734], // Координаты метки [широта, долгота]
+                {
+                    balloonContentHeader: "АНО «Твердыми шагами»", // Заголовок в балуне
+                    balloonContentBody: "Автономная некоммерческая организация помощи детям с ограниченными возможностями здоровья, инвалидностью и их семьям.", // Описание
+                    balloonContentFooter: "Телефон: +7 (XXX) XXX-XX-XX <br>Email: tverdymishagami@example.com", // Контакты
+                    hintContent: "Твёрдыми шагами" // Подсказка при наведении
+                },
+                {
+                    preset: 'islands#redDotIcon' // Иконка метки (можно изменить цвет: red, green, blue и т.д.)
+                }
+            );
+            myMap.geoObjects.add(placemark5);
+
+            // МЕТКА N: Добавьте N организацию
             // var placemark3 = new ymaps.Placemark(
             //     [55.745814, 37.627635], // Координаты третьей метки
             //     {
