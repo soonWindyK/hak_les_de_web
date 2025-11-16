@@ -735,6 +735,7 @@ main {
     border-radius: 5px;
     font-size: 15px;
     transition: border-color 0.3s;
+    margin-bottom:10px;
 }
 
 .filter-select {
