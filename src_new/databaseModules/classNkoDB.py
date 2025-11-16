@@ -41,6 +41,24 @@ class NkoDB_module:
         finally:
             self.conn.close()
 
+    def get_nko_by_city_id(self, city_id):
+        try:
+            status = 2
+            self.cursor.execute(
+                f"SELECT * FROM {self.nko_list}, cities, categories, regions WHERE "
+                f"status_id = {status} "
+                f"and cities.city_id = {self.nko_list}.citi_code "
+                f"and categories.id = {self.nko_list}.category_id "
+                f"and regions.region_code = cities.region_code "
+                f"and {self.nko_list}.deleted_at is null "
+                f"and citi_code = {city_id}"
+            )
+            return self.cursor.fetchall()
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
 
     def delete_nko(self, nko_id):
         try:

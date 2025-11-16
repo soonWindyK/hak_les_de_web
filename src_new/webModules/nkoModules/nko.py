@@ -11,11 +11,20 @@ def before_nko_(request):
 
 def nko_(request):
     print(request)
+
     if request.method == 'POST':
-        action = request.form.get('action', None)
-        print(action)
+        action = request.form.get('action')
+        if action == 'filter_go':
+            city_id = int(request.form.get('city').split("_")[-1])
+            nko_list = NkoDB_module().get_nko_by_city_id(city_id=city_id)
+            print(action, city_id)
 
-    nko_list = NkoDB_module().get_all_nko()
+    else:
+        nko_list = NkoDB_module().get_all_nko()
+
+
     cats_list = SmallFuncsDB_module().select_all_categories()
+    cities_list = CityRegionDB_module().get_cities_list_with_region()
 
-    return render_template('nko.html', nko_list=nko_list, cats_list=cats_list)
+
+    return render_template('nko.html', nko_list=nko_list, cats_list=cats_list, cities_list=cities_list)
