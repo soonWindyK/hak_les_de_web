@@ -1,5 +1,5 @@
 from databaseModules.classUsersDB import UsersDB_module
-from src_new.databaseModules.classKnowelegesDB import KnowelegesDB_module
+from databaseModules.classKnowelegesDB import KnowelegesDB_module
 from webModules.hash_password_usr import hasher_pass
 from flask import render_template, redirect, session, request, flash
 
