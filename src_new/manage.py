@@ -102,8 +102,8 @@ def admin_nko_list():
 
 @app.route('/profile/favorites')
 def favorites():
-
-    return render_template('favorites.html')
+    data_profile = UsersDB_module().select_with_mail(mail=session['username'])
+    return render_template('favorites.html', data_profile=data_profile)
 
 
 @app.route('/nko/add', methods=['GET', 'POST'])

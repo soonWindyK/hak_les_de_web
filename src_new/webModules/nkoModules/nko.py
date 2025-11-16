@@ -10,7 +10,12 @@ def before_nko_(request):
 
 
 def nko_(request):
+    print(request)
+    if request.method == 'POST':
+        action = request.form.get('action', None)
+        print(action)
+
     nko_list = NkoDB_module().get_all_nko()
     cats_list = SmallFuncsDB_module().select_all_categories()
-    # print(nko_list)
+
     return render_template('nko.html', nko_list=nko_list, cats_list=cats_list)
