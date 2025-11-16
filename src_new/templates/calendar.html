@@ -24,14 +24,18 @@
                         <form method="POST">
                             <div class="filter-group">
                                 <label for="city">Город</label>
+                                <font>{{city_selected}} <br></font>
+                                <font>{{region_sel}} </font>
+
                                 <select id="city" name="city" class="filter-select" required>
                                     <option value="city_id_0">Выберите город</option>
                                     {% for n, c, r in cities_list %}
-                                    <option value="cityid{{n}}">{{c}}, {{r}}</option>
+                                        <option value="city_id_{{n}}">{{c}} {{r}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <button class="btn-view" type="submit" name="action" value="btn-create-nko">Применить фильтр</button>
+                            <button class="btn-view" type="submit" name="action" value="filter_go">Применить фильтр</button>
+                            <button class="btn-view" type="submit" name="action" value="filter_fall">Убрать фильтр</button>
                         </form>
                     </aside>
 
@@ -43,7 +47,7 @@
                                 <h3 class="event-title">{{ event.title }}</h3>
                                 <p class="event-organizer">Организатор: {{ event.organizer }}</p>
                                 <p class="event-description">{{ event.description }}</p>
-                                <p class="event-location">📍 {{ event.location }}</p>
+                                <p class="event-location">📍 {{ event.region_name }}, {{ event.city_name }}, {{ event.location }}</p>
                                 <p class="event-start-time">Время начала: {{event.start_time}}</p>
                                 <p class="event-end-time">Время окончания: {{event.end_time}}</p>
                             </div>

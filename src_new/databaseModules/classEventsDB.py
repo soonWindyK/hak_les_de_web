@@ -35,6 +35,22 @@ class EventsDB_module:
         finally:
             self.conn.close()
 
+    def get_event_by_city_id(self, city_id):
+        try:
+            status = 2
+            self.cursor.execute(f'select * from {self.events}, cities, regions '
+                                f'WHERE cities.city_id = {self.events}.city_id '
+                                f'and regions.region_code = cities.region_code '
+                                f'and {self.events}.deleted_at is null '
+                                f'and status_id = {status} '
+                                f'and {self.events}.city_id = {city_id} ')
+            return self.cursor.fetchall()
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+
     def delete_event(self, event_id):
         try:
             self.cursor.execute(
