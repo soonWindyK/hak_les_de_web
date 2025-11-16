@@ -16,15 +16,19 @@
                     <h1>Редактирование курса</h1>
                     
                     <form method="POST" class="admin-form">
+
                         <div class="form-group">
+                            <font color="red">{{ error }}</font>
+                            <font color="green">{{ success }}</font>
                             <label for="name">Название курса</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ text_course }}" required>
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" class="btn-admin btn-primary">Сохранить</button>
-                            <a href="{{ url_for('admin_courses_list') }}" class="btn-secondary">Отмена</a>
+                            <button type="submit" name="action" class="btn-admin btn-primary" value="save_course_name">Сохранить</button>
+                            <a href="{{ url_for('admin_courses_list') }}" class="btn-secondary">Назад</a>
                         </div>
+
                     </form>
                 </div>
             </div>

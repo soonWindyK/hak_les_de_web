@@ -36,8 +36,8 @@
                                 {% endif %}
                                 <div class="news-content">
                                     <div class="news-meta">
-                                        <span>📅 {{ item.created_time.strftime('%d.%m.%Y') }}</span>
-                                        <span>📍 {{ item.city }}</span>
+                                        <span>📅 {{ item.created_time.strftime('%d.%m.%Y %H:%M') }}</span>
+                                        <span>📍 {{ item.region_name }}, {{ item.city_name }}</span>
                                     </div>
                                     <h2 class="news-title">{{ item.title }}</h2>
                                     <p class="news-excerpt">{{ item.description }}</p>

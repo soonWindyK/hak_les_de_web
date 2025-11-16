@@ -117,3 +117,30 @@ class KnowelegesDB_module:
             self.conn.close()
 
 
+    def update_theme(self, them_id, new_name):
+        try:
+            self.cursor.execute(
+                f'UPDATE {self.themes_table}  SET name = "{new_name}" '
+                f'WHERE id = {them_id}')
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+
+
+    def update_course(self, course_id, new_name):
+        try:
+            self.cursor.execute(
+                f'UPDATE {self.courses_table} SET name = "{new_name}" '
+                f'WHERE id = {course_id}')
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+
