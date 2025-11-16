@@ -8,3 +8,11 @@ def check_admin():
             return True
 
     return redirect('/')
+
+def check_moderaotr():
+    if 'username' in session:
+        data_db = UsersDB_module().select_with_mail(mail=session['username'])
+        if data_db['user_role'] == 3:
+            return True
+
+    return redirect('/')

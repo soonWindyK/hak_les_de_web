@@ -19,11 +19,32 @@
                 <div class="admin-body">
                     
                     <p>Здесь будет список НКО, ожидающих модерации</p>
+                    <font color="orange">{{ msg }}</font>
                     <!-- Здесь вы добавите функционал модерации -->
-                     <button class="btn-admin btn-primary">Редактировать</button>
-                    <form method="POST">
-                        <button type="submit" name="action" value="event_{{ event.id }}" class="btn-admin">Удалить</button>
-                    </form>
+                    {% if nko_list %}
+                    {% for nko in nko_list %}
+                        <div class="nko-card">
+                            <div class="nko-logo">{{ nko.icon }}</div>
+                            <div class="nko-content">
+                                <span class="nko-category">{{ nko.category_name }}</span>
+                                <h3 class="nko-title">{{ nko.name }}</h3>
+<!--                                <p class="nko-description"> {{ nko.description }}</p>-->
+                                <p class="nko-address">📍 {{ nko.region_name }}, {{ nko.city_name }}, {{ nko.address }}</p>
+                                <div class="nko-links">
+                                    <a href="{{ nko.website }}" class="nko-link">🌐 Сайт</a>
+                                    <a href="{{ nko.link_social_net }}" class="nko-link">📱 Соц. сеть</a>
+                                </div>
+                                <form method="POST">
+                                    <button type="submit" name="action" value="true_nko_{{ nko.nko_id }}" class="btn-admin">Одобрить</button>
+                                    <button type="submit" name="action" value="false_nko_{{ nko.nko_id }}" class="btn-admin">Отклонить</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="no-organizations">Нет организаций для отображения</p>
+                {% endif %}
+
                 </div>
             </div>
         </div>

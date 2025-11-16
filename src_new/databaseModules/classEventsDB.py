@@ -47,4 +47,19 @@ class EventsDB_module:
         finally:
             self.conn.close()
 
+    def update_status_event(self, event_id: int, status: int):
+        try:
+            self.cursor.execute(
+                f'UPDATE {self.events} '
+                f'SET status_id = {status} '
+                f'WHERE id = {event_id}'
+            )
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+            pass
 

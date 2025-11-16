@@ -24,12 +24,12 @@ class NkoDB_module:
         finally:
             self.conn.close()
 
-    def get_all_nko(self):
+    def get_all_nko(self, status=2):
         try:
             self.cursor.execute(
                 f"SELECT * FROM {self.nko_list}, cities, categories, regions WHERE "
-                # f"status_id = 2 and "
-                f"cities.city_id = {self.nko_list}.citi_code "
+                f"status_id = {status} "
+                f"and cities.city_id = {self.nko_list}.citi_code "
                 f"and categories.id = {self.nko_list}.category_id "
                 f"and regions.region_code = cities.region_code "
                 f"and {self.nko_list}.deleted_at is null "
@@ -54,3 +54,19 @@ class NkoDB_module:
             return False
         finally:
             self.conn.close()
+
+    def update_status_nko(self, nko_id: int, status: int):
+        try:
+            self.cursor.execute(
+                f'UPDATE {self.nko_list} '
+                f'SET status_id = {status} '
+                f'WHERE nko_id = {nko_id}'
+            )
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+            pass

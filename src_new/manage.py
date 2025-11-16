@@ -170,8 +170,8 @@ def admin_theme_delete(theme_id):
 # Маршруты для модератора - НКО
 @app.route('/moderator/nko/pending', methods=['GET', 'POST'])
 def moderator_nko_pending():
-    # Здесь будет логика отображения НКО на модерации
-    return render_template('moderator/moderator-nko-pending.html')
+    from webModules.moderatorModules.moderatr_nko_pending import before_moder_nko_pending
+    return before_moder_nko_pending()
 
 @app.route('/moderator/nko/all', methods=['GET', 'POST'])
 def moderator_nko_all():
@@ -182,7 +182,8 @@ def moderator_nko_all():
 @app.route('/moderator/events/pending', methods=['GET', 'POST'])
 def moderator_events_pending():
     # Здесь будет логика отображения событий на модерации
-    return render_template('moderator/moderator-events-pending.html')
+    from webModules.moderatorModules.moderatr_events_pending import before_moder_events_pending
+    return before_moder_events_pending()
 
 @app.route('/moderator/events/all', methods=['GET', 'POST'])
 def moderator_events_all():
