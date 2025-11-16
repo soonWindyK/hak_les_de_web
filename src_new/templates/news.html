@@ -22,9 +22,9 @@
                         <h3>Фильтры</h3>
                         <form method="POST">
                             <div class="filter-group">
-                                <label for="city">Город</label>
-                                <font>{{city_selected}} <br></font>
-                                <font>{{region_sel}} </font>
+                                <p style="margin-bottom:5px;">Город</p>
+<!--                                <font>{{city_selected}} <br></font>-->
+<!--                                <font>{{region_sel}} </font>-->
 
                                 <select id="city" name="city" class="filter-select" required>
                                     <option value="city_id_0">Выберите город</option>
@@ -32,9 +32,14 @@
                                         <option value="city_id_{{n}}">{{c}} {{r}}</option>
                                     {% endfor %}
                                 </select>
+                                <div class="filter-group">
+                                    <p>Избранное</p>
+                                    <input type="checkbox" name="action" value="checkbox_fav"><labe> В избранном</labe>
+
+                                </div>
                             </div>
-                            <button class="btn-view" type="submit" name="action" value="filter_go">Применить фильтр</button>
-                            <button class="btn-view" type="submit" name="action" value="filter_fall">Убрать фильтр</button>
+                                <button class="btn-view" type="submit" name="action" value="filter_go">Применить фильтр</button>
+                                <button class="btn-view" type="submit" name="action" value="filter_fall">Убрать фильтр</button>
                         </form>
                     </aside>
 
