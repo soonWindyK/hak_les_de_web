@@ -56,7 +56,6 @@
                             </div>
                         <!--  -->
                             <form method="POST">
-                                <p class="nko-description"> {{ nko.view_status }} если 1 то лайк если 0 то серое</p>
                             <button class="nko-favorite-btn" onclick="toggleFavorite(this, '{{ nko.nko_id }}')" aria-label="Добавить в избранное"
                                     name="action" value="favorite_add_{{ nko.nko_id }}">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
