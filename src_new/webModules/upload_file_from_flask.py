@@ -45,7 +45,7 @@ def handle_file_upload(file_key, allowed_extensions=None):
         file_path = os.path.join(upload_path, unique_filename)
         file.save(file_path)
 
-        return True, file_path.replace('staric/','')
+        return True, file_path.replace('static/','')
 
     except Exception as e:
         return False, f"Ошибка при сохранении файла: {str(e)}"
