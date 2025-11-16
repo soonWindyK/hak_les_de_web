@@ -28,5 +28,6 @@ def admin_nko_():
             else:
                 flash('Ивент не удалось','error')
 
-    nko_list = NkoDB_module().get_all_nko()
+    user_id = UsersDB_module().select_with_mail(mail=session['username'])['user_id']
+    nko_list = NkoDB_module().get_all_nko(user_id=user_id)
     return render_template('admin/admin-nko-list.html', nko_list=nko_list, cats_list=cats_list)

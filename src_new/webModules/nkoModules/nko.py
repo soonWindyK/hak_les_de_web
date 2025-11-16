@@ -8,12 +8,6 @@ from databaseModules.classNkoDB import NkoDB_module
 def before_nko_(request):
     return nko_(request=request)
 
-def filter(city_id):
-    if city_id == 0:
-        return NkoDB_module().get_all_nko()
-
-    nko_list = NkoDB_module().get_nko_by_city_id(city_id=city_id)
-    return nko_list
 
 
 def nko_(request):
@@ -23,6 +17,7 @@ def nko_(request):
     city_selected = region_sel = ''
     if request.method == 'POST':
         action = request.form.get('action')
+        print(action, request.form)
         if action == 'filter_go':
             city_id = int(request.form.get('city').split("_")[-1])
 
@@ -31,9 +26,27 @@ def nko_(request):
                 city_selected = f"{cities_list[city_id-1][1]}"
                 region_sel = f"{cities_list[city_id-1][2]}"
 
+        if 'favorite_add' in action:
+            from src_new.databaseModules.classFavoriteUsersDB import FavoriteUsersDB_module
+            if 'username' in session:
+                type_post = 'nko'
+                post_id = int(action.split("_")[-1])
+                user_id = UsersDB_module().select_with_mail(mail=session['username'])['user_id']
+
+                view_status = FavoriteUsersDB_module().presence_in_favorite(user_id, post_id, type_post)
+                if view_status == 'error':
+                    print('Не было в избарнном', view_status)
+                else:
+                    view_status = view_status['view_status']
+                    update_status = FavoriteUsersDB_module().update_favorite(user_id, post_id, type_post, view_status)
+                    print('Есть в избрном', update_status)
+
+                # print(post_id, type_post, user_id)
+
 
     if nko_list == False:
-        nko_list = NkoDB_module().get_all_nko()
+        user_id = UsersDB_module().select_with_mail(mail=session['username'])['user_id']
+        nko_list = NkoDB_module().get_all_nko(user_id=user_id)
 
     cats_list = SmallFuncsDB_module().select_all_categories()
 
