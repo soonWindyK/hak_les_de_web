@@ -18,15 +18,24 @@
                     <a href="/nko/add" class="btn-more">Создать НКО</a>
                 </div>
 
-<!--                <div class="filters">-->
-<!--                    <select class="filter-select">-->
-<!--                        <option value="cat_id_0">Выберите категорию</option>-->
-<!--                                {% for n, c in cats_list %}-->
-<!--                                <option value="cat_id_{{n}}">{{c}}</option>-->
-<!--                                {% endfor %}-->
-<!--                    </select>-->
-<!--                    <input type="text" class="search-input" placeholder="Поиск по названию...">-->
-<!--                </div>-->
+                <div class="content-with-sidebar">
+                    <aside class="filter-sidebar">
+                        <h3>Фильтры</h3>
+                        <form method="POST">
+                            <div class="filter-group">
+                                <label for="city">Город</label>
+                                <select id="city" name="city" class="filter-select" required>
+                                    <option value="city_id_0">Выберите город</option>
+                                    {% for n, c, r in cities_list %}
+                                    <option value="cityid{{n}}">{{c}}, {{r}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button class="btn-view" type="submit" name="action" value="btn-create-nko">Применить фильтр</button>
+                        </form>
+                    </aside>
+
+                    <div class="content-main">
                 {% if nko_list %}
                     {% for nko in nko_list %}
                         <div class="nko-card">
@@ -46,6 +55,7 @@
                     {% else %}
                         <p class="no-organizations">Нет организаций для отображения</p>
                 {% endif %}
+                    </div>
                 </div>
             </div>
         </div>

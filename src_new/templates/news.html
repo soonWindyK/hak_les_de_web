@@ -17,18 +17,25 @@
                     <p class="page-subtitle">Последние события и инициативы в городах присутствия Росатома</p>
                 </div>
 
-<!--                <div class="filters">-->
-<!--                    <select class="filter-select">-->
-<!--                        <option value="">Все категории</option>-->
-<!--                        <option value="social">Социальные</option>-->
-<!--                        <option value="ecology">Экология</option>-->
-<!--                        <option value="culture">Культура</option>-->
-<!--                        <option value="education">Образование</option>-->
-<!--                        <option value="sport">Спорт</option>-->
-<!--                    </select>-->
-<!--                </div>-->
+                <div class="content-with-sidebar">
+                    <aside class="filter-sidebar">
+                        <h3>Фильтры</h3>
+                        <form method="POST">
+                            <div class="filter-group">
+                                <label for="city">Город</label>
+                                <select id="city" name="city" class="filter-select" required>
+                                    <option value="city_id_0">Выберите город</option>
+                                    {% for n, c, r in cities_list %}
+                                    <option value="cityid{{n}}">{{c}}, {{r}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button class="btn-view" type="submit" name="action" value="btn-create-nko">Применить фильтр</button>
+                        </form>
+                    </aside>
 
-                <div class="news-grid">
+                    <div class="content-main">
+                        <div class="news-grid">
                     {% if news %}
                         {% for item in news %}
                             <article class="news-card">
@@ -51,6 +58,8 @@
                     {% else %}
                         <p>Новости пока не добавлены.</p>
                     {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
