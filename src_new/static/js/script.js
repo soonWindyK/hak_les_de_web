@@ -256,3 +256,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+
+// Функция для добавления/удаления НКО в избранное
+function toggleFavorite(button, nkoId) {
+    button.classList.toggle('active');
+    
+    // Здесь будет AJAX-запрос к серверу для сохранения в избранное
+    const isActive = button.classList.contains('active');
+    
+    if (isActive) {
+        console.log('Добавлено в избранное: НКО ID', nkoId);
+        // Отправка запроса на сервер для добавления в избранное
+        // fetch('/api/favorites/add', { method: 'POST', body: JSON.stringify({ nko_id: nkoId }) })
+    } else {
+        console.log('Удалено из избранного: НКО ID', nkoId);
+        // Отправка запроса на сервер для удаления из избранного
+        // fetch('/api/favorites/remove', { method: 'POST', body: JSON.stringify({ nko_id: nkoId }) })
+    }
+}

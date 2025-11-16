@@ -1434,6 +1434,7 @@ textarea.form-control,
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
+    position: relative;
 }
 
 .nko-card:hover {
@@ -1897,6 +1898,7 @@ img.news-image {
     transition: transform 0.3s, box-shadow 0.3s;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .knowledge-card:hover {
@@ -2287,4 +2289,44 @@ img.news-image {
 
 .content-main {
     width: 100%;
+}
+
+/* ============================================
+   NKO FAVORITE BUTTON - КНОПКА ИЗБРАННОГО НКО
+   ============================================ */
+
+.nko-favorite-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--medium-gray);
+}
+
+.nko-favorite-btn:hover {
+    background-color: var(--light-gray);
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.nko-favorite-btn.active {
+    color: #FF0033;
+}
+
+.nko-favorite-btn.active svg path {
+    fill: #FF0033;
+}
+
+.nko-favorite-btn svg {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
 }
