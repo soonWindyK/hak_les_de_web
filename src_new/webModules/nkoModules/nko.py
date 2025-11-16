@@ -3,6 +3,7 @@ from flask import render_template, redirect, session
 from databaseModules.classCityRegionDB import CityRegionDB_module
 from databaseModules.classSmallFuncsDB import SmallFuncsDB_module
 from databaseModules.classNkoDB import NkoDB_module
+from databaseModules.classFavoriteUsersDB import FavoriteUsersDB_module
 
 
 def before_nko_(request):
@@ -24,9 +25,8 @@ def connect_nko_with_favor(nko_list, data_fav):
     return nko_list
 
 
-from src_new.databaseModules.classFavoriteUsersDB import FavoriteUsersDB_module
 def nko_(request):
-    # print(request)
+    print(request.form)
     cities_list = CityRegionDB_module().get_cities_list_with_region()
 
     msg_data = ''
@@ -40,7 +40,7 @@ def nko_(request):
 
     if request.method == 'POST':
         action = request.form.get('action')
-        # print(action, request.form)
+        print(action, request.form)
         if action == 'filter_go':
             city_id = int(request.form.get('city').split("_")[-1])
 
@@ -48,6 +48,8 @@ def nko_(request):
                 nko_list = NkoDB_module().get_nko_by_city_id(city_id=city_id)
                 city_selected = f"{cities_list[city_id-1][1]}"
                 region_sel = f"{cities_list[city_id-1][2]}"
+
+
 
         if 'favorite_add' in action:
             if 'username' in session:

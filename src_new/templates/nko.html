@@ -34,6 +34,10 @@
                                         <option value="city_id_{{n}}">{{c}} {{r}}</option>
                                     {% endfor %}
                                 </select>
+                                <div class="filter-group">
+                                    <label>В избранном</label>
+                                    <input type="checkbox" name="action" value="checkbox_fav">
+                                </div>
                             </div>
                                 <button class="btn-view" type="submit" name="action" value="filter_go">Применить фильтр</button>
                                 <button class="btn-view" type="submit" name="action" value="filter_fall">Убрать фильтр</button>
