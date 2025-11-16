@@ -147,6 +147,11 @@ def admin_course_detail(course_id):
     from webModules.adminModules.admin_courses_list import admin_course_detail
     return admin_course_detail(course_id)
 
+@app.route('/admin/course/edit/<int:course_id>', methods=['GET', 'POST'])
+def admin_course_edit(course_id):
+    from webModules.adminModules.admin_course_edit import before_admin_course_edit
+    return before_admin_course_edit(course_id)
+
 @app.route('/admin/course/<int:course_id>/theme/add', methods=['GET', 'POST'])
 def admin_theme_add(course_id):
     from webModules.adminModules.admin_courses_list import admin_theme_add

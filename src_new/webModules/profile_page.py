@@ -45,6 +45,7 @@ def change_profile(request, mail):
     }
 
     data = list(form_data.values())
+
     form_data = data_db | form_data
 
     if UsersDB_module().update_user(data, mail):
