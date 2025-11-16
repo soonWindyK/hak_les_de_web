@@ -54,7 +54,7 @@ def nko_(request):
                 region_sel = f"{cities_list[city_id-1][2]}"
 
         if 'checkbox_fav' in action:
-            print('dasdasd')
+            nko_list = [item for item in nko_list if item.get('view_status') == 1]
 
 
         if 'favorite_add' in action:
