@@ -29,8 +29,8 @@
                     {% if news %}
                         {% for item in news %}
                             <article class="news-card">
-                                {% if item.attached_files %}
-                                    <img src="{{ url_for(item.attached_files) }}" alt="{{ item.title }}" class="news-image">
+                                {% if item.attached_file %}
+                                <img src="{{ url_for('static', filename=item.attached_file) }}" alt="{{ item.title }}" class="news-image">
                                 {% else %}
                                     <div class="news-image">📰</div>
                                 {% endif %}
