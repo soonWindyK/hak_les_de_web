@@ -29,9 +29,11 @@
                                     <div class="nko-links">
                                         <a href="{{ nko.website }}" class="nko-link">🌐 Сайт</a>
                                         <a href="{{ nko.link_social_net }}" class="nko-link">📱 Соц. сеть</a>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; margin-top: 10px;">
                                         <button class="btn-admin btn-primary">Редактировать</button>
-                                        <form method="POST">
-                                            <button type="submit" name="action" value="nko_{{ nko.nko_id }}" class="btn-admin">Удалить</button>
+                                        <form method="POST" style="margin: 0;">
+                                            <button type="submit" name="action" value="nko_{{ nko.nko_id }}" class="btn-secondary">Удалить</button>
                                         </form>
                                     </div>
                                 </div>
