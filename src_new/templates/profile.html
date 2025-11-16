@@ -43,6 +43,12 @@
                         {%endif%}
                         </li>
                         <li class="profile-menu-item">
+                            <a href="{{ url_for('favorites') }}" class="profile-menu-link">
+                                <span class="profile-menu-icon">⭐</span>
+                                <span>Избранное</span>
+                            </a>
+                        </li>
+                        <li class="profile-menu-item">
                             <a href="{{ url_for('home') }}" class="profile-menu-link">
                                 <span class="profile-menu-icon">🏠</span>
                                 <span>На главную</span>

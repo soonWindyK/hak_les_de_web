@@ -3,7 +3,7 @@ from databaseModules.classUsersDB import UsersDB_module
 from flask_wtf.csrf import CSRFProtect
 
 csrf = CSRFProtect()
-app = Flask(__name__, static_folder='static', static_url_path='/static')
+app = Flask(__name__, static_folder='static',static_url_path='/static')
 app.secret_key = 'your-secret-key'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
@@ -98,6 +98,13 @@ def admin_nko_list():
     # Здесь будет логика отображения списка НКО
     from webModules.adminModules.admin_nko_list import before_admin_nko_
     return before_admin_nko_()
+
+
+@app.route('/profile/favorites')
+def favorites():
+
+    return render_template('favorites.html')
+
 
 @app.route('/nko/add', methods=['GET', 'POST'])
 def nko_add():

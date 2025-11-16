@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Избранное - Добрые дела Росатома</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rosatom-main.css') }}">
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    <main>
+        <div class="container">
+            <div class="profile-container">
+                <aside class="profile-sidebar">
+                    <div class="profile-user-info">
+                        <div class="profile-avatar">👤</div>
+                        <div class="profile-name">{{ data_profile.first_name }}</div>
+                        <div class="profile-name">{{ data_profile.last_name }}</div>
+                        <span class="profile-role"> {{ data_profile.role_name }} </span>
+                    </div>
+
+                    <ul class="profile-menu">
+                        <li class="profile-menu-item">
+                            <a href="{{ url_for('profile') }}" class="profile-menu-link">
+                                <span class="profile-menu-icon">👤</span>
+                                <span>Мой профиль</span>
+                            </a>
+                        </li>
+                        {% if data_profile.role_id == 2 or data_profile.role_id == 3 %}
+                        <li class="profile-menu-item">
+                            <a href="{{ url_for('admin_panel') }}" class="profile-menu-link">
+                                <span class="profile-menu-icon">⚙️</span>
+                                <span>Панель управления</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li class="profile-menu-item">
+                            <a href="{{ url_for('favorites') }}" class="profile-menu-link active">
+                                <span class="profile-menu-icon">⭐</span>
+                                <span>Избранное</span>
+                            </a>
+                        </li>
+                        <li class="profile-menu-item">
+                            <a href="{{ url_for('home') }}" class="profile-menu-link">
+                                <span class="profile-menu-icon">🏠</span>
+                                <span>На главную</span>
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+                
+                <div class="profile-content">
+                    <div class="profile-header">
+                        <h1 class="profile-title">Избранное</h1>
+                        <p class="profile-subtitle">Ваши избранные НКО и события</p>
+                    </div>
+
+                    <div class="favorites-content">
+                        <p>Здесь будут отображаться избранные элементы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
