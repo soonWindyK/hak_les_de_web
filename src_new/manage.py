@@ -70,9 +70,10 @@ def profile():
 #системы выхода из аккаунта
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-
     session.clear()
     return redirect(url_for('home'))
+
+
 #Рендеринг панели администратора в профиле
 @app.route('/admin/panel', methods=['GET', 'POST'])
 def admin_panel():

@@ -7,7 +7,7 @@ class EventsDB_module:
         self.cursor = self.conn.cursor(buffered=True, dictionary=True)
         self.events = 'events'
 
-
+    # создание ивентов
     def create_event(self, data):
         try:
             print(data)
@@ -21,6 +21,7 @@ class EventsDB_module:
         finally:
             self.conn.close()
 
+    # берём все события не удалённые и одобренные
     def get_all_events(self, status=2):
         try:
             self.cursor.execute(f'select * from {self.events}, cities, regions '
@@ -35,6 +36,7 @@ class EventsDB_module:
         finally:
             self.conn.close()
 
+    # берём все события города не удалённые и одобренные
     def get_event_by_city_id(self, city_id):
         try:
             status = 2
@@ -51,6 +53,7 @@ class EventsDB_module:
         finally:
             self.conn.close()
 
+    # удаляем событие (в бд остаётся но статус - удалёно)
     def delete_event(self, event_id):
         try:
             self.cursor.execute(
@@ -64,6 +67,7 @@ class EventsDB_module:
         finally:
             self.conn.close()
 
+    # обновляем даныне ивента (одобрен/отклонён)
     def update_status_event(self, event_id: int, status: int):
         try:
             self.cursor.execute(

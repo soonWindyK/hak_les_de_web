@@ -1,6 +1,6 @@
 from databaseModules.helpModules import get_db_connection
 
-
+# создаются таблицы для удобства (часть руками была сделана) поэтмоу тут неактуально
 class CreatorTables:
     def __init__(self):
         self.conn = get_db_connection()

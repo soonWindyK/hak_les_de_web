@@ -8,6 +8,8 @@ class CityRegionDB_module:
         self.table_cities = 'cities'
         self.table_regions = 'regions'
 
+
+    # берём города и область для разных фильтров и форм
     def get_cities_list_with_region(self):
         self.cursor.execute(
             f'SELECT city_id, city_name, region_name FROM {self.table_cities}, {self.table_regions} WHERE {self.table_cities}.region_code = {self.table_regions}.region_code'
