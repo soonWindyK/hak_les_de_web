@@ -24,6 +24,9 @@
                         <form method="POST">
                             <div class="filter-group">
                                 <label for="city">Город</label>
+                                <font>{{city_selected}} <br></font>
+                                <font>{{region_sel}} </font>
+
                                 <select id="city" name="city" class="filter-select" required>
                                     <option value="city_id_0">Выберите город</option>
                                     {% for n, c, r in cities_list %}
