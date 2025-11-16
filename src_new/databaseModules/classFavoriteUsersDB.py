@@ -6,8 +6,9 @@ class FavoriteUsersDB_module:
         self.conn = get_db_connection()
         self.cursor = self.conn.cursor(buffered=True, dictionary=True)
         self.table_name = 'favorites_user'
-        # enum - type_post: nko, news, events
+        # типы постов - enum - type_post: nko, news, events
 
+    # првоерка на наличие такого поста в избранном у пользователя
     def presence_in_favorite(self, user_id, post_id, type_post):
         try:
             self.cursor.execute(
@@ -25,6 +26,7 @@ class FavoriteUsersDB_module:
         finally:
             self.conn.close()
 
+    # добавляем новый пост для юзера в избранное
     def add_favorite(self, user_id, post_id, type_post):
         try:
             self.cursor.execute(
@@ -39,6 +41,7 @@ class FavoriteUsersDB_module:
         finally:
             self.conn.close()
 
+    # обноляем статус для избранного у поста/нко
     def update_favorite(self, user_id, post_id, type_post, view_status):
         try:
             status = 1 if view_status == 0 else 0
@@ -56,6 +59,7 @@ class FavoriteUsersDB_module:
         finally:
             self.conn.close()
 
+    # берём все посты/нко для юзера по типу поста
     def get_all_favorites_by_type_post(self, user_id, type_post):
         try:
             self.cursor.execute(

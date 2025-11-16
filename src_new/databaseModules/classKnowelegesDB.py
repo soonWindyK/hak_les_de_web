@@ -8,6 +8,7 @@ class KnowelegesDB_module:
         self.courses_table = 'courses'
         self.themes_table = 'themes'
 
+    # получить все курсы
     def get_all_courses(self):
         try:
             self.cursor.execute(
@@ -20,7 +21,7 @@ class KnowelegesDB_module:
         finally:
             self.conn.close()
 
-
+    # полученеи данныех курсов
     def get_course_info(self, id):
         try:
             self.cursor.execute(
@@ -33,7 +34,7 @@ class KnowelegesDB_module:
         finally:
             self.conn.close()
 
-
+    # получение данных темы
     def get_theme_info(self, id):
         try:
             self.cursor.execute(
@@ -46,7 +47,7 @@ class KnowelegesDB_module:
         finally:
             self.conn.close()
 
-
+    # получние тем для курса
     def get_themses_by_course_id(self, id):
         try:
             self.cursor.execute(
@@ -59,6 +60,7 @@ class KnowelegesDB_module:
         finally:
             self.conn.close()
 
+    # добавление курса
     def add_course(self, name):
         try:
             self.cursor.execute(
@@ -73,7 +75,7 @@ class KnowelegesDB_module:
         finally:
             self.conn.close()
 
-
+    # добавление темы (не работает, не доделали на сайте)
     def add_theme(self, name):
         try:
             self.cursor.execute(
@@ -88,7 +90,7 @@ class KnowelegesDB_module:
         finally:
             self.conn.close()
 
-
+    # удаление темы
     def delete_theme(self, them_id):
         try:
             self.cursor.execute(
@@ -102,7 +104,7 @@ class KnowelegesDB_module:
         finally:
             self.conn.close()
 
-
+    # удаление курса
     def delete_course(self, course_id):
         try:
             self.cursor.execute(
@@ -116,7 +118,7 @@ class KnowelegesDB_module:
         finally:
             self.conn.close()
 
-
+    # обновление имени темы
     def update_theme(self, them_id, new_name):
         try:
             self.cursor.execute(
@@ -130,7 +132,7 @@ class KnowelegesDB_module:
         finally:
             self.conn.close()
 
-
+    # обновление имени курса
     def update_course(self, course_id, new_name):
         try:
             self.cursor.execute(
