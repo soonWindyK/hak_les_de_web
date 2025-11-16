@@ -42,21 +42,25 @@ def calendar_():
             events = connect_events_with_favor(events=events, data_fav=data_fav)
 
     if request.method == 'POST':
-        print(request.form.get('action'))
-        print(request.form.get('action2'))
-        action = request.form.get('action')
-        if 'filter_go' in action:
-            city_id = int(request.form.get('city').split("_")[-1])
+        action = request.form.get('action', '')
+        checkbox_fav = request.form.get('action_cb', '')
+
+        cities_new = 0
+        city_valid = request.form.get('city', False)
+        if city_valid:
+            cities_new = int(city_valid.split("_")[-1])
+
+        if cities_new != 0:
+            city_id = cities_new
             if city_id != 0:
                 print(city_id, 'city')
                 events = EventsDB_module().get_event_by_city_id(city_id=city_id)
                 city_selected = f"{cities_list[city_id - 1][1]}"
                 region_sel = f"{cities_list[city_id - 1][2]}"
 
-
-            if 'checkbox_fav' in action:
-                print(events)
-                events = [item for item in events if item.get('view_status') == 1]
+        if 'checkbox_fav' in checkbox_fav:
+            print(events)
+            events = [item for item in events if item.get('view_status') == 1]
 
         if 'favorite_add' in action:
             if 'username' in session:

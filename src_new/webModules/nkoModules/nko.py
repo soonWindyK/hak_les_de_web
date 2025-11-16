@@ -42,10 +42,16 @@ def nko_(request):
             nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
 
     if request.method == 'POST':
-        action = request.form.get('action', False)
+        action = request.form.get('action', '')
+        checkbox_fav = request.form.get('action_cb', '')
         print(action, request.form)
 
-        if action == 'filter_go':
+        cities_new = 0
+        city_valid = request.form.get('city', False)
+        if city_valid:
+            cities_new = int(city_valid.split("_")[-1])
+
+        if cities_new != 0:
             city_id = int(request.form.get('city').split("_")[-1])
 
             if city_id != 0:
@@ -53,7 +59,8 @@ def nko_(request):
                 city_selected = f"{cities_list[city_id-1][1]}"
                 region_sel = f"{cities_list[city_id-1][2]}"
 
-        if 'checkbox_fav' in action:
+
+        if 'checkbox_fav' in checkbox_fav:
             nko_list = [item for item in nko_list if item.get('view_status') == 1]
 
 
