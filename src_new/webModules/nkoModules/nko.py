@@ -8,17 +8,39 @@ from databaseModules.classNkoDB import NkoDB_module
 def before_nko_(request):
     return nko_(request=request)
 
+def connect_nko_with_favor(nko_list, data_fav):
+    for _, nko in enumerate(nko_list):
+        nko_id = nko['nko_id']
+        if not data_fav:
+            continue
+
+        if 'fav_id' in data_fav[0].keys():
+            for favorit in data_fav:
+                if favorit['post_id'] == nko_id:
+                    nko_list[_]['view_status'] = favorit['view_status']
+                    # print(nko_list[_])
+                    continue
+
+    return nko_list
 
 
+from src_new.databaseModules.classFavoriteUsersDB import FavoriteUsersDB_module
 def nko_(request):
-    print(request)
+    # print(request)
     cities_list = CityRegionDB_module().get_cities_list_with_region()
-    nko_list = False
-    city_selected = region_sel = ''
+
+    msg_data = ''
+    type_post = 'nko'
+    region_sel = city_selected = ''
+
+    nko_list = NkoDB_module().get_all_nko()
+
+    if 'username' in session:
+        user_id = UsersDB_module().select_with_mail(mail=session['username'])['user_id']
 
     if request.method == 'POST':
         action = request.form.get('action')
-        print(action, request.form)
+        # print(action, request.form)
         if action == 'filter_go':
             city_id = int(request.form.get('city').split("_")[-1])
 
@@ -28,29 +50,32 @@ def nko_(request):
                 region_sel = f"{cities_list[city_id-1][2]}"
 
         if 'favorite_add' in action:
-            from src_new.databaseModules.classFavoriteUsersDB import FavoriteUsersDB_module
             if 'username' in session:
-                type_post = 'nko'
                 post_id = int(action.split("_")[-1])
-                user_id = UsersDB_module().select_with_mail(mail=session['username'])['user_id']
 
                 view_status = FavoriteUsersDB_module().presence_in_favorite(user_id, post_id, type_post)
+
                 if view_status == 'error':
                     print('Не было в избарнном', view_status)
+                    if FavoriteUsersDB_module().add_favorite(user_id, post_id, type_post):
+                        pass
+                    else:
+                        msg_data = 'Ошибка добавления нового лайка'
                 else:
                     view_status = view_status['view_status']
                     update_status = FavoriteUsersDB_module().update_favorite(user_id, post_id, type_post, view_status)
-                    print('Есть в избрном', update_status)
 
-                # print(post_id, type_post, user_id)
+                    print('Есть в избранном', update_status)
 
+                data_fav = FavoriteUsersDB_module().get_all_favorites_by_type_post(user_id, type_post)
+                nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
 
-    if nko_list == False:
-        user_id = UsersDB_module().select_with_mail(mail=session['username'])['user_id']
-        nko_list = NkoDB_module().get_all_nko(user_id=user_id)
+    if 'username' in session:
+        data_fav = FavoriteUsersDB_module().get_all_favorites_by_type_post(user_id, type_post)
+        nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
 
     cats_list = SmallFuncsDB_module().select_all_categories()
 
-
+    # print(nko_list)
     return render_template('nko.html', nko_list=nko_list, cats_list=cats_list, cities_list=cities_list,
-                           city_selected=city_selected, region_sel=region_sel)
+                           msg_data=msg_data, city_selected=city_selected, region_sel=region_sel)

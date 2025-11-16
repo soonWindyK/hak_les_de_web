@@ -24,21 +24,19 @@ class NkoDB_module:
         finally:
             self.conn.close()
 
-    def get_all_nko(self, user_id, status=2):
+    def get_all_nko(self, status=2):
         try:
             self.cursor.execute(
-                f"SELECT * FROM {self.nko_list}, cities, categories, regions, favorites_user "
+                f"SELECT * FROM {self.nko_list}, cities, categories, regions "
                 f"WHERE "
                 f"status_id = {status} "
                 f"and cities.city_id = {self.nko_list}.citi_code "
                 f"and categories.id = {self.nko_list}.category_id "
                 f"and regions.region_code = cities.region_code "
-                f"and {self.nko_list}.deleted_at is null "
-                f"and favorites_user.user_id = {user_id} "
-                f"and favorites_user.post_type = 'nko' "
+                f"and {self.nko_list}.deleted_at is null"
             )
             data = self.cursor.fetchall()
-            print(data[0])
+            print(data)
             return data
         except Exception as e:
             print(e)

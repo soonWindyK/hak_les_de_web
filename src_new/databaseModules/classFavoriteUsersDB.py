@@ -55,3 +55,18 @@ class FavoriteUsersDB_module:
             return False
         finally:
             self.conn.close()
+
+    def get_all_favorites_by_type_post(self, user_id, type_post):
+        try:
+            self.cursor.execute(
+                f'SELECT * FROM {self.table_name} '
+                f'WHERE user_id = {user_id} '
+                f'and post_type = "{type_post}"'
+            )
+            x = self.cursor.fetchall()
+            return x
+        except Exception as e:
+            print(e)
+            return 'error'
+        finally:
+            self.conn.close()
