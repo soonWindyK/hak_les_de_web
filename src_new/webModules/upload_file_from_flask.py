@@ -19,7 +19,7 @@ def handle_file_upload(file_key, allowed_extensions=None):
         allowed_extensions = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'txt']
 
     # Создаем папку news если не существует
-    upload_path = 'file_dir/news'
+    upload_path = 'static/file_dir/news/'
     if not os.path.exists(upload_path):
         os.makedirs(upload_path)
 
@@ -42,7 +42,7 @@ def handle_file_upload(file_key, allowed_extensions=None):
     try:
         file_extension = os.path.splitext(file.filename)[1].lower()
         unique_filename = f"{uuid.uuid4().hex}{file_extension}"
-        file_path = os.path.join(unique_filename)
+        file_path = os.path.join(upload_path, unique_filename)
         file.save(file_path)
 
         return True, file_path
