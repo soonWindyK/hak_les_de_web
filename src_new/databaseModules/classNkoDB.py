@@ -7,7 +7,7 @@ class NkoDB_module:
         self.cursor = self.conn.cursor(buffered=True, dictionary=True)
         self.nko_list = 'list_nko'
 
-
+    # создание НКО
     def create_nko(self, data):
         try:
             print(data)
@@ -24,6 +24,7 @@ class NkoDB_module:
         finally:
             self.conn.close()
 
+    # берём все НКО не удалённые и одобренные
     def get_all_nko(self, status=2):
         try:
             self.cursor.execute(
@@ -44,6 +45,7 @@ class NkoDB_module:
         finally:
             self.conn.close()
 
+    # берём все НКО города не удалённые и одобренные
     def get_nko_by_city_id(self, city_id):
         try:
             status = 2
@@ -63,6 +65,7 @@ class NkoDB_module:
         finally:
             self.conn.close()
 
+    # удаляем новости (в бд остаётся но статус - удалёно)
     def delete_nko(self, nko_id):
         try:
             self.cursor.execute(
@@ -76,6 +79,7 @@ class NkoDB_module:
         finally:
             self.conn.close()
 
+    # обновляем даныне НКО (одобрен/отклонён)
     def update_status_nko(self, nko_id: int, status: int):
         try:
             self.cursor.execute(

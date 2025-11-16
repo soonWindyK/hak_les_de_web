@@ -7,7 +7,7 @@ class NewssDB_module:
         self.cursor = self.conn.cursor(buffered=True, dictionary=True)
         self.news = 'news'
 
-
+    # создание новостей
     def create_new(self, data):
         try:
             print(data)
@@ -21,6 +21,7 @@ class NewssDB_module:
         finally:
             self.conn.close()
 
+    # берём все новости не удалённые и одобренные
     def get_all_news(self):
         try:
             status = 2
@@ -36,6 +37,7 @@ class NewssDB_module:
         finally:
             self.conn.close()
 
+    # берём все события новости не удалённые и одобренные
     def get_new_by_city_id(self, city_id):
         try:
             status = 2
@@ -52,6 +54,7 @@ class NewssDB_module:
         finally:
             self.conn.close()
 
+    # удаляем новость (в бд остаётся но статус - удалёно)
     def delete_new(self, new_id):
         try:
             self.cursor.execute(
