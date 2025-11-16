@@ -39,11 +39,11 @@
                     {% if news %}
                         {% for item in news %}
                             <article class="news-card">
-                                <!-- {% if item.attached_file %} -->
-                                <img src="{{ url_for('file_dir', filename='item.attached_file') }}" class="news-image">
-                                <!-- {% else %} -->
-                                    <!-- <div class="news-image">📰</div> -->
-                                <!-- {% endif %} -->
+                                {% if item.attached_file %}
+                                <img src="{{ url_for('static', filename=item.attached_file) }}" alt="{{ item.title }}" style="width: 30%; height: 30%;" class="news-image">
+                                {% else %}
+                                    <div class="news-image">📰</div>
+                                {% endif %}
                                 <div class="news-content">
                                     <div class="news-meta">
                                         <span>📅 {{ item.created_time.strftime('%d.%m.%Y %H:%M') }}</span>
