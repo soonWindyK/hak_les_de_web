@@ -23,10 +23,28 @@ class NewssDB_module:
 
     def get_all_news(self):
         try:
+            status = 2
             self.cursor.execute(f'select * from {self.news}, cities, regions '
                                 f'WHERE cities.city_id = {self.news}.citi_code '
                                 f'and regions.region_code = cities.region_code '
-                                f'and {self.news}.deleted_at is null')
+                                f'and {self.news}.deleted_at is null '
+                                f'and status = {status} ')
+            return self.cursor.fetchall()
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            self.conn.close()
+
+    def get_new_by_city_id(self, city_id):
+        try:
+            status = 2
+            self.cursor.execute(f'select * from {self.news}, cities, regions '
+                                f'WHERE cities.city_id = {self.news}.citi_code '
+                                f'and regions.region_code = cities.region_code '
+                                f'and {self.news}.deleted_at is null '
+                                f'and status = {status} '
+                                f'and {self.news}.citi_code = {city_id}')
             return self.cursor.fetchall()
         except Exception as e:
             print(e)
