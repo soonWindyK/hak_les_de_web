@@ -8,58 +8,85 @@ moder - moderatornaf@gmail.com 123456
 ## Структура проекта
 
 ```
-├── manage.py                   # Flask приложение
-├── requirements.txt            # Зависимости Python
-├── db.sqlite3                 # База данных SQLite
-├── templates/
-│   ├── index.html             # Главная страница
-│   ├── nko.html               # Список НКО
-│   ├── nko-detail.html        # Детальная страница НКО
-│   ├── knowledge.html         # База знаний
-│   ├── calendar.html          # Календарь событий
-│   ├── news.html              # Лента новостей
-│   ├── news-detail.html       # Детальная страница новости
-│   ├── register.html          # Регистрация
-│   ├── login.html             # Вход
-│   ├── profile.html           # Профиль пользователя
-│   └── components/
-│       ├── header.html        # Компонент header (include)
-│       └── footer.html        # Компонент footer (include)
-├── static/
-│   ├── css/
-│   │   ├── styles.css         # Основные стили
-│   │   ├── pages.css          # Стили страниц
-│   │   ├── auth.css           # Стили форм авторизации
-│   │   ├── calendar.css       # Стили календаря
-│   │   ├── knowledge.css      # Стили базы знаний
-│   │   ├── news.css           # Стили новостей
-│   │   ├── nko.css            # Стили НКО
-│   │   └── profile.css        # Стили профиля
-│   └── js/
-│       └── script.js          # JavaScript
-└── README.md
+├── manage.py                          # Главный файл Flask приложения
+├── req_src_new.txt                    # Зависимости Python
+├── .env                               # Переменные окружения
+├── data_from_env.py                   # Загрузка данных из .env
+├── tesdb.py                           # Тестирование БД
+│
+├── databaseModules/                   # Модули работы с базой данных
+│   ├── __init__.py
+│   ├── db_conncetion_pool.py         # Пул соединений с БД
+│   ├── classCreatorTables.py         # Создание таблиц
+│   ├── classUsersDB.py               # Работа с пользователями
+│   ├── classNkoDB.py                 # Работа с НКО
+│   ├── classNewsDB.py                # Работа с новостями
+│   ├── classEventsDB.py              # Работа с событиями
+│   ├── classKnowelegesDB.py          # Работа с базой знаний
+│   ├── classCityRegionDB.py          # Работа с городами и регионами
+│   ├── classFavoriteUsersDB.py       # Работа с избранным
+│   ├── classOrganizationDB.py        # Работа с организациями
+│   ├── classSmallFuncsDB.py          # Вспомогательные функции БД
+│   └── helpModules.py                # Вспомогательные модули
+│
+├── webModules/                        # Модули веб-логики
+│   ├── __init__.py
+│   ├── login_page.py                 # Страница входа
+│   ├── registration_page.py          # Страница регистрации
+│   ├── profile_page.py               # Страница профиля
+│   ├── admin_checker.py              # Проверка прав администратора
+│   ├── hash_password_usr.py          # Хеширование паролей
+│   ├── upload_file_from_flask.py     # Загрузка файлов
+│   │
+│   ├── nkoModules/                   # Модули НКО
+│   ├── newsModules/                  # Модули новостей
+│   ├── eventsModules/                # Модули событий
+│   ├── knowelegeModules/             # Модули базы знаний
+│   ├── adminModules/                 # Модули администратора
+│   └── moderatorModules/             # Модули модератора
+│
+├── templates/                         # HTML шаблоны
+│   ├── index.html                    # Главная страница
+│   ├── login.html                    # Вход
+│   ├── register.html                 # Регистрация
+│   ├── profile.html                  # Профиль пользователя
+│   ├── favorites.html                # Избранное
+│   ├── 404.html                      # Страница ошибки 404
+│   │
+│   ├── nko.html                      # Список НКО
+│   ├── nko-detail.html               # Детальная страница НКО
+│   ├── nko-add.html                  # Добавление НКО
+│   ├── nko-list.html                 # Список НКО (альтернативный)
+│   ├── nko-map.html                  # Карта НКО
+│   │
+│   ├── news.html                     # Лента новостей
+│   ├── news-detail.html              # Детальная страница новости
+│   │
+│   ├── calendar.html                 # Календарь событий
+│   │
+│   ├── knowledge.html                # База знаний
+│   ├── course-detail.html            # Детальная страница курса
+│   ├── theme-detail.html             # Детальная страница темы
+│   │
+│   ├── components/                   # Компоненты
+│   │   ├── header.html               # Шапка сайта
+│   │   └── footer.html               # Подвал сайта
+│   │
+│   ├── admin/                        # Панель администратора
+│   │   └── admin-panel.html
+│   │
+│   └── moderator/                    # Панель модератора
+│       └── moderator-panel.html
+│
+└── static/                            # Статические файлы
+    ├── css/
+    │   └── rosatom-main.css          # Единый файл стилей
+    │
+    ├── js/
+    │   └── script.js                 # JavaScript функции
+    │
+    └── file_dir/                     # Загруженные файлы
 ```
-
-## Реализованный функционал
-
-### ✅ Основные разделы
-- Главная страница с описанием проекта
-- Список НКО с фильтрацией
-- База знаний с материалами
-- Календарь событий
-- Лента новостей
-
-### ✅ Дизайн
-- Минималистичный дизайн в цветах Росатома
-- Адаптивная вёрстка для мобильных устройств
-- Интуитивная навигация
-- Плавные переходы и анимации
-
-### ✅ Интерактивность
-- Выбор города с сохранением в localStorage
-- Фильтрация по категориям
-- Поиск по материалам
-- Плавная прокрутка
 
 ## Запуск проекта
 
@@ -74,42 +101,3 @@ python manage.py
 ```
 
 Откройте браузер и перейдите по адресу: `http://127.0.0.1:5000`
-
-## Архитектура проекта
-
-Проект использует Flask framework с шаблонизатором Jinja2:
-
-- **components/header.html** - компонент header (подключается через `{% include 'components/header.html' %}`)
-- **components/footer.html** - компонент footer (подключается через `{% include 'components/footer.html' %}`)
-- Все страницы используют эти компоненты для единообразного отображения header и footer
-
-## URL маршруты
-
-- `/` - Главная страница
-- `/nko` - Список НКО
-- `/nko/<id>` - Детальная страница НКО
-- `/news` - Список новостей
-- `/news/<id>` - Детальная страница новости
-- `/calendar` - Календарь событий
-- `/knowledge` - База знаний
-- `/register` - Регистрация
-- `/login` - Вход
-- `/profile` - Профиль пользователя
-
-## Цветовая палитра Росатома
-
-- Основной цвет: #00A3E0
-- Вторичный цвет: #0066A1
-- Акцентный цвет: #FF6B35
-- Тёмный: #1A1A1A
-- Светло-серый: #F5F5F5
-
-## Дальнейшее развитие
-
-Для полноценной работы потребуется:
-- Backend для хранения данных
-- Система авторизации
-- Административная панель
-- Интеграция с картами
-- API для работы с контентом
-- База данных для НКО, событий и новостей
