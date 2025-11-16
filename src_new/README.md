@@ -2,8 +2,6 @@
 
 Прототип многостраничного сайта для объединения НКО, волонтёров и координаторов в городах присутствия ГК Росатом.
 ```commandline
-adminka - adminnaf@gmail.com 123456
-moder - moderatornaf@gmail.com qweqwe
 ```
 ## Структура проекта
 
