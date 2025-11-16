@@ -125,7 +125,7 @@ def admin_events_list():
     from webModules.adminModules.admin_events_list import before_admin_events
     return before_admin_events()
 
-@app.route('/admin/events/add', methods=['GET', 'POST'])
+@app.route('/event/add', methods=['GET', 'POST'])
 def admin_events_add():
     from webModules.eventsModules.admin_event_add import before_admin_event_add
     # Здесь будет логика добавления события

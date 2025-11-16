@@ -8,11 +8,9 @@ from databaseModules.classCityRegionDB import CityRegionDB_module
 
 def before_admin_event_add():
     if 'username' in session:
-        data_db = UsersDB_module().select_with_mail(mail=session['username'])
-        if data_db['user_role'] == 2:
-            return admin_news_add()
+        return admin_news_add()
 
-    return redirect('/')
+    return redirect('/login')
 
 
 def admin_news_add():
