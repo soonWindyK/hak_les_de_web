@@ -3,7 +3,7 @@
 Прототип многостраничного сайта для объединения НКО, волонтёров и координаторов в городах присутствия ГК Росатом.
 ```commandline
 adminka - adminnaf@gmail.com 123456
-moder - moderatornaf@gmail.com 123456
+moder - moderatornaf@gmail.com qweqwe
 ```
 ## Структура проекта
 
@@ -97,7 +97,8 @@ pip install -r requirements.txt
 
 ### Запуск Flask сервера
 ```bash
+Вы должны быть в папке src_new
 python manage.py
 ```
 
-Откройте браузер и перейдите по адресу: `http://127.0.0.1:5000`
+Откройте браузер и перейдите по адресу из консоли, пример - `http://127.0.0.1:5000`

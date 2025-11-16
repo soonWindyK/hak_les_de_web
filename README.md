@@ -1,13 +1,9 @@
 # ROSATOM-HAKATON
 
 
-src/ 
+src_new/ 
 
     весь код основной
+    и инструкции для првоеряющих
 
-tests/
 
-    тестовые работы
-
-requirements.txt - библиотеки для ворка
-README.md - ты тут
