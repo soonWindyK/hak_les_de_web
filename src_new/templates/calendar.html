@@ -15,20 +15,21 @@
                 <div class="page-header">
                     <h1 class="page-title">Календарь событий</h1>
                     <p class="page-subtitle">Актуальные мероприятия и события в вашем городе</p>
+                    <a href="/event/add" class="btn-more">Создать НКО</a>
                 </div>
 
                 <div class="calendar-container">
                     <div class="calendar-events">
                         {% for event in events %}
-                        <div class="event-card" data-category="{{ event.category_id }}">
-                            <span class="event-date">{{ event.date }}</span>
-                            <h3 class="event-title">{{ event.title }}</h3>
-                            <p class="event-organizer">Организатор: {{ event.organizer }}</p>
-                            <p class="event-description">{{ event.description }}</p>
-                            <p class="event-location">📍 {{ event.location }}</p>
-                            <p class="event-start-time">Время начала: {{event.start_time}}</p>
-                            <p class="event-end-time">Время окончания: {{event.end_time}}</p>
-                        </div>
+                            <div class="event-card" data-category="{{ event.category_id }}">
+                                <span class="event-date">{{ event.date }}</span>
+                                <h3 class="event-title">{{ event.title }}</h3>
+                                <p class="event-organizer">Организатор: {{ event.organizer }}</p>
+                                <p class="event-description">{{ event.description }}</p>
+                                <p class="event-location">📍 {{ event.location }}</p>
+                                <p class="event-start-time">Время начала: {{event.start_time}}</p>
+                                <p class="event-end-time">Время окончания: {{event.end_time}}</p>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
