@@ -30,8 +30,8 @@
                             <p class="event-start-time">Время начала: {{event.start_time}}</p>
                             <p class="event-end-time">Время окончания: {{event.end_time}}</p>
                             <form method="POST">
-                                    <button type="submit" name="action" value="true_nko_{{ nko.nko_id }}" class="btn-admin">Одобрить</button>
-                                    <button type="submit" name="action" value="false_nko_{{ nko.nko_id }}" class="btn-admin">Отклонить</button>
+                                    <button type="submit" name="action" value="true_nko_{{ event.id }}" class="btn-admin">Одобрить</button>
+                                    <button type="submit" name="action" value="false_nko_{{ event.id }}" class="btn-admin">Отклонить</button>
                             </form>
                         </div>
                         {% endfor %}

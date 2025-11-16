@@ -19,20 +19,20 @@ def moderator_events_pending_(mail):
     if request.method == "POST":
         to_do_status = 1
         action = request.form.get('action')
-        if "true_nko" in action:
+        if "true_" in action:
             to_do_status = 2
-        if "false_nko" in action:
+        if "false_" in action:
             to_do_status = 3
 
-        nko_id = int(action.split("_")[-1])
-        print(to_do_status, action, nko_id)
+        event_id = int(action.split("_")[-1])
+        print(to_do_status, action, event_id)
 
-        if NkoDB_module().update_status_nko(nko_id=nko_id, status=to_do_status):
+        if EventsDB_module().update_status_event(event_id=event_id, status=to_do_status):
             msg = 'Успешно'
         else:
             msg = 'Ошибка удаления'
 
-    events = EventsDB_module().get_all_nko(status=1)
+    events = EventsDB_module().get_all_events(status=1)
     return render_template('moderator/moderator-events-pending.html', events=events)
 
 

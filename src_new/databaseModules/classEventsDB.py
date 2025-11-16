@@ -21,12 +21,13 @@ class EventsDB_module:
         finally:
             self.conn.close()
 
-    def get_all_events(self):
+    def get_all_events(self, status=2):
         try:
             self.cursor.execute(f'select * from {self.events}, cities, regions '
                                 f'WHERE cities.city_id = {self.events}.city_id '
                                 f'and regions.region_code = cities.region_code '
-                                f'and {self.events}.deleted_at is null')
+                                f'and {self.events}.deleted_at is null '
+                                f'and status_id = {status}')
             return self.cursor.fetchall()
         except Exception as e:
             print(e)
