@@ -27,7 +27,7 @@
                                 <select id="city" name="city" class="filter-select" required>
                                     <option value="city_id_0">Выберите город</option>
                                     {% for n, c, r in cities_list %}
-                                        <option value="city_id_{{n}}">{{c}}, {{r}}</option>
+                                        <option value="city_id_{{n}}">{{c}} {{r}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
