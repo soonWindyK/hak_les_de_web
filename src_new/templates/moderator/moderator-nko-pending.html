@@ -17,8 +17,13 @@
                     <a href="{{ url_for('admin_panel') }}" class="btn-secondary">Назад в панель</a>
                 </div>
                 <div class="admin-body">
+                    
                     <p>Здесь будет список НКО, ожидающих модерации</p>
                     <!-- Здесь вы добавите функционал модерации -->
+                     <button class="btn-admin btn-primary">Редактировать</button>
+                    <form method="POST">
+                        <button type="submit" name="action" value="event_{{ event.id }}" class="btn-admin">Удалить</button>
+                    </form>
                 </div>
             </div>
         </div>

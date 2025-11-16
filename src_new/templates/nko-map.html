@@ -62,8 +62,17 @@
                     preset: 'islands#blueCircleDotIcon' // Иконка метки (можно изменить цвет: red, green, blue и т.д.)
                 }
             );
-            myMap.geoObjects.add(placemark1);
-
+            ymaps.geocode("г.Москва, ш.Энтузиастов").then(function (res) {
+                var coord = res.geoObjects.get(0).geometry.getCoordinates();
+                var myPlacemark = new ymaps.Placemark(coord, null,{
+                    iconLayout: 'default#image',
+                    iconImageHref: "/map.png",
+                    iconImageSize: [30, 44],
+                    iconImageOffset: [-15, -44]
+                });
+                myMap.geoObjects.add(myPlacemark);
+                });	
+                
             // МЕТКА 2: Добавьте следующую организацию (скопируйте блок выше)
             // var placemark2 = new ymaps.Placemark(
             //     [55.755814, 37.617635], // Координаты второй метки
