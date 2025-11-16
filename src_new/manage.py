@@ -101,11 +101,11 @@ def admin_nko_list():
     from webModules.adminModules.admin_nko_list import before_admin_nko_
     return before_admin_nko_()
 
-#
-# @app.route('/profile/favorites')
-# def favorites():
-#     data_profile = UsersDB_module().select_with_mail(mail=session['username'])
-#     return render_template('favorites.html', data_profile=data_profile)
+
+@app.route('/profile/favorites')
+def favorites():
+    data_profile = UsersDB_module().select_with_mail(mail=session['username'])
+    return render_template('favorites.html', data_profile=data_profile)
 
 #рендеринг страницы добавления НКО
 @app.route('/nko/add', methods=['GET', 'POST'])
