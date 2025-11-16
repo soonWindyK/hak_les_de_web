@@ -35,11 +35,15 @@ def nko_(request):
 
     nko_list = NkoDB_module().get_all_nko()
 
+
+
     if 'username' in session:
         user_id = UsersDB_module().select_with_mail(mail=session['username'])['user_id']
+        data_fav = FavoriteUsersDB_module().get_all_favorites_by_type_post(user_id, type_post)
+        nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
 
     if request.method == 'POST':
-        action = request.form.get('action')
+        action = request.form.get('action', False)
         print(action, request.form)
         if action == 'filter_go':
             city_id = int(request.form.get('city').split("_")[-1])
@@ -49,6 +53,8 @@ def nko_(request):
                 city_selected = f"{cities_list[city_id-1][1]}"
                 region_sel = f"{cities_list[city_id-1][2]}"
 
+        if 'checkbox_fav' in action:
+            print('dasdasd')
 
 
         if 'favorite_add' in action:
@@ -69,8 +75,6 @@ def nko_(request):
 
                     print('Есть в избранном', update_status)
 
-                data_fav = FavoriteUsersDB_module().get_all_favorites_by_type_post(user_id, type_post)
-                nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
 
     if 'username' in session:
         data_fav = FavoriteUsersDB_module().get_all_favorites_by_type_post(user_id, type_post)
