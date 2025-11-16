@@ -32,8 +32,8 @@
                     {% if news %}
                         {% for item in news %}
                             <article class="news-card">
-                                {% if item.avatar %}
-                                    <img src="{{ url_for('static', filename=item.attached_file) }}" alt="{{ item.title }}" class="news-image">
+                                {% if item.attached_file %}
+                                    <img src="{{ url_for('static', filename=item.attached_file ) }}"  class="news-image">
                                 {% else %}
                                     <div class="news-image">📰</div>
                                 {% endif %}
@@ -44,9 +44,6 @@
                                     </div>
                                     <h2 class="news-title">{{ item.title }}</h2>
                                     <p class="news-excerpt">{{ item.description }}</p>
-                                    {% if item.attached_files %}
-                                        <a href="{{ url_for('static', filename=item.attached_files) }}" class="news-attachment" download>📎 Прикреплённый файл</a>
-                                    {% endif %}
                                     <a href="{{ url_for('news_detail', news_id=item.id) }}" class="btn-more">Читать далее</a>
                                 </div>
                             </article>
