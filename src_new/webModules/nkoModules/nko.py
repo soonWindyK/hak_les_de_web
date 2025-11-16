@@ -35,16 +35,16 @@ def nko_(request):
 
     nko_list = NkoDB_module().get_all_nko()
 
-
-
     if 'username' in session:
         user_id = UsersDB_module().select_with_mail(mail=session['username'])['user_id']
         data_fav = FavoriteUsersDB_module().get_all_favorites_by_type_post(user_id, type_post)
-        nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
+        if data_fav:
+            nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
 
     if request.method == 'POST':
         action = request.form.get('action', False)
         print(action, request.form)
+
         if action == 'filter_go':
             city_id = int(request.form.get('city').split("_")[-1])
 
@@ -75,13 +75,14 @@ def nko_(request):
 
                     print('Есть в избранном', update_status)
 
+        if 'username' in session:
+            data_fav = FavoriteUsersDB_module().get_all_favorites_by_type_post(user_id, type_post)
+            nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
 
-    if 'username' in session:
-        data_fav = FavoriteUsersDB_module().get_all_favorites_by_type_post(user_id, type_post)
-        nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
 
-    cats_list = SmallFuncsDB_module().select_all_categories()
+
+    # cats_list = SmallFuncsDB_module().select_all_categories()
 
     # print(nko_list)
-    return render_template('nko.html', nko_list=nko_list, cats_list=cats_list, cities_list=cities_list,
+    return render_template('nko.html', nko_list=nko_list, cats_list=[], cities_list=cities_list,
                            msg_data=msg_data, city_selected=city_selected, region_sel=region_sel)
