@@ -31,6 +31,7 @@ def nko_(request):
 
     msg_data = ''
     type_post = 'nko'
+    region_sel = city_selected = ''
 
     nko_list = NkoDB_module().get_all_nko()
 
@@ -69,14 +70,12 @@ def nko_(request):
                 data_fav = FavoriteUsersDB_module().get_all_favorites_by_type_post(user_id, type_post)
                 nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
 
-
     if 'username' in session:
         data_fav = FavoriteUsersDB_module().get_all_favorites_by_type_post(user_id, type_post)
         nko_list = connect_nko_with_favor(nko_list=nko_list, data_fav=data_fav)
-
 
     cats_list = SmallFuncsDB_module().select_all_categories()
 
     # print(nko_list)
     return render_template('nko.html', nko_list=nko_list, cats_list=cats_list, cities_list=cities_list,
-                           msg_data=msg_data)
+                           msg_data=msg_data, city_selected=city_selected, region_sel=region_sel)
